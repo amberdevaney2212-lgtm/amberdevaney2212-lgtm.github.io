@@ -257,9 +257,9 @@ h1{margin-top:15px;}
 /* Water */
 .card.water {
   position: relative;
-  background-color: #0078c8; /* Medium-dark blue card background */
   border-radius: 12px;
   overflow: hidden;
+  background-color: #0078c8; /* medium-dark blue base */
 }
 
 .card.water .card-overlay {
@@ -268,40 +268,25 @@ h1{margin-top:15px;}
   pointer-events: none;
   border-radius: inherit;
 
-  /* Water base + highlights + ripples */
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 70%),
-    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.2), transparent 70%),
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.12), rgba(255,255,255,0.12) 2px, transparent 6px),
-    linear-gradient(to bottom, rgba(0,170,255,0.7), rgba(0,110,200,0.9));
-  
-  background-size: cover, cover, 200px 200px, cover;
-  animation:
-    rippleShift 6s ease-in-out infinite,
-    flowShift 10s linear infinite,
-    shimmer 4s ease-in-out infinite;
+  /* Base water gradient */
+  background: linear-gradient(to bottom, rgba(0,150,255,0.7), rgba(0,100,200,0.9));
+
+  /* Soft highlights for shimmer */
+  box-shadow: 
+    inset 0 0 80px rgba(255,255,255,0.2),
+    inset 0 0 120px rgba(255,255,255,0.15);
+
+  /* Smooth wave motion */
+  animation: smoothWave 8s ease-in-out infinite;
 }
 
-/* Small wavy movement */
-@keyframes rippleShift {
-  0% { transform: translateX(0px) translateY(0px); opacity: 0.95; }
-  25% { transform: translateX(6px) translateY(3px); opacity: 1; }
-  50% { transform: translateX(0px) translateY(6px); opacity: 0.95; }
-  75% { transform: translateX(-6px) translateY(3px); opacity: 1; }
-  100% { transform: translateX(0px) translateY(0px); opacity: 0.95; }
-}
-
-/* Flowing water effect across layers */
-@keyframes flowShift {
-  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-  100% { background-position: 80px 40px, 120px 90px, 200px 200px, 0 50px; }
-}
-
-/* Shimmering highlights */
-@keyframes shimmer {
-  0% { opacity: 0.15; }
-  50% { opacity: 0.3; }
-  100% { opacity: 0.15; }
+/* Gentle horizontal & vertical movement for wave illusion */
+@keyframes smoothWave {
+  0% { transform: translateX(0px) translateY(0px); }
+  25% { transform: translateX(4px) translateY(2px); }
+  50% { transform: translateX(0px) translateY(4px); }
+  75% { transform: translateX(-4px) translateY(2px); }
+  100% { transform: translateX(0px) translateY(0px); }
 }
 /* Grass / Living Plant Effect */
 /* Card container */
