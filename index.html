@@ -259,49 +259,29 @@ h1{margin-top:15px;}
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  background-color: #2d9feb; /* bright medium blue */
-  color: #fff; /* ensures text is readable */
+  color: #fff;
 }
 
-.card.water .card-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-
-  /* Base water gradient */
-  background: linear-gradient(to bottom, rgba(45,159,235,0.6), rgba(0,110,200,0.85));
-
-  /* Stronger soft highlights for obvious shimmer */
-  box-shadow: 
-    inset 0 0 80px rgba(255,255,255,0.35),
-    inset 0 0 140px rgba(255,255,255,0.25),
-    inset 0 0 220px rgba(255,255,255,0.15);
-
-  /* Make overlay partially transparent for text readability */
-  opacity: 0.85;
-  mix-blend-mode: lighten;
-  
-  /* Smooth wave motion */
-  animation: smoothWave 6s ease-in-out infinite;
-  z-index: 0; /* behind text */
-}
-
-/* Gentle horizontal & vertical movement for wave illusion */
-@keyframes smoothWave {
-  0% { transform: translateX(0px) translateY(0px); }
-  25% { transform: translateX(8px) translateY(4px); }
-  50% { transform: translateX(0px) translateY(8px); }
-  75% { transform: translateX(-8px) translateY(4px); }
-  100% { transform: translateX(0px) translateY(0px); }
-}
-
-/* Ensure text is above overlay */
-.card.water .card-content {
+.card-content {
   position: relative;
   z-index: 1;
+  padding: 16px;
 }
 
+.water-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  animation: waveAnim 6s linear infinite;
+}
+
+@keyframes waveAnim {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(10px, 5px); }
+  100% { transform: translate(0, 0); }
+}
 /* Grass overlay */
 .card.grass .card-overlay{
   position: absolute;
@@ -745,6 +725,20 @@ card.onclick=()=>openAnimal(a,img);
           <span>${typeIcons[a.type]}${a.type2?` ${typeIcons[a.type2]}`:""}</span>
           <span>${continentIcons[a.continent]}</span>
         </div>
+        <div class="card water">
+  <div class="card-content">
+    <h2>Card Title</h2>
+    <p>Some text over water</p>
+  </div>
+
+  <!-- SVG overlay goes here -->
+  <svg class="water-overlay" viewBox="0 0 500 500" preserveAspectRatio="none">
+    <filter id="wave">
+      <feTurbulence id="turb" xFrequency="0.02" yFrequency="0.05" numOctaves="3" result="turb"/>
+      <feDisplacementMap in2="turb" in="SourceGraphic" scale="20" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <rect width="100%" height="100%" fill="#2d9feb" filter="url(#wave)"/>
+  </svg>
       </div>
     `;
     area.appendChild(card);
