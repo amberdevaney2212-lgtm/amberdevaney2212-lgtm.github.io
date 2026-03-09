@@ -260,10 +260,25 @@ h1{margin-top:15px;}
 /* Water */
 .card.water .card-overlay{
   background:
-    linear-gradient(225deg,transparent,rgba(0,150,255,.3),transparent);
-  animation:waterFlow 4s linear infinite;
+    linear-gradient(225deg, transparent, rgba(0,150,255,.35), transparent),
+    radial-gradient(circle at 30% 50%, rgba(0,150,255,.25), transparent 60%),
+    radial-gradient(circle at 70% 50%, rgba(0,150,255,.2), transparent 60%);
+    
+  background-size: 200% 200%, 150% 150%, 150% 150%;
+  animation: waterFlow 4s linear infinite;
 }
-@keyframes waterFlow{from{background-position:-200px}to{background-position:200px}}
+
+@keyframes waterFlow{
+  0%{
+    background-position:-200px 0, 0 0, 0 0;
+  }
+  50%{
+    background-position:0 20px, 20px -10px, -20px 10px;
+  }
+  100%{
+    background-position:200px 0, 0 0, 0 0;
+  }
+}
 
 /* Grass / Living Plant Effect */
 /* Card container */
