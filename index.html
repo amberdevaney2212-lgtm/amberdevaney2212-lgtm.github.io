@@ -725,20 +725,6 @@ card.onclick=()=>openAnimal(a,img);
           <span>${typeIcons[a.type]}${a.type2?` ${typeIcons[a.type2]}`:""}</span>
           <span>${continentIcons[a.continent]}</span>
         </div>
-        <div class="card water">
-  <div class="card-content">
-    <h2>Card Title</h2>
-    <p>Some text over water</p>
-  </div>
-
-  <!-- SVG overlay goes here -->
-  <svg class="water-overlay" viewBox="0 0 500 500" preserveAspectRatio="none">
-    <filter id="wave">
-      <feTurbulence id="turb" xFrequency="0.02" yFrequency="0.05" numOctaves="3" result="turb"/>
-      <feDisplacementMap in2="turb" in="SourceGraphic" scale="20" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <rect width="100%" height="100%" fill="#2d9feb" filter="url(#wave)"/>
-  </svg>
       </div>
     `;
     area.appendChild(card);
