@@ -511,6 +511,7 @@ background-position: 0 0, 10px 10px;
     <p id="modalStats"></p>
     <p id="modalType"></p>
     <p id="modalContinent"></p>
+    <p id="modalDate"></p>
     <button onclick="releaseAnimal()" style="margin-top:10px;padding:8px 14px;border-radius:8px;border:none;background:#ff6b6b;color:white;cursor:pointer;">
 Release
 </button>
@@ -713,7 +714,10 @@ function logAnimal(){
     return;
   }
 
-  logged.push(animal);
+  logged.push({
+  ...animal,
+  recordedAt: new Date().toISOString()
+});
 
   localStorage.setItem("wilddex_logged", JSON.stringify(logged));
 
@@ -722,6 +726,8 @@ function logAnimal(){
 
   document.getElementById("animalInput").value="";
   document.getElementById("animalInput").focus();
+  document.getElementById("modalDate").textContent =
+"Recorded: " + new Date(a.recordedAt).toLocaleString();
 
   renderCollection();
   updateBadges();
