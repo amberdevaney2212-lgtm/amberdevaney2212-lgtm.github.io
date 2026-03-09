@@ -727,7 +727,9 @@ function logAnimal(){
   document.getElementById("animalInput").value="";
   document.getElementById("animalInput").focus();
   document.getElementById("modalDate").textContent =
-"Recorded: " + new Date(a.recordedAt).toLocaleString();
+a.recordedAt
+  ? "Recorded: " + new Date(a.recordedAt).toLocaleString()
+  : "Recorded: Unknown";
 
   renderCollection();
   updateBadges();
