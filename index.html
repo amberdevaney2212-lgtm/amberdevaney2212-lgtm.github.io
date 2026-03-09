@@ -154,7 +154,7 @@ h1{margin-top:15px;}
 
 /* Element colors */
 .card.fire{background:linear-gradient(#ffe5d0,#631010);}
-.card.water {background:linear-gradient(#2d9feb,#2d9feb);}
+.card.water{background:linear-gradient(#dff4ff,#c8eaff);}
 .card.grass{background:linear-gradient(#1e3a1e,#2a4d2a);}
 .card.ice{background:linear-gradient(#eaffff,#dff6ff);}
 .card.flying{background:linear-gradient(#f0f0ff,#e5e5ff);}
@@ -217,6 +217,17 @@ h1{margin-top:15px;}
   animation: fireFlicker 2s ease-in-out infinite alternate;
 }
 
+/* Heat shimmer layer (pseudo-element) */
+.card.fire .card-overlay::nth-child(3){
+  content:"";
+  position:absolute;
+  inset:-30%;
+  background:
+    linear-gradient(to top, rgba(255,255,255,0.08), transparent 60%);
+  filter: blur(15px);
+  animation: heatShimmer 2s ease-in-out infinite alternate;
+}
+
 /* Ember movement + vertical fade */
 @keyframes embersFade{
   0%{background-position:0 0,0 0,0 0; opacity:1;}
@@ -255,7 +266,29 @@ h1{margin-top:15px;}
   100%{transform: translateX(-5px) translateY(-10px) skewX(-2deg);}
 }
 /* Water */
-.card.water {
+.card.water .card-overlay{
+  background:
+    linear-gradient(120deg,transparent,rgba(0,150,255,.15),transparent);
+  animation:waterFlow 4s linear infinite;
+}
+@keyframes waterFlow{from{background-position:-200px}to{background-position:200px}}
+
+/* Grass / Living Plant Effect */
+/* Card container */
+.card{
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grass overlay */
+/* Card container */
+.card{
+  position: relative;
+  overflow: hidden;
+  /* Suggested background for grass: soft earthy green */
+  background-color: #2a4d2a; /* dark forest green works well */
+  color: black; /* keeps text readable */
+}
 
 /* Grass overlay */
 .card.grass .card-overlay{
@@ -331,9 +364,9 @@ background-position: 0 0, 10px 10px;
 .card.dark .card-overlay{
   background:
     radial-gradient(circle at center,
-      rgba(255,255,255,0.05) 0%,
-      rgba(40,50,90,0.15) 50%,
-      rgba(10,10,25,0.35) 100%);
+      rgba(255,255,255,0.2) 0%,
+      rgba(40,50,90,0.3) 50%,
+      rgba(10,10,25,0.45) 100%);
   animation: darkParticles 5s linear infinite;
 }
 .card.electric .card-overlay{
@@ -368,8 +401,8 @@ background-position: 0 0, 10px 10px;
   background:
     repeating-radial-gradient(
       circle at center,
-      rgba(80,200,80,.4) 0px,
-      rgba(80,200,80,.4) 2px,
+      rgba(80,200,80,.5) 0px,
+      rgba(80,200,80,.5) 2px,
       transparent 4px
     ),
     radial-gradient(circle, rgba(50,200,50,.15), transparent);
@@ -663,7 +696,7 @@ async function getImage(name){
     let url=`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`;
     let res=await fetch(url);
     let data=await res.json();
-    return data.thumbnail ? data.thumbnail.source : "placeholder.jpg";
+    return data.thumbnail ? data.thumbnail.source : "";
   }catch{return "";}
 }
 
