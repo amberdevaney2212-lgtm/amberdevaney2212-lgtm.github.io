@@ -14,6 +14,41 @@
   margin:20px auto;
   box-shadow:0 6px 14px rgba(0,0,0,.2);
 }
+  .card.fire:hover{
+  box-shadow:0 10px 25px rgba(255,120,50,0.7);
+}
+
+.card.water:hover{
+  box-shadow:0 10px 25px rgba(80,170,255,0.7);
+}
+
+.card.grass:hover{
+  box-shadow:0 10px 25px rgba(80,200,120,0.7);
+}
+
+.card.electric:hover{
+  box-shadow:0 10px 25px rgba(255,230,80,0.7);
+}
+
+.card.ice:hover{
+  box-shadow:0 10px 25px rgba(170,240,255,0.7);
+}
+
+.card.dark:hover{
+  box-shadow:0 10px 25px rgba(120,120,120,0.7);
+}
+
+.card.poison:hover{
+  box-shadow:0 10px 25px rgba(180,80,200,0.7);
+}
+
+.card.bug:hover{
+  box-shadow:0 10px 25px rgba(150,200,80,0.7);
+}
+
+.card.flying:hover{
+  box-shadow:0 10px 25px rgba(180,220,255,0.7);
+}
 .page {
   display: none;
 }
@@ -21,7 +56,20 @@
 .page.active {
   display: block;
 }
+.card{
+  width:220px;
+  height:340px;
+  border-radius:12px;
+  position:relative;
 
+  transition:transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* hover lift */
+.card:hover{
+  transform:translateY(-8px) scale(1.03);
+  box-shadow:0 10px 25px rgba(0,0,0,0.35);
+}
   #collection {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* card width */
