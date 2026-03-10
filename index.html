@@ -736,17 +736,17 @@ function logAnimal(){
   recordedAt: new Date().toISOString()
 });
 
-  localStorage.setItem("wilddex_logged", JSON.stringify(logged));
+localStorage.setItem("wilddex_logged", JSON.stringify(logged));
+
+renderCollection();
+updateBadges();
 
   message.textContent="New animal logged!";
   message.style.color="green";
 
   document.getElementById("animalInput").value="";
   document.getElementById("animalInput").focus();
-  document.getElementById("modalDate").textContent =
-a.recordedAt
-  ? "Recorded: " + new Date(a.recordedAt).toLocaleString()
-  : "Recorded: Unknown";
+
 
   renderCollection();
   updateBadges();
