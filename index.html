@@ -684,15 +684,17 @@ onkeydown="if(event.key==='Enter') logAnimal()">
       <option value="bug">Bug</option>
       <option value="electric">Electric</option>
     </select>
-    <select id="filterHabitat">
+<select id="filterHabitat" onchange="renderCollection()">
 <option value="all">All Habitats</option>
 <option value="forest">Forest</option>
+<option value="grassland">Grassland</option>
 <option value="desert">Desert</option>
 <option value="ocean">Ocean</option>
-<option value="grassland">Grassland</option>
+<option value="freshwater">Freshwater</option>
 <option value="wetland">Wetland</option>
 <option value="mountain">Mountain</option>
 <option value="polar">Polar</option>
+<option value="rainforest">Rainforest</option>
 </select>
   </div>
   <div id="collection" class="grid"></div>
