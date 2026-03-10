@@ -21,6 +21,14 @@
 .page.active {
   display: block;
 }
+
+  #collection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* card width */
+  gap: 20px; /* spacing between cards */
+  justify-items: center; /* center cards in each column */
+  padding: 10px;
+}
 /* Input styling */
 #animalInput{
   width:80%;
