@@ -14,7 +14,30 @@
   margin:20px auto;
   box-shadow:0 6px 14px rgba(0,0,0,.2);
 }
+.discover-popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(.8);
+  background:white;
+  padding:20px 30px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+  font-size:22px;
+  font-weight:bold;
+  opacity:0;
+  pointer-events:none;
+}
 
+.discover-popup.show{
+  animation:discoverPop 1.4s ease forwards;
+}
+
+@keyframes discoverPop{
+  0%{opacity:0;transform:translate(-50%,-60%) scale(.7);}
+  40%{opacity:1;transform:translate(-50%,-50%) scale(1.1);}
+  100%{opacity:0;transform:translate(-50%,-45%) scale(1);}
+}
 /* Input styling */
 #animalInput{
   width:80%;
@@ -593,6 +616,9 @@ background-position: 0 0, 10px 10px;
 } 
 </style>
 </head>
+<div id="discoverPopup" class="discover-popup">
+  <h2 id="discoverName"></h2>
+</div>
 <body>
 <div id="animalModal" class="modal" onclick="closeModal(event)">
   <div class="modal-content">
@@ -849,6 +875,16 @@ document.body.classList.add("discoveryFlash");
 setTimeout(()=>{
 document.body.classList.remove("discoveryFlash");
 },500);
+  const popup=document.getElementById("discoverPopup");
+
+document.getElementById("discoverName").textContent =
+"🌿 New Species Logged: " + animal.name;
+
+popup.classList.add("show");
+
+setTimeout(()=>{
+popup.classList.remove("show");
+},1400);
 
   renderCollection();
   updateBadges();
