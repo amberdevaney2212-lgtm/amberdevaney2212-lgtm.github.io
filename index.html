@@ -693,9 +693,9 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 </div>
 
 <script>
-const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"❄️", flying:"🕊️", dark:"🌑", poison:"☣️", bug:"🐛",electric:"⚡"};
-  const habitatIcons = {forest:"🌲",grassland:"🌾",mountain:"⛰️",river:"🏞️",coastal:"🌊",urban:"🏙️",wetland:"🦆"};
-const continentIcons={Africa:"🌍", Europe:"🌍", Asia:"🌏", NorthAmerica:"🌎", SouthAmerica:"🌎", Australia:"🦘", Antarctica:"🧊"};
+const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"🕊️", dark:"🌑", poison:"☣️", bug:"🐛",electric:"⚡"};
+  const habitatIcons = {forest:"🌲",grassland:"🌾",mountain:"⛰️",freshwater:"🏞️",ocean:"🌊",urban:"🏙️",wetland:"🪷",desert: “🏜️”, polar: "❄️",rainforest: "🌴"};
+const continentIcons={Africa:"🌍", Europe:"🌍", Asia:"🌏", NorthAmerica:"🌎", SouthAmerica:"🌎", Oceania:"🦘", Antarctica:"🐧"};
 
 const animals=[
   {name:"African Lion",scientific:"Panthera leo",type:"fire",continent:"Africa",rarity:"rare",atk:80,def:70,move:"Flame Pounce"},
@@ -709,7 +709,7 @@ const animals=[
 
 {name:"Red Fox",scientific:"Vulpes vulpes",type:"fire",continent:"Europe",habitat:"forest",rarity:"common",atk:50,def:40,move:"Blaze Dash"},
 
-{name:"Snowy Owl",scientific:"Bubo scandiacus",type:"ice",type2:"flying",continent:"NorthAmerica",rarity:"uncommon",atk:55,def:45,move:"Frost Glide"},
+{name:"Snowy Owl",scientific:"Bubo scandiacus",type:"ice",type2:"flying",habitat:"forest",continent:"NorthAmerica",rarity:"uncommon",atk:55,def:45,move:"Frost Glide"},
 
 {name:"Praying Mantis",scientific:"Mantodea",type:"bug",continent:"Asia",rarity:"common",atk:45,def:35,move:"Blade Strike"},
 
@@ -720,7 +720,7 @@ const animals=[
 {name:"Honey Bee",scientific:"Apis mellifera",type:"bug",type2:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Sting Swarm"},
   {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll"},
 
-{name:"Red Deer",scientific:"Cervus elaphus",type:"grass",continent:"Europe",rarity:"common",atk:60,def:55,move:"Antler Charge"},
+{name:"Red Deer",scientific:"Cervus elaphus",type:"grass",continent:"Europe",habitat:"forest",rarity:"common",atk:60,def:55,move:"Antler Charge"},
 
 {name:"European Badger",scientific:"Meles meles",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Burrow Strike"},
 
@@ -730,7 +730,7 @@ const animals=[
 
 {name:"Wild Boar",scientific:"Sus scrofa",type:"dark",continent:"Europe",rarity:"uncommon",atk:70,def:65,move:"Tusk Rush"},
 
-{name:"European Otter",scientific:"Lutra lutra",type:"water",continent:"Europe",rarity:"uncommon",atk:55,def:50,move:"River Dash"},
+{name:"European Otter",scientific:"Lutra lutra",type:"water",continent:"Europe",habitat:"freshwater",rarity:"uncommon",atk:55,def:50,move:"River Dash"},
 
 {name:"Common Frog",scientific:"Rana temporaria",type:"water",continent:"Europe",rarity:"common",atk:30,def:25,move:"Leap Splash"},
 
@@ -751,9 +751,9 @@ const animals=[
 
 {name:"Mountain Hare",scientific:"Lepus timidus",type:"ice",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Snow Dash"},
 
-{name:"Grey Seal",scientific:"Halichoerus grypus",type:"water",continent:"Europe",rarity:"uncommon",atk:60,def:65,move:"Wave Slam"},
+{name:"Grey Seal",scientific:"Halichoerus grypus",type:"water",continent:"Europe",habitat:"ocean",rarity:"uncommon",atk:60,def:65,move:"Wave Slam"},
 
-{name:"Harbour Seal",scientific:"Phoca vitulina",type:"water",continent:"Europe",rarity:"common",atk:55,def:55,move:"Tidal Roll"},
+{name:"Harbour Seal",scientific:"Phoca vitulina",type:"water",continent:"Europe",habitat:"ocean",rarity:"common",atk:55,def:55,move:"Tidal Roll"},
 
 {name:"Atlantic Puffin",scientific:"Fratercula arctica",type:"flying",continent:"Europe",rarity:"uncommon",atk:40,def:35,move:"Dive Peck"},
 
