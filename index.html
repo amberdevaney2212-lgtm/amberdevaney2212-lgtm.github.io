@@ -201,21 +201,46 @@ select:focus,
   box-shadow: 0 0 12px rgba(0, 191, 255, 0.8);
   border-color: #00bfff;
 }
-.tab{
-  padding:8px 14px;
-  border-radius:10px;
-  background:#ddd;
-  cursor:pointer;
+/* Tabs container */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
 }
-.tab.active{background:#bbb;}
-.page{display:none;}
-.page.active{display:block;}
-.grid{
-  display:flex;
-  flex-wrap:wrap;
-  gap:15px;
-  justify-content:center;
-  padding:20px;
+
+/* Individual tab buttons */
+.tab {
+  padding: 10px 18px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #f0f8ff, #b0e0e6); /* soft Pokémon-style blue */
+  border: 2px solid #87cefa;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  box-shadow: 0 4px 10px rgba(135, 206, 250, 0.4);
+}
+
+/* Active tab */
+.tab.active {
+  background: linear-gradient(145deg, #ffe680, #ffcc33); /* bright golden highlight */
+  border-color: #ffcc33;
+  color: #222;
+  box-shadow: 0 6px 12px rgba(255, 204, 51, 0.6);
+}
+
+/* Hover effects for tabs */
+.tab:hover:not(.active) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(135, 206, 250, 0.6);
+  background: linear-gradient(145deg, #e0f7ff, #c0e7ff);
+}
+
+/* Focus outline (for accessibility) */
+.tab:focus {
+  outline: 3px solid #00bfff;
+  outline-offset: 2px;
 }
 .card{
   width:220px;
