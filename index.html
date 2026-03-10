@@ -939,6 +939,7 @@ card.onclick=()=>openAnimal(a,img);
   <span>${typeIcons[a.type]}${a.type2 ? ` ${typeIcons[a.type2]}` : ""}</span>
   ${a.habitat ? `<span class="habitat-badge">${habitatIcons[a.habitat]} ${a.habitat}</span>` : ""}
   <span>${continentIcons[a.continent]}</span>
+  <span class="rarity ${a.rarity}">${a.rarity}</span>
 </div>
       </div>
     `;
@@ -963,7 +964,12 @@ function updateBadges() {
     b.title = title;
     badgeArea.appendChild(b);
   };
-
+  
+.rarity.common{color:#777;}
+.rarity.uncommon{color:#2ecc71;}
+.rarity.rare{color:#3498db;}
+.rarity.epic{color:#9b59b6;}
+.rarity.legendary{color:#f1c40f;}
   // Continent Badges
   if (continents.length >= 5) createBadge("🌏 World Explorer", "Collected animals from 5+ continents!", "badge-world");
   else if (continents.length >= 3) createBadge("🌍 Explorer Badge", `Collected animals from 3+ continents. ${5 - continents.length} more to World Explorer!`, "badge-world");
