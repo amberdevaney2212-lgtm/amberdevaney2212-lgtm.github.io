@@ -14,6 +14,13 @@
   margin:20px auto;
   box-shadow:0 6px 14px rgba(0,0,0,.2);
 }
+
+  .rarity{
+position:absolute;
+top:8px;
+right:10px;
+font-size:16px;
+}
   body.fireTheme{
 background:linear-gradient(180deg,#ffb199,#ff6a3d);
 }
@@ -1105,7 +1112,13 @@ document.body.classList.remove("discoveryFlash");
   renderCollection();
   updateBadges();
 }
-
+let stars = {
+common:"⭐",
+rare:"⭐⭐",
+epic:"⭐⭐⭐",
+legendary:"⭐⭐⭐⭐"
+}[a.rarity] || "⭐";
+  
 async function getImage(name){
   try{
     let url=`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`;
@@ -1145,6 +1158,7 @@ card.onclick=()=>openAnimal(a,img);
     card.className=`card ${a.type} ${a.rarity}`;
     if(a.type2) card.dataset.type2=a.type2;
     card.innerHTML=`
+      <div class="rarity">${stars}</div>
       <div class="card-header">
         <span>${a.name}</span>
         <span>HP ${a.atk+a.def}</span>
