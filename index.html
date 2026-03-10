@@ -762,11 +762,22 @@ async function getImage(name){
 }
 
 async function renderCollection(){
-  let area=document.getElementById("collection");
-  area.innerHTML="";
-  let search=document.getElementById("searchBox").value.toLowerCase();
-  let filter=document.getElementById("filterElement").value;
-  for(let a of logged){
+
+  const area = document.getElementById("collection");
+
+  // Clear grid immediately
+  area.innerHTML = "";
+
+  const search = document.getElementById("searchBox").value.toLowerCase();
+  const filter = document.getElementById("filterElement").value;
+
+  const animalsToShow = logged.filter(a => {
+    if (search && !a.name.toLowerCase().includes(search)) return false;
+    if (filter !== "all" && a.type !== filter) return false;
+    return true;
+  });
+
+  for (let a of animalsToShow) {
     if(search && !a.name.toLowerCase().includes(search)) continue;
     if(filter!="all" && a.type!=filter) continue;
     let img=await getImage(a.name);
