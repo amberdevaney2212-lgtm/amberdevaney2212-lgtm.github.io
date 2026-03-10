@@ -116,6 +116,15 @@ body{
   50%{background-position:100% 50%;}
   100%{background-position:0% 50%;}
 }
+.discoveryFlash{
+  animation:flashGlow .5s ease;
+}
+
+@keyframes flashGlow{
+  0%{filter:brightness(1);}
+  50%{filter:brightness(1.5);}
+  100%{filter:brightness(1);}
+}
 h1{margin-top:15px;}
 .tabs{
   display:flex;
@@ -830,12 +839,16 @@ localStorage.setItem("wilddex_logged", JSON.stringify(logged));
 
 message.textContent="🐾 Animal Discovered!";
 message.classList.add("foundAnim");
-
+message.style.color="green";
 setTimeout(()=>message.classList.remove("foundAnim"),800);
 
   document.getElementById("animalInput").value="";
   document.getElementById("animalInput").focus();
+document.body.classList.add("discoveryFlash");
 
+setTimeout(()=>{
+document.body.classList.remove("discoveryFlash");
+},500);
 
   renderCollection();
   updateBadges();
