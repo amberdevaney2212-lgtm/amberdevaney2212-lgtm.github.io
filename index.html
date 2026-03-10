@@ -684,6 +684,16 @@ onkeydown="if(event.key==='Enter') logAnimal()">
       <option value="bug">Bug</option>
       <option value="electric">Electric</option>
     </select>
+    <select id="filterHabitat">
+<option value="all">All Habitats</option>
+<option value="forest">Forest</option>
+<option value="desert">Desert</option>
+<option value="ocean">Ocean</option>
+<option value="grassland">Grassland</option>
+<option value="wetland">Wetland</option>
+<option value="mountain">Mountain</option>
+<option value="polar">Polar</option>
+</select>
   </div>
   <div id="collection" class="grid"></div>
 </div>
@@ -904,7 +914,7 @@ async function renderCollection(){
 
   const search = document.getElementById("searchBox").value.toLowerCase();
   const filter = document.getElementById("filterElement").value;
-
+let habitat = document.getElementById("filterHabitat").value;
   const animalsToShow = logged.filter(a => {
     if (search && !a.name.toLowerCase().includes(search)) return false;
     if (filter !== "all" && a.type !== filter) return false;
@@ -914,6 +924,7 @@ async function renderCollection(){
   for (let a of animalsToShow) {
     if(search && !a.name.toLowerCase().includes(search)) continue;
     if(filter!="all" && a.type!=filter) continue;
+    if(habitat !== "all" && a.habitat !== habitat) continue;
     let img=await getImage(a.name);
     let card=document.createElement("div");
 card.onclick=()=>openAnimal(a,img);
@@ -939,7 +950,6 @@ card.onclick=()=>openAnimal(a,img);
   <span>${typeIcons[a.type]}${a.type2 ? ` ${typeIcons[a.type2]}` : ""}</span>
   ${a.habitat ? `<span class="habitat-badge">${habitatIcons[a.habitat]} ${a.habitat}</span>` : ""}
   <span>${continentIcons[a.continent]}</span>
-  <span class="rarity ${a.rarity}">${a.rarity}</span>
 </div>
       </div>
     `;
@@ -964,12 +974,7 @@ function updateBadges() {
     b.title = title;
     badgeArea.appendChild(b);
   };
-  
-.rarity.common{color:#777;}
-.rarity.uncommon{color:#2ecc71;}
-.rarity.rare{color:#3498db;}
-.rarity.epic{color:#9b59b6;}
-.rarity.legendary{color:#f1c40f;}
+
   // Continent Badges
   if (continents.length >= 5) createBadge("🌏 World Explorer", "Collected animals from 5+ continents!", "badge-world");
   else if (continents.length >= 3) createBadge("🌍 Explorer Badge", `Collected animals from 3+ continents. ${5 - continents.length} more to World Explorer!`, "badge-world");
