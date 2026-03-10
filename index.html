@@ -14,7 +14,13 @@
   margin:20px auto;
   box-shadow:0 6px 14px rgba(0,0,0,.2);
 }
+.page {
+  display: none;
+}
 
+.page.active {
+  display: block;
+}
 /* Input styling */
 #animalInput{
   width:80%;
@@ -1127,9 +1133,21 @@ function releaseAnimal(){
   renderCollection();
   updateBadges();
 }
+  function openPage(id) {
+  // Hide all pages
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+
+  // Show only the selected page
+  document.getElementById(id).classList.add("active");
+
+  // Update tab highlight
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  event.currentTarget.classList.add("active");
+}
 /* ADD THIS AT THE END */
 renderCollection();
 updateBadges();
+  
 </script>
 </body>
 </html>
