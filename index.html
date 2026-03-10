@@ -914,10 +914,11 @@ async function renderCollection(){
 
   const search = document.getElementById("searchBox").value.toLowerCase();
   const filter = document.getElementById("filterElement").value;
-let habitat = document.getElementById("filterHabitat").value;
+const habitat = document.getElementById("filterHabitat").value;
   const animalsToShow = logged.filter(a => {
     if (search && !a.name.toLowerCase().includes(search)) return false;
     if (filter !== "all" && a.type !== filter) return false;
+    if (habitat !== "all" && a.habitat !== habitat) return false;
     return true;
   });
 
