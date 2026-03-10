@@ -671,30 +671,34 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 
 <div id="catches" class="page">
   <div class="controls">
-    <input id="searchBox" placeholder="Search animals" oninput="renderCollection()">
-    <select id="filterElement" onchange="renderCollection()">
-      <option value="all">All Elements</option>
-      <option value="fire">Fire</option>
-      <option value="water">Water</option>
-      <option value="grass">Grass</option>
-      <option value="ice">Ice</option>
-      <option value="flying">Flying</option>
-      <option value="dark">Dark</option>
-      <option value="poison">Poison</option>
-      <option value="bug">Bug</option>
-      <option value="electric">Electric</option>
-    </select>
+  <div class="filter-bar">
+
+<input id="searchBox" placeholder="🔍 Search animals" oninput="renderCollection()">
+
+<select id="filterElement" onchange="renderCollection()">
+<option value="all">🔥 All Elements</option>
+<option value="fire">🔥 Fire</option>
+<option value="water">💧 Water</option>
+<option value="grass">🌿 Grass</option>
+<option value="ice">🧊 Ice</option>
+<option value="flying">🕊️ Flying</option>
+<option value="dark">🌑 Dark</option>
+<option value="poison">☣️ Poison</option>
+<option value="bug">🐛 Bug</option>
+<option value="electric">⚡ Electric</option>
+</select>
+
 <select id="filterHabitat" onchange="renderCollection()">
-<option value="all">All Habitats</option>
-<option value="forest">Forest</option>
-<option value="grassland">Grassland</option>
-<option value="desert">Desert</option>
-<option value="ocean">Ocean</option>
-<option value="freshwater">Freshwater</option>
-<option value="wetland">Wetland</option>
-<option value="mountain">Mountain</option>
-<option value="polar">Polar</option>
-<option value="rainforest">Rainforest</option>
+<option value="all">🌍 All Habitats</option>
+<option value="forest">🌲 Forest</option>
+<option value="grassland">🌾 Grassland</option>
+<option value="desert">🏜️ Desert</option>
+<option value="ocean">🌊 Ocean</option>
+<option value="freshwater">🏞️ Freshwater</option>
+<option value="wetland">🪷 Wetland</option>
+<option value="mountain">⛰️ Mountain</option>
+<option value="polar">❄️ Polar</option>
+<option value="rainforest">🌴 Rainforest</option>
 </select>
   </div>
   <div id="collection" class="grid"></div>
