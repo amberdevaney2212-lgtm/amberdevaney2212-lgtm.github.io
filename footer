@@ -211,11 +211,20 @@ h1{margin-top:15px;}
   margin-top:6px;
   font-size:14px;
 }
-.footer{
-  display:flex;
-  justify-content:space-between;
-  margin-top:6px;
-  font-size:18px;
+.card .footer {
+  display: flex;
+  justify-content: space-between; /* spreads items evenly across the width */
+  align-items: center;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+/* Make type and habitat badges look consistent */
+.card .footer span,
+.card .footer .habitat-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* small space between emoji and text */
 }
 .card-overlay{
   position:absolute;
