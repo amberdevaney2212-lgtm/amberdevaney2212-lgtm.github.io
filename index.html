@@ -840,7 +840,6 @@ background-position: 0 0, 10px 10px;
     <p id="modalContinent"></p>
     <p id="modalHabitat"></p>
     <p id="modalDate"></p>
-    <p id="xpDisplay"></p>
     <button onclick="releaseAnimal()" style="margin-top:10px;padding:8px 14px;border-radius:8px;border:none;background:#ff6b6b;color:white;cursor:pointer;">
 Release
 </button>
@@ -853,6 +852,7 @@ Release
   <div class="tab active" onclick="openPage('log')">📘 Log</div>
   <div class="tab" onclick="openPage('catches')">🐾 Catches</div>
   <div class="tab" onclick="openPage('badges')">🏅 Badges</div>
+  <div class="tab" onclick="openPage('stats')">📊 Stats</div>
 </div>
 
 <div id="log" class="page active">
@@ -877,6 +877,7 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 </div>
 
 <p id="progressText"></p>
+  <p id="xpDisplay"></p>
 
 </div>
 
@@ -920,6 +921,16 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <div id="badges" class="page">
   <div id="badgeArea"></div>
 </div>
+ <div id="stats" class="page">
+
+<h2>📊 WildDex Statistics</h2>
+
+<p id="statTotal"></p>
+<p id="statRare"></p>
+<p id="statHabitats"></p>
+<p id="statContinents"></p>
+
+</div> 
 
 <script>
 const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"🕊️", dark:"🌑", poison:"☣️", bug:"🐛",electric:"⚡"};
@@ -1074,16 +1085,6 @@ animals.forEach(a=>{let o=document.createElement("option");o.value=a.name;datali
 let logged = JSON.parse(localStorage.getItem("wilddex_logged")) || [];
 let xp = Number(localStorage.getItem("wilddex_xp")) || 0;
 let level = Math.floor(xp / 50);
-function logAnimal(){
-  let name = document.getElementById("animalInput").value.trim();
-  let animal = animals.find(a => a.name === name);
-  let message = document.getElementById("logMessage");
-
-  if(!animal){
-    message.textContent="Animal not found.";
-    message.style.color="red";
-    return;
-  }
 function addXP(rarity){
 
   const xpTable = {
@@ -1098,12 +1099,6 @@ function addXP(rarity){
 
   updateXPDisplay();
 }
-  // check using the animal's official name
-  if(logged.some(a => a.name === animal.name)){
-    message.textContent="You've already logged this animal.";
-    message.style.color="orange";
-    return;
-  }
 function updateXPDisplay(){
 
   let level = Math.floor(xp / 50);
@@ -1113,6 +1108,24 @@ function updateXPDisplay(){
     "Level "+level+" Researcher • XP "+xp+" / "+nextLevel;
 
 }
+function logAnimal(){
+  let name = document.getElementById("animalInput").value.trim();
+  let animal = animals.find(a => a.name === name);
+  let message = document.getElementById("logMessage");
+
+  if(!animal){
+    message.textContent="Animal not found.";
+    message.style.color="red";
+    return;
+  }
+
+  // check using the animal's official name
+  if(logged.some(a => a.name === animal.name)){
+    message.textContent="You've already logged this animal.";
+    message.style.color="orange";
+    return;
+  }
+
   logged.push({
   ...animal,
   recordedAt: new Date().toISOString()
@@ -1138,6 +1151,28 @@ document.body.classList.remove("discoveryFlash");
   updateBadges();
 }
 ;
+function updateStats(){
+
+  const habitats = [...new Set(logged.map(a=>a.habitat).filter(Boolean))];
+  const continents = [...new Set(logged.map(a=>a.continent))];
+
+  const rareCount = logged.filter(a =>
+    a.rarity==="rare" || a.rarity==="legendary"
+  ).length;
+
+  document.getElementById("statTotal").textContent =
+    "Animals Logged: "+logged.length;
+
+  document.getElementById("statRare").textContent =
+    "Rare Animals: "+rareCount;
+
+  document.getElementById("statHabitats").textContent =
+    "Habitats Explored: "+habitats.length;
+
+  document.getElementById("statContinents").textContent =
+    "Continents Explored: "+continents.length;
+
+}
 const imageCache = {};  
 async function getImage(name){
   if(imageCache[name]) return imageCache[name];
@@ -1297,22 +1332,14 @@ function releaseAnimal(){
   closeModal();
   renderCollection();
   updateBadges();
+  updateStats(); 
 }
-  function openPage(id) {
-  // Hide all pages
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
 
-  // Show only the selected page
-  document.getElementById(id).classList.add("active");
-
-  // Update tab highlight
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  event.currentTarget.classList.add("active");
-}
 /* ADD THIS AT THE END */
 renderCollection();
 updateBadges();
-updateXPDisplay(); 
+updateStats();
+updateXPDisplay();
 </script>
 </body>
 </html>
