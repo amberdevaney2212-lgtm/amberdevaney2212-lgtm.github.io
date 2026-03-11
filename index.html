@@ -10,6 +10,14 @@ h1 {
   font-size: 32px; /* adjust as needed */
   margin-top: 15px;
 }
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 22%, 24%, 55% { opacity: 0.7; }
+}
+
+h1 {
+  animation: flicker 1.5s infinite;
+}
 /* Log panel styling */
 .log-panel{
   background:linear-gradient(135deg,#d8ffe8,#b9f6d3);
