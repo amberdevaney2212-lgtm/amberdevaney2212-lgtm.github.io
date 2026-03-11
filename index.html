@@ -14,6 +14,31 @@
   margin:20px auto;
   box-shadow:0 6px 14px rgba(0,0,0,.2);
 }
+#explorerMap{
+position:relative;
+max-width:700px;
+margin:auto;
+}
+
+#worldMap{
+width:100%;
+border-radius:10px;
+}
+
+.mapPoint{
+position:absolute;
+width:18px;
+height:18px;
+background:#ffcc00;
+border-radius:50%;
+box-shadow:0 0 10px #ffcc00;
+transform:translate(-50%,-50%);
+}
+
+.mapPoint.locked{
+background:#555;
+box-shadow:none;
+}
 .continent-map{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -960,14 +985,18 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 
 <h3>🌍 Explorer Map</h3>
 
-<div id="continentMap" class="continent-map">
-  <div class="continent" id="cont-africa">Africa</div>
-  <div class="continent" id="cont-asia">Asia</div>
-  <div class="continent" id="cont-europe">Europe</div>
-  <div class="continent" id="cont-northamerica">North America</div>
-  <div class="continent" id="cont-southamerica">South America</div>
-  <div class="continent" id="cont-oceania">Oceania</div>
-  <div class="continent" id="cont-antarctica">Antarctica</div>
+<div id="explorerMap">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" id="worldMap">
+
+<div class="mapPoint" style="top:40%; left:50%;" id="Africa"></div>
+<div class="mapPoint" style="top:25%; left:20%;" id="NorthAmerica"></div>
+<div class="mapPoint" style="top:65%; left:30%;" id="SouthAmerica"></div>
+<div class="mapPoint" style="top:30%; left:55%;" id="Europe"></div>
+<div class="mapPoint" style="top:40%; left:65%;" id="Asia"></div>
+<div class="mapPoint" style="top:75%; left:80%;" id="Oceania"></div>
+<div class="mapPoint" style="top:90%; left:50%;" id="Antarctica"></div>
+
 </div>
 
 </div> 
@@ -1146,6 +1175,19 @@ function updateXPDisplay(){
   document.getElementById("xpDisplay").textContent =
     "Level "+level+" Researcher • XP "+xp+" / "+nextLevel;
 
+}
+  function updateMap(){
+const unlocked = new Set(logged.map(a=>a.continent));
+
+document.querySelectorAll(".mapPoint").forEach(p=>{
+const name = p.id;
+
+if(unlocked.has(name)){
+p.classList.remove("locked");
+}else{
+p.classList.add("locked");
+}
+});
 }
 function logAnimal(){
   let name = document.getElementById("animalInput").value.trim();
@@ -1381,7 +1423,8 @@ function releaseAnimal(){
   closeModal();
   renderCollection();
   updateBadges();
-  updateStats(); 
+  updateStats();
+  updateMap();
 }
 
 /* ADD THIS AT THE END */
@@ -1389,6 +1432,7 @@ renderCollection();
 updateBadges();
 updateStats();
 updateXPDisplay();
+updateMap();
 </script>
 </body>
 </html>
