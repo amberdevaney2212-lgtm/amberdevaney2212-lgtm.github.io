@@ -14,7 +14,28 @@
   margin:20px auto;
   box-shadow:0 6px 14px rgba(0,0,0,.2);
 }
+.continent-map{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:15px;
+}
 
+.continent{
+padding:12px;
+border-radius:10px;
+background:#ddd;
+text-align:center;
+font-weight:bold;
+opacity:0.4;
+transition:0.3s;
+}
+
+.continent.discovered{
+background:#4caf50;
+color:white;
+opacity:1;
+}
 .rarity{
   position:absolute;
   top:6px;
@@ -932,6 +953,19 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <p id="statRare"></p>
 <p id="statHabitats"></p>
 <p id="statContinents"></p>
+
+<h3>🌍 Explorer Map</h3>
+
+<div id="continentMap" class="continent-map">
+  <div class="continent" id="cont-africa">Africa</div>
+  <div class="continent" id="cont-asia">Asia</div>
+  <div class="continent" id="cont-europe">Europe</div>
+  <div class="continent" id="cont-northamerica">North America</div>
+  <div class="continent" id="cont-southamerica">South America</div>
+  <div class="continent" id="cont-oceania">Oceania</div>
+  <div class="continent" id="cont-antarctica">Antarctica</div>
+</div>
+
 </div> 
 <script>
 const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"🕊️", dark:"🌑", poison:"☣️", bug:"🐛",electric:"⚡"};
@@ -1154,24 +1188,39 @@ document.body.classList.remove("discoveryFlash");
 ;
 function updateStats(){
 
-  const habitats = [...new Set(logged.map(a=>a.habitat).filter(Boolean))];
-  const continents = [...new Set(logged.map(a=>a.continent))];
+const habitats = [...new Set(logged.map(a=>a.habitat).filter(Boolean))];
+const continents = [...new Set(logged.map(a=>a.continent))];
 
-  const rareCount = logged.filter(a =>
-    a.rarity==="rare" || a.rarity==="legendary"
-  ).length;
+const rareCount = logged.filter(a =>
+a.rarity==="rare" || a.rarity==="legendary"
+).length;
 
-  document.getElementById("statTotal").textContent =
-    "Animals Logged: "+logged.length;
+document.getElementById("statTotal").textContent =
+"🐾 Animals Logged: "+logged.length;
 
-  document.getElementById("statRare").textContent =
-    "Rare Animals: "+rareCount;
+document.getElementById("statRare").textContent =
+"💎 Rare Animals: "+rareCount;
 
-  document.getElementById("statHabitats").textContent =
-    "Habitats Explored: "+habitats.length;
+document.getElementById("statHabitats").textContent =
+"🌿 Habitats Explored: "+habitats.length;
 
-  document.getElementById("statContinents").textContent =
-    "Continents Explored: "+continents.length;
+document.getElementById("statContinents").textContent =
+"🌍 Continents Explored: "+continents.length;
+
+
+/* explorer map */
+
+document.querySelectorAll(".continent").forEach(c=>{
+c.classList.remove("discovered");
+});
+
+continents.forEach(c=>{
+let id="cont-"+c.replace(/\s/g,"").toLowerCase();
+let el=document.getElementById(id);
+if(el) el.classList.add("discovered");
+});
+
+}
 
 }
 const imageCache = {};  
