@@ -903,27 +903,29 @@ Release
 <div id="log" class="page active">
 
 <div class="log-panel">
+  <h2>🔎 Wildlife Scanner</h2>
 
-<h2>🔎 Wildlife Scanner</h2>
+  <!-- Input field for animal logging -->
+  <input 
+    id="animalInput" 
+    list="animals" 
+    placeholder="Log animal"
+    onkeydown="if(event.key==='Enter') logAnimal()"
+  >
 
-<input id="animalInput" list="animals" placeholder="Log animal"
-onkeydown="if(event.key==='Enter') logAnimal()">
+  <datalist id="animals"></datalist>
 
-<datalist id="animals"></datalist>
+  <br><br>
+  <button class="log-btn" onclick="logAnimal()">Log Animal</button>
 
-<br><br>
+  <p id="logMessage" style="height:20px;font-weight:bold;"></p>
 
-<button class="log-btn" onclick="logAnimal()">Log Animal</button>
+  <div class="progress-bar">
+    <div id="progressFill"></div>
+  </div>
 
-<p id="logMessage" style="height:20px;font-weight:bold;"></p>
-
-<div class="progress-bar">
-  <div id="progressFill"></div>
-</div>
-
-<p id="progressText"></p>
+  <p id="progressText"></p>
   <p id="xpDisplay"></p>
-
 </div>
 
 </div>
@@ -1139,12 +1141,11 @@ const animals=[
 
 
 ];
-
 const datalist = document.getElementById("animals");
 animals.forEach(animal => {
     const option = document.createElement("option");
-    option.value = animal.name;;
-      datalist.appendChild(option);
+    option.value = animal.name;      // Set the option text/value
+    datalist.appendChild(option);    // Add it to the datalist
 });
 
 let logged = JSON.parse(localStorage.getItem("wilddex_logged")) || [];
