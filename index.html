@@ -9,7 +9,7 @@ h1 {
   font-family: 'Press Start 2P', cursive; /* retro 8-bit font */
   font-size: 32px;                        /* adjust size as needed */
   text-transform: uppercase;              /* classic game style */
-  color: #004d33;                         /* dark green text */
+  color: #de81b9;                         /* dark green text */
   letter-spacing: 2px;                    /* slightly spaced letters */
 
   /* Pixelated blocky outline with multiple shadows */
@@ -1179,7 +1179,22 @@ function logAnimal(){
     message.style.color="red";
     return;
   }
+ // Mark as logged
+  animal.logged = true;
 
+  // Optional: show success message
+  message.textContent = `${animal.name} logged!`;
+  message.style.color = "green";
+
+  // Refresh the continent map
+  updateContinentMap();
+
+  // Optional: update other UI (progress bar, collection, etc.)
+  renderCollection();
+
+  // Clear input
+  document.getElementById('animalInput').value = '';
+}
   // check using the animal's official name
   if(logged.some(a => a.name === animal.name)){
     message.textContent="You've already logged this animal.";
@@ -1361,6 +1376,24 @@ function updateBadges() {
 
   // Legendary Hunter
   if (legendaryCount >= 1) createBadge("🌟 Legendary Hunter", `Caught ${legendaryCount} legendary animal(s)!`, "badge-legendary");
+}
+function updateContinentMap() {
+  // First, remove all previous "discovered" classes
+  document.querySelectorAll('.continent').forEach(div => div.classList.remove('discovered'));
+
+  // Get unique continents from recorded animals
+  const recordedContinents = [...new Set(animals.filter(a => a.logged).map(a => a.continent))];
+
+  // Add "discovered" class to each recorded continent
+  recordedContinents.forEach(continent => {
+    const continentId = 'cont-' + continent.toLowerCase().replace(/\s/g,'');
+    const el = document.getElementById(continentId);
+    if (el) el.classList.add('discovered');
+  });
+
+  // Optionally update a text summary
+  document.getElementById('statContinents').textContent =
+    `Continents recorded: ${recordedContinents.join(', ') || 'None'}`;
 }
 function openPage(e, id){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
