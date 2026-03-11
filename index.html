@@ -546,7 +546,7 @@ select:focus,
   animation: fireFlicker 2s ease-in-out infinite alternate;
 }
 /* Heat shimmer layer (pseudo-element) */
-.card.fire .card-overlay::nth-child(3){
+.card.fire .card-overlay::after{
   content:"";
   position:absolute;
   inset:-30%;
@@ -908,13 +908,8 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 
 
 <div id="catches" class="page">
-  <div class="controls">
-    <div class="filter-bar">
-      <!-- ... filters ... -->
-    </div>
-    <div id="collection" class="grid"></div>
-  </div>
-</div>
+
+<div class="filter-bar">
 
 <input id="searchBox" placeholder="🔍 Search animals" oninput="renderCollection()">
 
@@ -943,10 +938,11 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <option value="polar">❄️ Polar</option>
 <option value="rainforest">🌴 Rainforest</option>
 </select>
-  </div>
- <div id="collection" class="grid"></div>
+
 </div>
-</div>
+
+<div id="collection"></div>
+
 </div>
 
 <div id="badges" class="page">
