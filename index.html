@@ -1188,25 +1188,24 @@ document.body.classList.remove("discoveryFlash");
 ;
 function updateStats(){
 
-const habitats = [...new Set(logged.map(a=>a.habitat).filter(Boolean))];
-const continents = [...new Set(logged.map(a=>a.continent))];
+  const habitats = [...new Set(logged.map(a=>a.habitat).filter(Boolean))];
+  const continents = [...new Set(logged.map(a=>a.continent).filter(Boolean))];
 
-const rareCount = logged.filter(a =>
-a.rarity==="rare" || a.rarity==="legendary"
-).length;
+  const rareCount = logged.filter(a =>
+    a.rarity==="rare" || a.rarity==="legendary"
+  ).length;
 
-document.getElementById("statTotal").textContent =
-"🐾 Animals Logged: "+logged.length;
+  const totalEl = document.getElementById("statTotal");
+  const rareEl = document.getElementById("statRare");
+  const habitatEl = document.getElementById("statHabitats");
+  const continentEl = document.getElementById("statContinents");
 
-document.getElementById("statRare").textContent =
-"💎 Rare Animals: "+rareCount;
+  if(totalEl) totalEl.textContent = "🐾 Animals Logged: " + logged.length;
+  if(rareEl) rareEl.textContent = "💎 Rare Animals: " + rareCount;
+  if(habitatEl) habitatEl.textContent = "🌿 Habitats Explored: " + habitats.length;
+  if(continentEl) continentEl.textContent = "🌍 Continents Explored: " + continents.length;
 
-document.getElementById("statHabitats").textContent =
-"🌿 Habitats Explored: "+habitats.length;
-
-document.getElementById("statContinents").textContent =
-"🌍 Continents Explored: "+continents.length;
-
+}
 
 /* explorer map */
 
