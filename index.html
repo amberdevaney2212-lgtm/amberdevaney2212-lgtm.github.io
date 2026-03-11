@@ -847,43 +847,55 @@ background-position: 0 0, 10px 10px;
 } 
 /* WORLD MAP */
 
+/* WORLD MAP */
+
 #worldMap{
-  max-width:800px;
-  margin:20px auto;
+  width:900px;
+  margin:30px auto;
   position:relative;
 }
 
-#worldMap svg{
+#mapImage{
   width:100%;
+  display:block;
 }
 
-.map-continent{
-  fill:#cfcfcf;
-  stroke:#444;
-  stroke-width:2;
-  transition:0.4s;
+/* continent overlay layer */
+
+#continentLayer div{
+  position:absolute;
+  border-radius:30px;
+  transition:.4s;
+  background:rgba(0,200,100,.0);
 }
 
-/* discovered continent */
+/* continent positions */
+
+#map-northamerica{top:18%;left:6%;width:22%;height:22%;}
+#map-southamerica{top:42%;left:22%;width:12%;height:28%;}
+#map-europe{top:20%;left:46%;width:10%;height:10%;}
+#map-africa{top:30%;left:48%;width:12%;height:28%;}
+#map-asia{top:18%;left:56%;width:28%;height:22%;}
+#map-oceania{top:48%;left:78%;width:12%;height:14%;}
+#map-antarctica{top:78%;left:20%;width:60%;height:14%;}
+
+/* discovered continents */
+
 .map-continent.discovered{
-  fill:#4caf50;
-  filter:drop-shadow(0 0 6px rgba(0,255,120,0.6));
+  background:rgba(0,200,120,.35);
+  box-shadow:0 0 20px rgba(0,255,120,.7);
 }
 
 /* glow animation */
+
 .map-continent.glow{
-  animation:continentGlow 1.2s ease;
+  animation:mapGlow 1.3s ease;
 }
 
-@keyframes continentGlow{
-  0%{filter:drop-shadow(0 0 0px rgba(0,255,120,0))}
-  50%{filter:drop-shadow(0 0 18px rgba(0,255,120,1))}
-  100%{filter:drop-shadow(0 0 6px rgba(0,255,120,0.6))}
-}
-
-.map-continent:hover{
-  filter:brightness(1.2);
-  cursor:pointer;
+@keyframes mapGlow{
+  0%{box-shadow:0 0 0px rgba(0,255,120,0)}
+  50%{box-shadow:0 0 40px rgba(0,255,120,1)}
+  100%{box-shadow:0 0 20px rgba(0,255,120,.7)}
 }
 
 /* tooltip */
@@ -893,11 +905,10 @@ background-position: 0 0, 10px 10px;
   background:white;
   padding:8px 10px;
   border-radius:8px;
-  box-shadow:0 3px 10px rgba(0,0,0,.3);
   font-size:13px;
+  box-shadow:0 4px 10px rgba(0,0,0,.3);
   display:none;
   pointer-events:none;
-  max-width:180px;
 }
   
 </style>
@@ -1013,36 +1024,27 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <p id="statHabitats"></p>
 <p id="statContinents"></p>
 
+
 <h3>🌍 Explorer Map</h3>
 
 <div id="worldMap">
 
 <div id="mapTooltip"></div>
 
-<svg viewBox="0 0 1000 500">
+<img id="mapImage"
+src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
 
-<path id="map-northamerica" class="map-continent"
-d="M70 120 L200 80 L280 120 L260 200 L180 220 L90 170 Z"/>
+<div id="continentLayer">
 
-<path id="map-southamerica" class="map-continent"
-d="M260 240 L320 280 L300 360 L260 420 L220 340 Z"/>
+<div id="map-northamerica" class="map-continent"></div>
+<div id="map-southamerica" class="map-continent"></div>
+<div id="map-europe" class="map-continent"></div>
+<div id="map-africa" class="map-continent"></div>
+<div id="map-asia" class="map-continent"></div>
+<div id="map-oceania" class="map-continent"></div>
+<div id="map-antarctica" class="map-continent"></div>
 
-<path id="map-europe" class="map-continent"
-d="M460 110 L520 90 L560 120 L520 150 L470 140 Z"/>
-
-<path id="map-africa" class="map-continent"
-d="M520 160 L600 160 L640 260 L560 340 L500 260 Z"/>
-
-<path id="map-asia" class="map-continent"
-d="M600 90 L800 90 L860 150 L720 210 L600 160 Z"/>
-
-<path id="map-oceania" class="map-continent"
-d="M840 280 L900 300 L880 350 L820 330 Z"/>
-
-<path id="map-antarctica" class="map-continent"
-d="M300 430 L720 430 L660 470 L340 470 Z"/>
-
-</svg>
+</div>
 
 </div>
 
