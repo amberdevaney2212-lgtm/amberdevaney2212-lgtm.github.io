@@ -1,60 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">  
 <meta charset="UTF-8">
 <title>WildDex</title>
 
 <style>
-#gameTitle{
-font-family:'Press Start 2P', monospace;
-font-size:32px;
-color:#f0aad4;
-text-align:center;
-
-text-shadow:
-3px 3px 0 #003b2f,
-6px 6px 0 #001f18;
-
-letter-spacing:2px;
-}
 /* Log panel styling */
 .log-panel{
- body {
-  background: repeating-linear-gradient(
-    45deg,
-    #1a1a1a,
-    #1a1a1a 10px,
-    #0d0d0d 10px,
-    #0d0d0d 20px
-  );
-  color: #00ff9d; /* matches title for fun glow */
-  font-family: 'Press Start 2P', monospace;
-}
-#explorerMap{
-position:relative;
-max-width:700px;
-margin:auto;
-}
-
-#worldMap{
-width:100%;
-border-radius:10px;
-}
-
-.mapPoint{
-position:absolute;
-width:18px;
-height:18px;
-background:#ffcc00;
-border-radius:50%;
-box-shadow:0 0 10px #ffcc00;
-transform:translate(-50%,-50%);
-}
-
-.mapPoint.locked{
-background:#555;
-box-shadow:none;
+  background:linear-gradient(135deg,#d8ffe8,#b9f6d3);
+  padding:20px;
+  border-radius:16px;
+  width:320px;
+  margin:20px auto;
+  box-shadow:0 6px 14px rgba(0,0,0,.2);
 }
 .continent-map{
 display:grid;
@@ -891,7 +849,6 @@ background-position: 0 0, 10px 10px;
 </head>
 
 <body>
-  <h1 id="gameTitle">WildDex</h1>
 <div id="animalModal" class="modal" onclick="closeModal(event)">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">✖</span>
@@ -910,7 +867,8 @@ Release
   </div>
 </div>
 
-<h1 id="gameTitle">WildDex</h1>
+<h1>WildDex</h1>
+
 <div class="tabs">
 
 <div class="tab active" onclick="openPage(event,'log')">📘 Log</div>
@@ -1002,18 +960,14 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 
 <h3>🌍 Explorer Map</h3>
 
-<div id="explorerMap">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" id="worldMap">
-
-<div class="mapPoint" style="top:40%; left:50%;" id="Africa"></div>
-<div class="mapPoint" style="top:25%; left:20%;" id="NorthAmerica"></div>
-<div class="mapPoint" style="top:65%; left:30%;" id="SouthAmerica"></div>
-<div class="mapPoint" style="top:30%; left:55%;" id="Europe"></div>
-<div class="mapPoint" style="top:40%; left:65%;" id="Asia"></div>
-<div class="mapPoint" style="top:75%; left:80%;" id="Oceania"></div>
-<div class="mapPoint" style="top:90%; left:50%;" id="Antarctica"></div>
-
+<div id="continentMap" class="continent-map">
+  <div class="continent" id="cont-africa">Africa</div>
+  <div class="continent" id="cont-asia">Asia</div>
+  <div class="continent" id="cont-europe">Europe</div>
+  <div class="continent" id="cont-northamerica">North America</div>
+  <div class="continent" id="cont-southamerica">South America</div>
+  <div class="continent" id="cont-oceania">Oceania</div>
+  <div class="continent" id="cont-antarctica">Antarctica</div>
 </div>
 
 </div> 
@@ -1192,19 +1146,6 @@ function updateXPDisplay(){
   document.getElementById("xpDisplay").textContent =
     "Level "+level+" Researcher • XP "+xp+" / "+nextLevel;
 
-}
-  function updateMap(){
-const unlocked = new Set(logged.map(a=>a.continent));
-
-document.querySelectorAll(".mapPoint").forEach(p=>{
-const name = p.id;
-
-if(unlocked.has(name)){
-p.classList.remove("locked");
-}else{
-p.classList.add("locked");
-}
-});
 }
 function logAnimal(){
   let name = document.getElementById("animalInput").value.trim();
@@ -1440,8 +1381,7 @@ function releaseAnimal(){
   closeModal();
   renderCollection();
   updateBadges();
-  updateStats();
-  updateMap();
+  updateStats(); 
 }
 
 /* ADD THIS AT THE END */
@@ -1449,7 +1389,7 @@ renderCollection();
 updateBadges();
 updateStats();
 updateXPDisplay();
-updateMap();
 </script>
 </body>
 </html>
+
