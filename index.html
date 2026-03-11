@@ -3,8 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <title>WildDex</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
+h1 {
+  font-family: 'Press Start 2P', cursive; /* retro 8-bit font */
+  font-size: 32px;                        /* adjust size as needed */
+  text-transform: uppercase;              /* classic game style */
+  color: #de81b9;                         /* dark green text */
+  letter-spacing: 2px;                    /* slightly spaced letters */
+
+  /* Pixelated blocky outline with multiple shadows */
+  text-shadow:
+    1px 1px 0 #000,
+    2px 2px 0 #000,
+    3px 3px 0 #000;
+
+  /* Optional: flicker animation for arcade effect */
+  animation: flicker 1.5s infinite;
+}
+
+/* Flicker keyframes */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 22%, 24%, 55% { opacity: 0.7; }
+}
 /* Log panel styling */
 .log-panel{
   background:linear-gradient(135deg,#d8ffe8,#b9f6d3);
@@ -545,7 +567,16 @@ select:focus,
   filter: blur(26px);
   animation: fireFlicker 2s ease-in-out infinite alternate;
 }
-
+/* Heat shimmer layer (pseudo-element) */
+.card.fire .card-overlay::after{
+  content:"";
+  position:absolute;
+  inset:-30%;
+  background:
+    linear-gradient(to top, rgba(255,255,255,0.08), transparent 60%);
+  filter: blur(15px);
+  animation: heatShimmer 2s ease-in-out infinite alternate;
+}
 /* Ember movement + vertical fade */
 @keyframes embersFade{
   0%{background-position:0 0,0 0,0 0; opacity:1;}
@@ -836,72 +867,6 @@ background-position: 0 0, 10px 10px;
   color: #555;
   margin-top: 4px;
 } 
-/* WORLD MAP */
-
-/* WORLD MAP */
-
-#worldMap{
-  width:900px;
-  margin:30px auto;
-  position:relative;
-}
-
-#mapImage{
-  width:100%;
-  display:block;
-}
-
-/* continent overlay layer */
-
-#continentLayer div{
-  position:absolute;
-  border-radius:30px;
-  transition:.4s;
-  background:rgba(0,200,100,.0);
-}
-
-/* continent positions */
-
-#map-northamerica{top:18%;left:6%;width:22%;height:22%;}
-#map-southamerica{top:42%;left:22%;width:12%;height:28%;}
-#map-europe{top:20%;left:46%;width:10%;height:10%;}
-#map-africa{top:30%;left:48%;width:12%;height:28%;}
-#map-asia{top:18%;left:56%;width:28%;height:22%;}
-#map-oceania{top:48%;left:78%;width:12%;height:14%;}
-#map-antarctica{top:78%;left:20%;width:60%;height:14%;}
-
-/* discovered continents */
-
-.map-continent.discovered{
-  background:rgba(0,200,120,.35);
-  box-shadow:0 0 20px rgba(0,255,120,.7);
-}
-
-/* glow animation */
-
-.map-continent.glow{
-  animation:mapGlow 1.3s ease;
-}
-
-@keyframes mapGlow{
-  0%{box-shadow:0 0 0px rgba(0,255,120,0)}
-  50%{box-shadow:0 0 40px rgba(0,255,120,1)}
-  100%{box-shadow:0 0 20px rgba(0,255,120,.7)}
-}
-
-/* tooltip */
-
-#mapTooltip{
-  position:absolute;
-  background:white;
-  padding:8px 10px;
-  border-radius:8px;
-  font-size:13px;
-  box-shadow:0 4px 10px rgba(0,0,0,.3);
-  display:none;
-  pointer-events:none;
-}
-  
 </style>
 </head>
 
@@ -938,27 +903,29 @@ Release
 <div id="log" class="page active">
 
 <div class="log-panel">
+  <h2>🔎 Wildlife Scanner</h2>
 
-<h2>🔎 Wildlife Scanner</h2>
+  <!-- Input field for animal logging -->
+  <input 
+    id="animalInput" 
+    list="animals" 
+    placeholder="Log animal"
+    onkeydown="if(event.key==='Enter') logAnimal()"
+  >
 
-<input id="animalInput" list="animals" placeholder="Log animal"
-onkeydown="if(event.key==='Enter') logAnimal()">
+  <datalist id="animals"></datalist>
 
-<datalist id="animals"></datalist>
+  <br><br>
+  <button class="log-btn" onclick="logAnimal()">Log Animal</button>
 
-<br><br>
+  <p id="logMessage" style="height:20px;font-weight:bold;"></p>
 
-<button class="log-btn" onclick="logAnimal()">Log Animal</button>
+  <div class="progress-bar">
+    <div id="progressFill"></div>
+  </div>
 
-<p id="logMessage" style="height:20px;font-weight:bold;"></p>
-
-<div class="progress-bar">
-  <div id="progressFill"></div>
-</div>
-
-<p id="progressText"></p>
+  <p id="progressText"></p>
   <p id="xpDisplay"></p>
-
 </div>
 
 </div>
@@ -1015,28 +982,16 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <p id="statHabitats"></p>
 <p id="statContinents"></p>
 
-
 <h3>🌍 Explorer Map</h3>
 
-<div id="worldMap">
-
-<div id="mapTooltip"></div>
-
-<img id="mapImage"
-src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
-
-<div id="continentLayer">
-
-<div id="map-northamerica" class="map-continent"></div>
-<div id="map-southamerica" class="map-continent"></div>
-<div id="map-europe" class="map-continent"></div>
-<div id="map-africa" class="map-continent"></div>
-<div id="map-asia" class="map-continent"></div>
-<div id="map-oceania" class="map-continent"></div>
-<div id="map-antarctica" class="map-continent"></div>
-
-</div>
-
+<div id="continentMap" class="continent-map">
+  <div class="continent" id="cont-africa">Africa</div>
+  <div class="continent" id="cont-asia">Asia</div>
+  <div class="continent" id="cont-europe">Europe</div>
+  <div class="continent" id="cont-northamerica">North America</div>
+  <div class="continent" id="cont-southamerica">South America</div>
+  <div class="continent" id="cont-oceania">Oceania</div>
+  <div class="continent" id="cont-antarctica">Antarctica</div>
 </div>
 
 </div> 
@@ -1055,56 +1010,143 @@ const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"�
   rainforest:"🌴",
 };
 const continentIcons={Africa:"🌍", Europe:"🌍", Asia:"🌏", NorthAmerica:"🌎", SouthAmerica:"🌎", Oceania:"🦘", Antarctica:"🐧"};
-const animals = [
+
+const animals=[
   {name:"African Lion",scientific:"Panthera leo",type:"fire",continent:"Africa",rarity:"rare",atk:80,def:70,move:"Flame Pounce"},
   {name:"Bald Eagle",scientific:"Haliaeetus leucocephalus",type:"flying",continent:"NorthAmerica",rarity:"uncommon",atk:60,def:50,move:"Sky Dive"},
   {name:"Polar Bear",scientific:"Ursus maritimus",type:"ice",continent:"Antarctica",rarity:"rare",atk:75,def:80,move:"Frozen Swipe"},
   {name:"Poison Dart Frog",scientific:"Dendrobatidae",type:"poison",continent:"SouthAmerica",rarity:"uncommon",atk:40,def:30,move:"Toxic Jump"},
   {name:"Horseshoe Bat",scientific:"Rhinolophus hipposideros",type:"dark",type2:"flying",continent:"Europe",rarity:"rare",atk:50,def:40,move:"Night Dive"},
   {name:"Gray Wolf",scientific:"Canis lupus",type:"dark",continent:"NorthAmerica",rarity:"uncommon",atk:65,def:55,move:"Shadow Hunt"},
-  {name:"Komodo Dragon",scientific:"Varanus komodoensis",type:"fire",type2:"poison",continent:"Asia",rarity:"rare",atk:85,def:70,move:"Venom Bite"},
-  {name:"Red Fox",scientific:"Vulpes vulpes",type:"fire",continent:"Europe",habitat:"forest",rarity:"common",atk:50,def:40,move:"Blaze Dash"},
-  {name:"Snowy Owl",scientific:"Bubo scandiacus",type:"ice",type2:"flying",habitat:"forest",continent:"NorthAmerica",rarity:"uncommon",atk:55,def:45,move:"Frost Glide"},
-  {name:"Praying Mantis",scientific:"Mantodea",type:"bug",continent:"Asia",rarity:"common",atk:45,def:35,move:"Blade Strike"},
-  {name:"Jaguar",scientific:"Panthera onca",type:"dark",type2:"fire",continent:"SouthAmerica",rarity:"rare",atk:80,def:65,move:"Night Pounce"},
-  {name:"Emperor Penguin",scientific:"Aptenodytes forsteri",type:"ice",continent:"Antarctica",rarity:"uncommon",atk:40,def:60,move:"Glacier Slide"},
-  {name:"Honey Bee",scientific:"Apis mellifera",type:"bug",type2:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Sting Swarm"},
-  {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll"},
-  {name:"Red Deer",scientific:"Cervus elaphus",type:"grass",continent:"Europe",habitat:"forest",rarity:"common",atk:60,def:55,move:"Antler Charge"},
-  {name:"European Badger",scientific:"Meles meles",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Burrow Strike"},
-  {name:"Barn Owl",scientific:"Tyto alba",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Silent Glide"},
-  {name:"European Robin",scientific:"Erithacus rubecula",type:"flying",continent:"Europe",rarity:"common",atk:25,def:20,move:"Quick Chirp"},
-  {name:"Wild Boar",scientific:"Sus scrofa",type:"dark",continent:"Europe",rarity:"uncommon",atk:70,def:65,move:"Tusk Rush"},
-  {name:"European Otter",scientific:"Lutra lutra",type:"water",continent:"Europe",habitat:"freshwater",rarity:"uncommon",atk:55,def:50,move:"River Dash"},
-  {name:"Common Frog",scientific:"Rana temporaria",type:"water",continent:"Europe",rarity:"common",atk:30,def:25,move:"Leap Splash"},
-  {name:"European Green Lizard",scientific:"Lacerta viridis",type:"grass",continent:"Europe",rarity:"common",atk:40,def:35,move:"Sun Dash"},
-  {name:"European Brown Bear",scientific:"Ursus arctos arctos",type:"dark",continent:"Europe",rarity:"rare",atk:85,def:80,move:"Forest Smash"},
-  {name:"Eurasian Lynx",scientific:"Lynx lynx",type:"dark",continent:"Europe",rarity:"rare",atk:75,def:60,move:"Silent Pounce"},
-  {name:"Alpine Ibex",scientific:"Capra ibex",type:"grass",continent:"Europe",rarity:"uncommon",atk:65,def:70,move:"Cliff Charge"},
-  {name:"Chamois",scientific:"Rupicapra rupicapra",type:"grass",continent:"Europe",rarity:"common",atk:55,def:50,move:"Mountain Dash"},
-  {name:"European Pine Marten",scientific:"Martes martes",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:45,move:"Tree Ambush"},
-  {name:"Roe Deer",scientific:"Capreolus capreolus",type:"grass",continent:"Europe",rarity:"common",atk:50,def:45,move:"Swift Bound"},
-  {name:"European Hare",scientific:"Lepus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:40,def:30,move:"Rapid Hop"},
-  {name:"Mountain Hare",scientific:"Lepus timidus",type:"ice",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Snow Dash"},
-  {name:"Grey Seal",scientific:"Halichoerus grypus",type:"water",continent:"Europe",habitat:"ocean",rarity:"uncommon",atk:60,def:65,move:"Wave Slam"},
-  {name:"Harbour Seal",scientific:"Phoca vitulina",type:"water",continent:"Europe",habitat:"ocean",rarity:"common",atk:55,def:55,move:"Tidal Roll"},
-  {name:"Atlantic Puffin",scientific:"Fratercula arctica",type:"flying",continent:"Europe",rarity:"uncommon",atk:40,def:35,move:"Dive Peck"},
-  {name:"Common Buzzard",scientific:"Buteo buteo",type:"flying",continent:"Europe",rarity:"common",atk:55,def:45,move:"Sky Swoop"},
-  {name:"Golden Eagle",scientific:"Aquila chrysaetos",type:"flying",continent:"Europe",rarity:"rare",atk:80,def:65,move:"Royal Dive"},
-  {name:"European Magpie",scientific:"Pica pica",type:"flying",continent:"Europe",rarity:"common",atk:35,def:30,move:"Flash Peck"},
-  {name:"Common Raven",scientific:"Corvus corax",type:"dark",type2:"flying",continent:"Europe",rarity:"uncommon",atk:60,def:50,move:"Shadow Call"},
-  {name:"Torpedo Ray",scientific:"Torpedo nobiliana",type:"electric",type2:"water",continent:"Europe",rarity:"rare",atk:80,def:70,move:"Shock Wave"},
-  {name:"Killer Whale",scientific:"Orcinus orca",type:"water",type2:"fire",continent:"Europe",rarity:"rare",atk:95,def:80,move:"Tidal Hunt"},
-  {name:"Leatherback Sea Turtle",scientific:"Dermochelys coriacea",type:"water",continent:"Europe",rarity:"rare",atk:70,def:90,move:"Deep Current"},
-  {name:"Manx Shearwater",scientific:"Puffinus puffinus",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Ocean Glide"},
-  {name:"Sand Lizard",scientific:"Lacerta agilis",type:"grass",continent:"Europe",rarity:"rare",atk:45,def:40,move:"Sun Sprint"},
-  {name:"Basking Shark",scientific:"Cetorhinus maximus",type:"water",continent:"Europe",rarity:"rare",atk:90,def:85,move:"Ocean Surge"},
-  {name:"Electric Eel",scientific:"Electrophorus electricus",type:"electric",type2:"water",continent:"SouthAmerica",rarity:"rare",atk:85,def:60,move:"Volt Shock"}
-];
-];
 
-const datalist=document.getElementById("animals")
-animals.forEach(a=>{let o=document.createElement("option");o.value=a.name;datalist.appendChild(o);});
+{name:"Komodo Dragon",scientific:"Varanus komodoensis",type:"fire",type2:"poison",continent:"Asia",rarity:"rare",atk:85,def:70,move:"Venom Bite"},
+
+{name:"Red Fox",scientific:"Vulpes vulpes",type:"fire",continent:"Europe",habitat:"forest",rarity:"common",atk:50,def:40,move:"Blaze Dash"},
+
+{name:"Snowy Owl",scientific:"Bubo scandiacus",type:"ice",type2:"flying",habitat:"forest",continent:"NorthAmerica",rarity:"uncommon",atk:55,def:45,move:"Frost Glide"},
+
+{name:"Praying Mantis",scientific:"Mantodea",type:"bug",continent:"Asia",rarity:"common",atk:45,def:35,move:"Blade Strike"},
+
+{name:"Jaguar",scientific:"Panthera onca",type:"dark",type2:"fire",continent:"SouthAmerica",rarity:"rare",atk:80,def:65,move:"Night Pounce"},
+
+{name:"Emperor Penguin",scientific:"Aptenodytes forsteri",type:"ice",continent:"Antarctica",rarity:"uncommon",atk:40,def:60,move:"Glacier Slide"},
+
+{name:"Honey Bee",scientific:"Apis mellifera",type:"bug",type2:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Sting Swarm"},
+  {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll"},
+
+{name:"Red Deer",scientific:"Cervus elaphus",type:"grass",continent:"Europe",habitat:"forest",rarity:"common",atk:60,def:55,move:"Antler Charge"},
+
+{name:"European Badger",scientific:"Meles meles",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Burrow Strike"},
+
+{name:"Barn Owl",scientific:"Tyto alba",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Silent Glide"},
+
+{name:"European Robin",scientific:"Erithacus rubecula",type:"flying",continent:"Europe",rarity:"common",atk:25,def:20,move:"Quick Chirp"},
+
+{name:"Wild Boar",scientific:"Sus scrofa",type:"dark",continent:"Europe",rarity:"uncommon",atk:70,def:65,move:"Tusk Rush"},
+
+{name:"European Otter",scientific:"Lutra lutra",type:"water",continent:"Europe",habitat:"freshwater",rarity:"uncommon",atk:55,def:50,move:"River Dash"},
+
+{name:"Common Frog",scientific:"Rana temporaria",type:"water",continent:"Europe",rarity:"common",atk:30,def:25,move:"Leap Splash"},
+
+{name:"European Green Lizard",scientific:"Lacerta viridis",type:"grass",continent:"Europe",rarity:"common",atk:40,def:35,move:"Sun Dash"},
+{name:"European Brown Bear",scientific:"Ursus arctos arctos",type:"dark",continent:"Europe",rarity:"rare",atk:85,def:80,move:"Forest Smash"},
+
+{name:"Eurasian Lynx",scientific:"Lynx lynx",type:"dark",continent:"Europe",rarity:"rare",atk:75,def:60,move:"Silent Pounce"},
+
+{name:"Alpine Ibex",scientific:"Capra ibex",type:"grass",continent:"Europe",rarity:"uncommon",atk:65,def:70,move:"Cliff Charge"},
+
+{name:"Chamois",scientific:"Rupicapra rupicapra",type:"grass",continent:"Europe",rarity:"common",atk:55,def:50,move:"Mountain Dash"},
+
+{name:"European Pine Marten",scientific:"Martes martes",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:45,move:"Tree Ambush"},
+
+{name:"Roe Deer",scientific:"Capreolus capreolus",type:"grass",continent:"Europe",rarity:"common",atk:50,def:45,move:"Swift Bound"},
+
+{name:"European Hare",scientific:"Lepus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:40,def:30,move:"Rapid Hop"},
+
+{name:"Mountain Hare",scientific:"Lepus timidus",type:"ice",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Snow Dash"},
+
+{name:"Grey Seal",scientific:"Halichoerus grypus",type:"water",continent:"Europe",habitat:"ocean",rarity:"uncommon",atk:60,def:65,move:"Wave Slam"},
+
+{name:"Harbour Seal",scientific:"Phoca vitulina",type:"water",continent:"Europe",habitat:"ocean",rarity:"common",atk:55,def:55,move:"Tidal Roll"},
+
+{name:"Atlantic Puffin",scientific:"Fratercula arctica",type:"flying",continent:"Europe",rarity:"uncommon",atk:40,def:35,move:"Dive Peck"},
+
+{name:"Common Buzzard",scientific:"Buteo buteo",type:"flying",continent:"Europe",rarity:"common",atk:55,def:45,move:"Sky Swoop"},
+
+{name:"Golden Eagle",scientific:"Aquila chrysaetos",type:"flying",continent:"Europe",rarity:"rare",atk:80,def:65,move:"Royal Dive"},
+
+{name:"European Magpie",scientific:"Pica pica",type:"flying",continent:"Europe",rarity:"common",atk:35,def:30,move:"Flash Peck"},
+
+{name:"Common Raven",scientific:"Corvus corax",type:"dark",type2:"flying",continent:"Europe",rarity:"uncommon",atk:60,def:50,move:"Shadow Call"},
+
+{name:"European Mole",scientific:"Talpa europaea",type:"dark",continent:"Europe",rarity:"common",atk:35,def:40,move:"Tunnel Strike"},
+
+{name:"Grass Snake",scientific:"Natrix natrix",type:"poison",continent:"Europe",rarity:"common",atk:45,def:35,move:"Venom Snap"},
+
+{name:"European Adder",scientific:"Vipera berus",type:"poison",continent:"Europe",rarity:"uncommon",atk:60,def:40,move:"Toxic Bite"},
+
+{name:"Fire Salamander",scientific:"Salamandra salamandra",type:"poison",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Poison Blaze"},
+
+{name:"Common Newt",scientific:"Lissotriton vulgaris",type:"water",continent:"Europe",rarity:"common",atk:30,def:25,move:"Ripple Hop"},
+
+{name:"European Perch",scientific:"Perca fluviatilis",type:"water",continent:"Europe",rarity:"common",atk:40,def:35,move:"Fin Strike"},
+{name:"Northern Pike",scientific:"Esox lucius",type:"water",continent:"Europe",rarity:"uncommon",atk:70,def:50,move:"Ambush Bite"},
+{name:"Irish Hare",scientific:"Lepus timidus hibernicus",type:"grass",continent:"Europe",rarity:"common",atk:45,def:35,move:"Bog Dash"},
+{name:"Sika Deer",scientific:"Cervus nippon",type:"grass",continent:"Europe",rarity:"uncommon",atk:60,def:55,move:"Forest Charge"},
+{name:"Hooded Crow",scientific:"Corvus cornix",type:"dark",type2:"flying",continent:"Europe",rarity:"common",atk:45,def:40,move:"Shadow Call"},
+{name:"European Wasp",scientific:"Vespula vulgaris",type:"bug",continent:"Europe",rarity:"common",atk:35,def:25,move:"Sting Dart"},
+{name:"Smooth Newt",scientific:"Lissotriton vulgaris",type:"water",continent:"Europe",rarity:"common",atk:28,def:25,move:"Ripple Hop"},
+{name:"Three-Spined Stickleback",scientific:"Gasterosteus aculeatus",type:"water",continent:"Europe",rarity:"common",atk:30,def:30,move:"Spine Strike"},
+{name:"Ladybird Beetle",scientific:"Coccinellidae",type:"bug",continent:"Europe",rarity:"common",atk:20,def:30,move:"Lucky Glide"},
+{name:"Buff-Tailed Bumblebee",scientific:"Bombus terrestris",type:"bug",continent:"Europe",rarity:"common",atk:35,def:25,move:"Buzz Sting"},
+{name:"European Dragonfly",scientific:"Anisoptera",type:"bug",type2:"flying",continent:"Europe",rarity:"common",atk:35,def:25,move:"Wing Flash"},
+{name:"Stoat",scientific:"Mustela erminea hibernica",type:"dark",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Swift Strike"},
+{name:"Pygmy Shrew",scientific:"Sorex minutus",type:"grass",continent:"Europe",rarity:"common",atk:20,def:15,move:"Tiny Bite"},
+{name:"Garden Spider",scientific:"Araneus diadematus",type:"bug",continent:"Europe",rarity:"common",atk:30,def:35,move:"Web Trap"},
+{name:"Wood Ant",scientific:"Formica rufa",type:"bug",continent:"Europe",rarity:"common",atk:25,def:30,move:"Colony Rush"},
+{name:"Brown Rat",scientific:"Rattus norvegicus",type:"dark",continent:"Europe",rarity:"common",atk:30,def:25,move:"Gnaw Attack"},
+{name:"Wood Mouse",scientific:"Apodemus sylvaticus",type:"grass",continent:"Europe",rarity:"common",atk:25,def:20,move:"Forest Scurry"},
+{name:"Mute Swan",scientific:"Cygnus olor",type:"flying",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Wing Bash"},
+{name:"European Glowworm",scientific:"Lampyris noctiluca",type:"bug",continent:"Europe",rarity:"uncommon",atk:20,def:25,move:"Glow Pulse"},
+{name:"Mallard Duck",scientific:"Anas platyrhynchos",type:"water",type2:"flying",continent:"Europe",rarity:"common",atk:35,def:35,move:"Splash Peck"},
+{name:"Grey Heron",scientific:"Ardea cinerea",type:"water",type2:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Spear Strike"},
+{name:"Blackbird",scientific:"Turdus merula",type:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Dawn Song"},
+{name:"Eurasian Beaver",scientific:"Castor fiber",type:"water",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Dam Slam"},
+{name:"Starling",scientific:"Sturnus vulgaris",type:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Flock Burst"},
+{name:"Common Gull",scientific:"Larus canus",type:"flying",continent:"Europe",rarity:"common",atk:35,def:30,move:"Coastal Cry"},
+{name:"Razorbill",scientific:"Alca torda",type:"water",type2:"flying",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Cliff Dive"},
+{name:"European Wildcat",scientific:"Felis silvestris",type:"dark",continent:"Europe",rarity:"rare",atk:70,def:55,move:"Forest Slash"},
+{name:"European Eel",scientific:"Anguilla anguilla",type:"water",continent:"Europe",rarity:"uncommon",atk:50,def:35,move:"River Coil"},
+{name:"Atlantic Mackerel",scientific:"Scomber scombrus",type:"water",continent:"Europe",rarity:"common",atk:40,def:30,move:"Silver Dash"},
+{name:"Blue Mussel",scientific:"Mytilus edulis",type:"water",continent:"Europe",rarity:"common",atk:10,def:40,move:"Shell Guard"},
+{name:"Common Shore Crab",scientific:"Carcinus maenas",type:"water",continent:"Europe",rarity:"common",atk:30,def:35,move:"Claw Snap"},
+{name:"Red Squirrel",scientific:"Sciurus vulgaris",type:"grass",continent:"Europe",rarity:"rare",atk:45,def:40,move:"Forest Leap"},
+
+{name:"Pine Marten",scientific:"Martes martes",type:"dark",continent:"Europe",rarity:"rare",atk:70,def:55,move:"Tree Ambush"},
+
+{name:"White-Tailed Eagle",scientific:"Haliaeetus albicilla",type:"flying",continent:"Europe",rarity:"rare",atk:85,def:70,move:"Sky Tyrant"},
+
+{name:"Golden Eagle",scientific:"Aquila chrysaetos",type:"flying",continent:"Europe",rarity:"rare",atk:80,def:65,move:"Royal Dive"},
+
+{name:"Basking Shark",scientific:"Cetorhinus maximus",type:"water",continent:"Europe",rarity:"rare",atk:90,def:85,move:"Ocean Surge"},
+{name:"Electric Eel",scientific:"Electrophorus electricus",type:"electric",type2:"water",continent:"SouthAmerica",rarity:"rare",atk:85,def:60,move:"Volt Shock"},
+{name:"Torpedo Ray",scientific:"Torpedo nobiliana",type:"electric",type2:"water",continent:"Europe",rarity:"rare",atk:80,def:70,move:"Shock Wave"},
+{name:"Killer Whale",scientific:"Orcinus orca",type:"water",type2:"fire",continent:"Europe",rarity:"rare",atk:95,def:80,move:"Tidal Hunt"},
+{name:"Leatherback Sea Turtle",scientific:"Dermochelys coriacea",type:"water",continent:"Europe",rarity:"rare",atk:70,def:90,move:"Deep Current"},
+{name:"Manx Shearwater",scientific:"Puffinus puffinus",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Ocean Glide"},
+{name:"Sand Lizard",scientific:"Lacerta agilis",type:"grass",continent:"Europe",rarity:"rare",atk:45,def:40,move:"Sun Dash"},
+{name:"Irish Mountain Goat",scientific:"Capra aegagrus hircus",type:"grass",continent:"Europe",rarity:"uncommon",atk:65,def:60,move:"Cliff Charge"},
+{name:"Seven-Spot Ladybird",scientific:"Coccinella septempunctata",type:"bug",continent:"Europe",rarity:"common",atk:20,def:25,move:"Lucky Glide"},
+{name:"Stag Beetle",scientific:"Lucanus cervus",type:"bug",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Mandible Clamp"}
+
+
+];
+const datalist = document.getElementById("animals");
+animals.forEach(animal => {
+    const option = document.createElement("option");
+    option.value = animal.name;      // Set the option text/value
+    datalist.appendChild(option);    // Add it to the datalist
+});
 
 let logged = JSON.parse(localStorage.getItem("wilddex_logged")) || [];
 let xp = Number(localStorage.getItem("wilddex_xp")) || 0;
@@ -1142,7 +1184,22 @@ function logAnimal(){
     message.style.color="red";
     return;
   }
+ // Mark as logged
+  animal.logged = true;
 
+  // Optional: show success message
+  message.textContent = `${animal.name} logged!`;
+  message.style.color = "green";
+
+  // Refresh the continent map
+  updateContinentMap();
+
+  // Optional: update other UI (progress bar, collection, etc.)
+  renderCollection();
+
+  // Clear input
+  document.getElementById('animalInput').value = '';
+}
   // check using the animal's official name
   if(logged.some(a => a.name === animal.name)){
     message.textContent="You've already logged this animal.";
@@ -1195,47 +1252,12 @@ function updateStats(){
   if(continentEl) continentEl.textContent = "🌍 Continents Explored: " + continents.length;
 
 // ✅ Explorer map update lives here (has access to `continents`)
-  // Reset map
-// Reset map
-document.querySelectorAll(".map-continent")
-.forEach(el=>{
-  el.classList.remove("discovered");
-});
-
-// Track continents discovered
-continents.forEach(c=>{
-  const id="map-"+c.replace(/\s/g,"").toLowerCase();
-  const el=document.getElementById(id);
-
-  if(el){
-
-    el.classList.add("discovered");
-
-    // glow animation
-    el.classList.add("glow");
-    setTimeout(()=>el.classList.remove("glow"),1200);
-
-    // animals in this continent
-    const animalsHere = logged
-      .filter(a=>a.continent===c)
-      .map(a=>a.name)
-      .join(", ");
-
-    el.onmousemove = (e)=>{
-      const tip=document.getElementById("mapTooltip");
-      tip.style.display="block";
-      tip.style.left=(e.pageX+10)+"px";
-      tip.style.top=(e.pageY+10)+"px";
-      tip.innerHTML="<b>"+c+"</b><br>"+animalsHere;
-    };
-
-    el.onmouseleave=()=>{
-      document.getElementById("mapTooltip").style.display="none";
-    };
-
-  }
-
-});
+  document.querySelectorAll(".continent").forEach(el => el.classList.remove("discovered"));
+  continents.forEach(c => {
+    const id = "cont-" + c.replace(/\s/g,"").toLowerCase();
+    const el = document.getElementById(id);
+    if (el) el.classList.add("discovered");
+  });
 }
 
 
@@ -1360,13 +1382,34 @@ function updateBadges() {
   // Legendary Hunter
   if (legendaryCount >= 1) createBadge("🌟 Legendary Hunter", `Caught ${legendaryCount} legendary animal(s)!`, "badge-legendary");
 }
-function openPage(e, id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  if (e && e.currentTarget) {
-    e.currentTarget.classList.add("active");
-  }
+function updateContinentMap() {
+  // First, remove all previous "discovered" classes
+  document.querySelectorAll('.continent').forEach(div => div.classList.remove('discovered'));
+
+  // Get unique continents from recorded animals
+  const recordedContinents = [...new Set(animals.filter(a => a.logged).map(a => a.continent))];
+
+  // Add "discovered" class to each recorded continent
+  recordedContinents.forEach(continent => {
+    const continentId = 'cont-' + continent.toLowerCase().replace(/\s/g,'');
+    const el = document.getElementById(continentId);
+    if (el) el.classList.add('discovered');
+  });
+
+  // Optionally update a text summary
+  document.getElementById('statContinents').textContent =
+    `Continents recorded: ${recordedContinents.join(', ') || 'None'}`;
+}
+function openPage(evt, pageId) {
+    // Hide all pages
+    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+    // Remove active from all tabs
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    // Show current page
+    document.getElementById(pageId).classList.add("active");
+    // Highlight current tab
+    evt.currentTarget.classList.add("active");
+}
 }
 let currentAnimal=null;
 function openAnimal(a,img){
@@ -1409,6 +1452,7 @@ renderCollection();
 updateBadges();
 updateStats();
 updateXPDisplay();
+updateContinentMap()
 </script>
 </body>
 </html>
