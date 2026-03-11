@@ -1141,10 +1141,10 @@ const animals=[
 ];
 
 const datalist = document.getElementById("animals");
-animals.forEach(a => {
+animals.forEach(animal => {
     const option = document.createElement("option");
-    option.value = a.name;
-    datalist.appendChild(option);
+    option.value = animal.name;;
+      datalist.appendChild(option);
 });
 
 let logged = JSON.parse(localStorage.getItem("wilddex_logged")) || [];
@@ -1399,13 +1399,16 @@ function updateContinentMap() {
   document.getElementById('statContinents').textContent =
     `Continents recorded: ${recordedContinents.join(', ') || 'None'}`;
 }
-function openPage(e, id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  if (e && e.currentTarget) {
-    e.currentTarget.classList.add("active");
-  }
+function openPage(evt, pageId) {
+    // Hide all pages
+    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+    // Remove active from all tabs
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    // Show current page
+    document.getElementById(pageId).classList.add("active");
+    // Highlight current tab
+    evt.currentTarget.classList.add("active");
+}
 }
 let currentAnimal=null;
 function openAnimal(a,img){
