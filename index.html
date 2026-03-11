@@ -1140,8 +1140,12 @@ const animals=[
 
 ];
 
-const datalist=document.getElementById("animals")
-animals.forEach(a=>{let o=document.createElement("option");o.value=a.name;datalist.appendChild(o);});
+const datalist = document.getElementById("animals");
+animals.forEach(a => {
+    const option = document.createElement("option");
+    option.value = a.name;
+    datalist.appendChild(option);
+});
 
 let logged = JSON.parse(localStorage.getItem("wilddex_logged")) || [];
 let xp = Number(localStorage.getItem("wilddex_xp")) || 0;
@@ -1444,6 +1448,7 @@ renderCollection();
 updateBadges();
 updateStats();
 updateXPDisplay();
+updateContinentMap()
 </script>
 </body>
 </html>
