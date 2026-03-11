@@ -3,30 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>WildDex</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
-h1 {
-  font-family: 'Press Start 2P', cursive; /* retro 8-bit font */
-  font-size: 32px;                        /* adjust size as needed */
-  text-transform: uppercase;              /* classic game style */
-  color: #de81b9;                         /* dark green text */
-  letter-spacing: 2px;                    /* slightly spaced letters */
-
-  /* Pixelated blocky outline with multiple shadows */
-  text-shadow:
-    1px 1px 0 #000,
-    2px 2px 0 #000,
-    3px 3px 0 #000;
-
-  /* Optional: flicker animation for arcade effect */
-  animation: flicker 1.5s infinite;
-}
-
-/* Flicker keyframes */
-@keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-  20%, 22%, 24%, 55% { opacity: 0.7; }
-}
 /* Log panel styling */
 .log-panel{
   background:linear-gradient(135deg,#d8ffe8,#b9f6d3);
@@ -903,29 +881,27 @@ Release
 <div id="log" class="page active">
 
 <div class="log-panel">
-  <h2>🔎 Wildlife Scanner</h2>
 
-  <!-- Input field for animal logging -->
-  <input 
-    id="animalInput" 
-    list="animals" 
-    placeholder="Log animal"
-    onkeydown="if(event.key==='Enter') logAnimal()"
-  >
+<h2>🔎 Wildlife Scanner</h2>
 
-  <datalist id="animals"></datalist>
+<input id="animalInput" list="animals" placeholder="Log animal"
+onkeydown="if(event.key==='Enter') logAnimal()">
 
-  <br><br>
-  <button class="log-btn" onclick="logAnimal()">Log Animal</button>
+<datalist id="animals"></datalist>
 
-  <p id="logMessage" style="height:20px;font-weight:bold;"></p>
+<br><br>
 
-  <div class="progress-bar">
-    <div id="progressFill"></div>
-  </div>
+<button class="log-btn" onclick="logAnimal()">Log Animal</button>
 
-  <p id="progressText"></p>
+<p id="logMessage" style="height:20px;font-weight:bold;"></p>
+
+<div class="progress-bar">
+  <div id="progressFill"></div>
+</div>
+
+<p id="progressText"></p>
   <p id="xpDisplay"></p>
+
 </div>
 
 </div>
@@ -1141,12 +1117,9 @@ const animals=[
 
 
 ];
-const datalist = document.getElementById("animals");
-animals.forEach(animal => {
-    const option = document.createElement("option");
-    option.value = animal.name;      // Set the option text/value
-    datalist.appendChild(option);    // Add it to the datalist
-});
+
+const datalist=document.getElementById("animals")
+animals.forEach(a=>{let o=document.createElement("option");o.value=a.name;datalist.appendChild(o);});
 
 let logged = JSON.parse(localStorage.getItem("wilddex_logged")) || [];
 let xp = Number(localStorage.getItem("wilddex_xp")) || 0;
@@ -1184,22 +1157,7 @@ function logAnimal(){
     message.style.color="red";
     return;
   }
- // Mark as logged
-  animal.logged = true;
 
-  // Optional: show success message
-  message.textContent = `${animal.name} logged!`;
-  message.style.color = "green";
-
-  // Refresh the continent map
-  updateContinentMap();
-
-  // Optional: update other UI (progress bar, collection, etc.)
-  renderCollection();
-
-  // Clear input
-  document.getElementById('animalInput').value = '';
-}
   // check using the animal's official name
   if(logged.some(a => a.name === animal.name)){
     message.textContent="You've already logged this animal.";
@@ -1382,34 +1340,13 @@ function updateBadges() {
   // Legendary Hunter
   if (legendaryCount >= 1) createBadge("🌟 Legendary Hunter", `Caught ${legendaryCount} legendary animal(s)!`, "badge-legendary");
 }
-function updateContinentMap() {
-  // First, remove all previous "discovered" classes
-  document.querySelectorAll('.continent').forEach(div => div.classList.remove('discovered'));
-
-  // Get unique continents from recorded animals
-  const recordedContinents = [...new Set(animals.filter(a => a.logged).map(a => a.continent))];
-
-  // Add "discovered" class to each recorded continent
-  recordedContinents.forEach(continent => {
-    const continentId = 'cont-' + continent.toLowerCase().replace(/\s/g,'');
-    const el = document.getElementById(continentId);
-    if (el) el.classList.add('discovered');
-  });
-
-  // Optionally update a text summary
-  document.getElementById('statContinents').textContent =
-    `Continents recorded: ${recordedContinents.join(', ') || 'None'}`;
-}
-function openPage(evt, pageId) {
-    // Hide all pages
-    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
-    // Remove active from all tabs
-    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-    // Show current page
-    document.getElementById(pageId).classList.add("active");
-    // Highlight current tab
-    evt.currentTarget.classList.add("active");
-}
+function openPage(e, id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  if (e && e.currentTarget) {
+    e.currentTarget.classList.add("active");
+  }
 }
 let currentAnimal=null;
 function openAnimal(a,img){
@@ -1452,7 +1389,6 @@ renderCollection();
 updateBadges();
 updateStats();
 updateXPDisplay();
-updateContinentMap()
 </script>
 </body>
 </html>
