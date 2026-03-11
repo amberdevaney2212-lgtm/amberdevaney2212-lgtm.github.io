@@ -1184,6 +1184,11 @@ function logAnimal(){
     message.style.color="red";
     return;
   }
+    if(logged.some(a => a.name === animal.name)){
+    message.textContent="You've already logged this animal.";
+    message.style.color="orange";
+    return;
+  }
  // Mark as logged
   animal.logged = true;
 
@@ -1201,11 +1206,6 @@ function logAnimal(){
   document.getElementById('animalInput').value = '';
 }
   // check using the animal's official name
-  if(logged.some(a => a.name === animal.name)){
-    message.textContent="You've already logged this animal.";
-    message.style.color="orange";
-    return;
-  }
 
   logged.push({
   ...animal,
@@ -1409,7 +1409,6 @@ function openPage(evt, pageId) {
     document.getElementById(pageId).classList.add("active");
     // Highlight current tab
     evt.currentTarget.classList.add("active");
-}
 }
 let currentAnimal=null;
 function openAnimal(a,img){
