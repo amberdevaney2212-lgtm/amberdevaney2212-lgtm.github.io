@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">  
 <meta charset="UTF-8">
 <title>WildDex</title>
 
 <style>
+#gameTitle{
+font-family:'Press Start 2P', monospace;
+font-size:32px;
+color:#00ff9d;
+text-align:center;
+
+text-shadow:
+3px 3px 0 #003b2f,
+6px 6px 0 #001f18;
+
+letter-spacing:2px;
+}
 /* Log panel styling */
 .log-panel{
   background:linear-gradient(135deg,#d8ffe8,#b9f6d3);
@@ -874,6 +887,7 @@ background-position: 0 0, 10px 10px;
 </head>
 
 <body>
+  <h1 id="gameTitle">WildDex</h1>
 <div id="animalModal" class="modal" onclick="closeModal(event)">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">✖</span>
@@ -893,7 +907,7 @@ Release
 </div>
 
 <h1>WildDex</h1>
-
+<h1 id="gameTitle">WildDex</h1>
 <div class="tabs">
 
 <div class="tab active" onclick="openPage(event,'log')">📘 Log</div>
