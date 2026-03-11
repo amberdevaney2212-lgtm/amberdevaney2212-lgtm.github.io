@@ -840,6 +840,7 @@ background-position: 0 0, 10px 10px;
     <p id="modalContinent"></p>
     <p id="modalHabitat"></p>
     <p id="modalDate"></p>
+    <p id="xpDisplay"></p>
     <button onclick="releaseAnimal()" style="margin-top:10px;padding:8px 14px;border-radius:8px;border:none;background:#ff6b6b;color:white;cursor:pointer;">
 Release
 </button>
@@ -1071,7 +1072,8 @@ const datalist=document.getElementById("animals")
 animals.forEach(a=>{let o=document.createElement("option");o.value=a.name;datalist.appendChild(o);});
 
 let logged = JSON.parse(localStorage.getItem("wilddex_logged")) || [];
-
+let xp = Number(localStorage.getItem("wilddex_xp")) || 0;
+let level = Math.floor(xp / 50);
 function logAnimal(){
   let name = document.getElementById("animalInput").value.trim();
   let animal = animals.find(a => a.name === name);
@@ -1082,19 +1084,41 @@ function logAnimal(){
     message.style.color="red";
     return;
   }
+function addXP(rarity){
 
+  const xpTable = {
+    common:5,
+    uncommon:10,
+    rare:25,
+    legendary:50
+  };
+
+  xp += xpTable[rarity] || 5;
+  localStorage.setItem("wilddex_xp",xp);
+
+  updateXPDisplay();
+}
   // check using the animal's official name
   if(logged.some(a => a.name === animal.name)){
     message.textContent="You've already logged this animal.";
     message.style.color="orange";
     return;
   }
+function updateXPDisplay(){
 
+  let level = Math.floor(xp / 50);
+  let nextLevel = (level+1)*50;
+
+  document.getElementById("xpDisplay").textContent =
+    "Level "+level+" Researcher • XP "+xp+" / "+nextLevel;
+
+}
   logged.push({
   ...animal,
   recordedAt: new Date().toISOString()
 });
-
+addXP(animal.rarity);
+updateStats();
 localStorage.setItem("wilddex_logged", JSON.stringify(logged));
 
 message.textContent="🐾 Animal Discovered!";
@@ -1114,14 +1138,20 @@ document.body.classList.remove("discoveryFlash");
   updateBadges();
 }
 ;
-  
+const imageCache = {};  
 async function getImage(name){
+  if(imageCache[name]) return imageCache[name];
   try{
     let url=`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`;
     let res=await fetch(url);
     let data=await res.json();
-    return data.thumbnail ? data.thumbnail.source : "";
-  }catch{return "";}
+    let img = data.thumbnail ? data.thumbnail.source : "";
+    imageCache[name] = img;
+    return img;
+  }catch{
+    return "";
+  }
+
 }
 
 async function renderCollection(){
@@ -1282,7 +1312,7 @@ function releaseAnimal(){
 /* ADD THIS AT THE END */
 renderCollection();
 updateBadges();
-  
+updateXPDisplay(); 
 </script>
 </body>
 </html>
