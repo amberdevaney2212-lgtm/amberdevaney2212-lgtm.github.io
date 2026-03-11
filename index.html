@@ -5,6 +5,29 @@
 <title>WildDex</title>
 
 <style>
+h1 {
+  font-family: 'Press Start 2P', cursive; /* retro 8-bit font */
+  font-size: 32px;                        /* adjust size as needed */
+  text-transform: uppercase;              /* classic game style */
+  color: #de81b9;                         /* dark green text */
+  letter-spacing: 2px;                    /* slightly spaced letters */
+
+  /* Pixelated blocky outline with multiple shadows */
+  text-shadow:
+    1px 1px 0 #000,
+    2px 2px 0 #000,
+    3px 3px 0 #000;
+
+  /* Optional: flicker animation for arcade effect */
+  animation: flicker 1.5s infinite;
+}
+
+/* Flicker keyframes */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 22%, 24%, 55% { opacity: 0.7; }
+}
+
 /* Log panel styling */
 .log-panel{
   background:linear-gradient(135deg,#d8ffe8,#b9f6d3);
@@ -1276,7 +1299,7 @@ card.onclick=()=>openAnimal(a,img);
       <div class="rarity">${stars}</div>
       <div class="card-header">
         <span>${a.name}</span>
-        <span>HP ${a.atk+a.def}</span>
+        
       </div>
       <div class="image-container">
         <img src="${img}" alt="${a.name}">
