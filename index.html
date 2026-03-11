@@ -545,16 +545,7 @@ select:focus,
   filter: blur(26px);
   animation: fireFlicker 2s ease-in-out infinite alternate;
 }
-/* Heat shimmer layer (pseudo-element) */
-.card.fire .card-overlay::after{
-  content:"";
-  position:absolute;
-  inset:-30%;
-  background:
-    linear-gradient(to top, rgba(255,255,255,0.08), transparent 60%);
-  filter: blur(15px);
-  animation: heatShimmer 2s ease-in-out infinite alternate;
-}
+
 /* Ember movement + vertical fade */
 @keyframes embersFade{
   0%{background-position:0 0,0 0,0 0; opacity:1;}
@@ -1183,7 +1174,7 @@ const animals=[
 {name:"Golden Eagle",scientific:"Aquila chrysaetos",type:"flying",continent:"Europe",rarity:"rare",atk:80,def:65,move:"Royal Dive"},
 
 {name:"Basking Shark",scientific:"Cetorhinus maximus",type:"water",continent:"Europe",rarity:"rare",atk:90,def:85,move:"Ocean Surge"},
-{name:"Electric Eel",scientific:"Electrophorus electricus",type:"electric",type2:"water",continent:"SouthAmerica",rarity:"rare",atk:85,def:60,move:"Volt Shock"},
+{name:"Electric Eel",scientific:"Electrophorus electricus",type:"electric",type2:"water",continent:"SouthAmerica",rarity:"rare",atk:85,def:60,move:"Volt Shock"}];
 {name:"Torpedo Ray",scientific:"Torpedo nobiliana",type:"electric",type2:"water",continent:"Europe",rarity:"rare",atk:80,def:70,move:"Shock Wave"},
 {name:"Killer Whale",scientific:"Orcinus orca",type:"water",type2:"fire",continent:"Europe",rarity:"rare",atk:95,def:80,move:"Tidal Hunt"},
 {name:"Leatherback Sea Turtle",scientific:"Dermochelys coriacea",type:"water",continent:"Europe",rarity:"rare",atk:70,def:90,move:"Deep Current"},
