@@ -43,7 +43,51 @@ grid-template-columns:repeat(3,1fr);
 gap:10px;
 margin-top:15px;
 }
+#weatherOverlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
 
+/* Rain */
+.rain{
+  background-image:
+    linear-gradient(transparent 70%, rgba(255,255,255,.6) 90%);
+  background-size:2px 20px;
+  animation:rainFall .5s linear infinite;
+}
+
+@keyframes rainFall{
+  from{background-position:0 -20px}
+  to{background-position:0 20px}
+}
+
+/* Snow */
+.snow{
+  background:
+    radial-gradient(circle, white 2px, transparent 3px);
+  background-size:30px 30px;
+  animation:snowFall 6s linear infinite;
+}
+
+@keyframes snowFall{
+  from{background-position:0 0}
+  to{background-position:0 200px}
+}
+
+/* Lightning flashes */
+.lightning{
+  animation:lightningFlash 6s infinite;
+}
+
+@keyframes lightningFlash{
+  0%,97%,100%{background:transparent;}
+  98%{background:white;}
+}
 .continent{
 padding:12px;
 border-radius:10px;
@@ -173,7 +217,15 @@ background:linear-gradient(180deg,#e3f2fd,#90caf9);
   border:2px solid #7adca8;
   margin-top:8px;
 }
-
+.toast{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#222;
+color:white;
+padding:12px 18px;
+border-radius:10px;
+}
 /* Button styling */
 .log-btn{
   padding:10px 16px;
@@ -872,6 +924,7 @@ background-position: 0 0, 10px 10px;
 </head>
 
 <body>
+<div id="weatherOverlay"></div>
 <div id="animalModal" class="modal" onclick="closeModal(event)">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">✖</span>
@@ -1133,6 +1186,20 @@ function updateXPDisplay(){
 
   document.getElementById("xpDisplay").textContent =
     "Level "+level+" Researcher • XP "+xp+" / "+nextLevel;
+  
+function setWeather(){
+
+  const today = new Date().toDateString();
+  let weather = localStorage.getItem("wilddex_weather");
+
+  if(!weather){
+    const types = ["sunny","rain","snow","storm"];
+    weather = types[Math.floor(Math.random()*types.length)];
+    localStorage.setItem("wilddex_weather",weather);
+  }
+
+  const overlay = document.getElementById("weatherOverlay");
+  overlay.className = weather;
 
 }
 function logAnimal(){
