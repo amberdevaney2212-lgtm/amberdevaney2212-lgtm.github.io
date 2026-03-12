@@ -37,57 +37,36 @@ h1 {
   margin:20px auto;
   box-shadow:0 6px 14px rgba(0,0,0,.2);
 }
+.world-map{
+  display:grid;
+  grid-template-columns:repeat(3,150px);
+  gap:20px;
+  justify-content:center;
+  margin-top:20px;
+}
+
+.continent-mapbox{
+  padding:20px;
+  border-radius:16px;
+  background:#ccc;
+  font-weight:bold;
+  opacity:0.4;
+  transition:0.3s;
+}
+
+.continent-mapbox.discovered{
+  background:linear-gradient(135deg,#6ee7b7,#10b981);
+  color:white;
+  opacity:1;
+  box-shadow:0 0 12px rgba(0,255,150,.6);
+}
 .continent-map{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:10px;
 margin-top:15px;
 }
-#weatherOverlay{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:0;
-}
 
-/* Rain */
-.rain{
-  background-image:
-    linear-gradient(transparent 70%, rgba(255,255,255,.6) 90%);
-  background-size:2px 20px;
-  animation:rainFall .5s linear infinite;
-}
-
-@keyframes rainFall{
-  from{background-position:0 -20px}
-  to{background-position:0 20px}
-}
-
-/* Snow */
-.snow{
-  background:
-    radial-gradient(circle, white 2px, transparent 3px);
-  background-size:30px 30px;
-  animation:snowFall 6s linear infinite;
-}
-
-@keyframes snowFall{
-  from{background-position:0 0}
-  to{background-position:0 200px}
-}
-
-/* Lightning flashes */
-.lightning{
-  animation:lightningFlash 6s infinite;
-}
-
-@keyframes lightningFlash{
-  0%,97%,100%{background:transparent;}
-  98%{background:white;}
-}
 .continent{
 padding:12px;
 border-radius:10px;
@@ -97,7 +76,25 @@ font-weight:bold;
 opacity:0.4;
 transition:0.3s;
 }
+#worldMap{
+  width:90%;
+  max-width:900px;
+  margin:auto;
+}
 
+.continent-shape{
+  fill:#bbb;
+  stroke:#444;
+  stroke-width:2;
+  opacity:.5;
+  transition:.4s;
+}
+
+.continent-shape.discovered{
+  fill:#22c55e;
+  opacity:1;
+  filter:drop-shadow(0 0 10px rgba(0,255,150,.8));
+}
 .continent.discovered{
 background:#4caf50;
 color:white;
@@ -924,7 +921,7 @@ background-position: 0 0, 10px 10px;
 </head>
 
 <body>
-<div id="weatherOverlay"></div>
+
 <div id="animalModal" class="modal" onclick="closeModal(event)">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">✖</span>
@@ -951,7 +948,7 @@ Release
 <div class="tab" onclick="openPage(event,'catches')">🐾 Catches</div>
 <div class="tab" onclick="openPage(event,'badges')">🏅 Badges</div>
 <div class="tab" onclick="openPage(event,'stats')">📊 Stats</div>
-
+<div class="tab" onclick="openPage(event,'map')">🗺 Map</div>
 </div>
 
 <div id="log" class="page active">
@@ -1047,6 +1044,37 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 </div>
 
 </div> 
+<div id="map" class="page">
+
+<h2>🌍 WildDex World Map</h2>
+
+<svg id="worldMap" viewBox="0 0 1000 500">
+
+<path id="map-northamerica" class="continent-shape"
+d="M90 150 L210 120 L260 160 L220 220 L140 210 Z"/>
+
+<path id="map-southamerica" class="continent-shape"
+d="M260 260 L310 300 L290 380 L240 340 Z"/>
+
+<path id="map-europe" class="continent-shape"
+d="M470 130 L520 120 L540 150 L500 170 Z"/>
+
+<path id="map-africa" class="continent-shape"
+d="M520 200 L580 210 L600 300 L540 330 L500 260 Z"/>
+
+<path id="map-asia" class="continent-shape"
+d="M600 120 L780 130 L820 200 L690 210 Z"/>
+
+<path id="map-oceania" class="continent-shape"
+d="M830 300 L900 320 L880 360 L820 340 Z"/>
+
+<path id="map-antarctica" class="continent-shape"
+d="M200 420 L800 420 L750 460 L250 460 Z"/>
+
+</svg>
+
+
+</div>
 <script>
 const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"🕊️", dark:"🌑", poison:"☣️", bug:"🐛",electric:"⚡"};
  const habitatIcons = {
@@ -1177,6 +1205,23 @@ function addXP(rarity){
 
   updateXPDisplay();
 }
+function updateWorldMap(){
+
+  const continents = [...new Set(logged.map(a=>a.continent))];
+
+  document.querySelectorAll(".continent-shape")
+    .forEach(el => el.classList.remove("discovered"));
+
+  continents.forEach(c => {
+
+    const id = "map-" + c.replace(/\s/g,"").toLowerCase();
+    const el = document.getElementById(id);
+
+    if(el) el.classList.add("discovered");
+
+  });
+
+}
 function updateXPDisplay(){
 
   let level = Math.floor(xp / 50);
@@ -1186,21 +1231,6 @@ function updateXPDisplay(){
     "Level "+level+" Researcher • XP "+xp+" / "+nextLevel;
 }
 
-function setWeather(){
-
-  const today = new Date().toDateString();
-  let weather = localStorage.getItem("wilddex_weather");
-
-  if(!weather){
-    const types = ["sunny","rain","snow","storm"];
-    weather = types[Math.floor(Math.random()*types.length)];
-    localStorage.setItem("wilddex_weather",weather);
-  }
-
-  const overlay = document.getElementById("weatherOverlay");
-  overlay.className = weather;
-
-}
 function logAnimal(){
   let name = document.getElementById("animalInput").value.trim();
   let animal = animals.find(a => a.name === name);
@@ -1242,6 +1272,7 @@ document.body.classList.remove("discoveryFlash");
  
   renderCollection();
   updateBadges();
+  updateWorldMap();
 }
 ;
 function updateStats(){
@@ -1443,7 +1474,8 @@ renderCollection();
 updateBadges();
 updateStats();
 updateXPDisplay();
-setWeather();
+updateWorldMap();
+
 </script>
 </body>
 </html>
