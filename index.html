@@ -5,9 +5,6 @@
 <title>WildDex</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
-  <path d="M100,100 L150,150 ... (highly simplified path data) ..." fill="#ccc" stroke="#000"/>
-</svg>
 
 h1 {
   font-family: 'Press Start 2P', cursive; /* retro 8-bit font */
@@ -925,7 +922,9 @@ background-position: 0 0, 10px 10px;
 </head>
 
 <body>
-
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
+    <path d="M100,100 L150,150 ..." fill="#ccc" stroke="#000"/>
+  </svg>
 <div id="animalModal" class="modal" onclick="closeModal(event)">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">✖</span>
@@ -1147,9 +1146,7 @@ const animals = [
   {name:"Blue Mussel",scientific:"Mytilus edulis",type:"water",continent:"Europe",rarity:"common",atk:10,def:40,move:"Shell Guard", habitat:"ocean"},
   {name:"Common Shore Crab",scientific:"Carcinus maenas",type:"water",continent:"Europe",rarity:"common",atk:30,def:35,move:"Claw Snap", habitat:"ocean"},
   {name:"Red Squirrel",scientific:"Sciurus vulgaris",type:"grass",continent:"Europe",rarity:"rare",atk:45,def:40,move:"Forest Leap", habitat:"forest"},
-
   {name:"Pine Marten",scientific:"Martes martes",type:"dark",continent:"Europe",rarity:"rare",atk:70,def:55,move:"Tree Ambush", habitat:"forest"},
-
   {name:"White-Tailed Eagle",scientific:"Haliaeetus albicilla",type:"flying",continent:"Europe",rarity:"rare",atk:85,def:70,move:"Sky Tyrant", habitat:"forest"},
   {name:"Basking Shark",scientific:"Cetorhinus maximus",type:"water",continent:"Europe",rarity:"rare",atk:90,def:85,move:"Ocean Surge", habitat:"ocean"},
   {name:"Electric Eel",scientific:"Electrophorus electricus",type:"electric",type2:"water",continent:"SouthAmerica",rarity:"rare",atk:85,def:60,move:"Volt Shock", habitat:"freshwater"},
