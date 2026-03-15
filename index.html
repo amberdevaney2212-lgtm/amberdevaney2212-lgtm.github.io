@@ -1101,7 +1101,6 @@ function startAccount() {
 
   userID = username;
 
-  // Load existing data
   const savedData = localStorage.getItem(`wilddex_${userID}`);
   if (savedData) {
     const parsed = JSON.parse(savedData);
@@ -1113,7 +1112,6 @@ function startAccount() {
     xp = 0;
     alert(`New account created: ${username}`);
 
-    // Add to accounts list
     const accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
     if (!accounts.includes(username)) {
       accounts.push(username);
@@ -1121,16 +1119,17 @@ function startAccount() {
     }
   }
 
-  // Update the dropdown so the new account appears
-  loadAccounts(); // <-- Add this line here
+  // Update dropdown
+  loadAccounts();
 
-  // Show main app, hide login
+  // Show main app
   document.getElementById("loginBox").style.display = "none";
   document.getElementById("app").style.display = "block";
 
-  loadData(); // your existing function for initializing the app
+  // Minimal initialization if loadData() is missing:
+  document.getElementById("xpDisplay").innerText = `XP: ${xp}`;
+  renderCollection();  // if you have this function defined
 }
-
 // Save function
 function saveData() {
   if (!userID) return;
