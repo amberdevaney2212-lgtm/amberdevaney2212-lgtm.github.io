@@ -1055,7 +1055,7 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 
 
 </div>
-<script type="module">
+<script>
 function switchAccount() {
   saveData(); // save current account
 
@@ -1143,26 +1143,15 @@ window.onload = () => {
 };
 
 // Example: integrate with your existing logAnimal
-function logAnimal() {
-  const input = document.getElementById("animalInput").value.trim();
-  if (!input) return;
 
-  const animal = animals.find(a => a.name.toLowerCase() === input.toLowerCase());
-  if (!animal) return alert("Animal not found!");
-
-  if (!logged.includes(animal.name)) {
-    logged.push(animal.name);
-    xp += 10; // example XP
-    document.getElementById("logMessage").innerText = `Logged ${animal.name}! +10 XP`;
-    saveData(); // save after each log
-    renderCollection();
-  } else {
-    document.getElementById("logMessage").innerText = `${animal.name} already logged!`;
-  }
-
-  document.getElementById("animalInput").value = "";
-}
-
+// Make functions accessible to HTML onclick
+window.startAccount = startAccount;
+window.switchAccount = switchAccount;
+window.selectAccount = selectAccount;
+window.logAnimal = logAnimal;
+window.openPage = openPage;      // for your tabs
+window.closeModal = closeModal;  // for closing modals
+window.releaseAnimal = releaseAnimal; // for release button
 const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"🕊️", dark:"🌑", poison:"☣️", bug:"🐛",electric:"⚡"};
  const habitatIcons = {
   forest:"🌲",
@@ -1403,14 +1392,7 @@ async function getImage(name){
   }
 
 }
-  async function saveData(){
-
-await setDoc(doc(db,"users",userID),{
-logged:logged,
-xp:xp
-});
-
-}
+  
 async function loadData(){
 
 const ref=doc(db,"users",userID);
