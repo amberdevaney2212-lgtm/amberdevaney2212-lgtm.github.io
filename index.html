@@ -1142,12 +1142,10 @@ function startAccount() {
   document.getElementById("loginBox").style.display = "none";
   document.getElementById("app").style.display = "block";
   renderCollection();
-}
+
   // Minimal initialization if loadData() is missing:
   document.getElementById("xpDisplay").innerText = `XP: ${xp}`;
-  renderCollection();  // if you have this function defined
 }
-
  function updateAvatar(event) {
   const file = event.target.files[0];
   if (!file) return;
