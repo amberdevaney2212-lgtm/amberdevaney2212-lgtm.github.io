@@ -923,15 +923,15 @@ background-position: 0 0, 10px 10px;
 
 <body>
 <div id="loginBox">
+  <h2>WildDex Login</h2>
 
-<h2>WildDex Login</h2>
+  <label for="accountSelect">Select account:</label><br>
+  <select id="accountSelect" onchange="selectAccount()">
+    <option value="">-- New Account --</option>
+  </select><br><br>
 
-<input id="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
-
-<button onclick="register()">Register</button>
-<button onclick="login()">Login</button>
-
+  <input id="usernameInput" placeholder="Enter username for new account"><br><br>
+  <button onclick="startAccount()">Start / Create</button>
 </div>
 
 <div id="app" style="display:none;"> 
@@ -954,7 +954,9 @@ Release
 </div>
 
 <h1>WildDex</h1>
-
+<button id="switchAccountBtn" onclick="switchAccount()" style="margin-bottom:10px;padding:6px 12px;border-radius:8px;background:#f0ad4e;color:white;border:none;cursor:pointer;">
+  Switch Account
+</button>
 <div class="tabs">
 
 <div class="tab active" onclick="openPage(event,'log')">📘 Log</div>
@@ -1054,57 +1056,112 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 
 </div>
 <script type="module">
+function switchAccount() {
+  saveData(); // save current account
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+  // hide main app, show login box
+  document.getElementById("app").style.display = "none";
+  document.getElementById("loginBox").style.display = "block";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDQjfDbfELaJKy6CYF-EaGSy3HMVfRv0NM",
-  authDomain: "wilddex-5bbb0.firebaseapp.com",
-  projectId: "wilddex-5bbb0",
-  storageBucket: "wilddex-5bbb0.firebasestorage.app",
-  messagingSenderId: "751823583630",
-  appId: "1:751823583630:web:1d8560ca3dd4bc51c2ccdf"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+  // reset inputs
+  document.getElementById("usernameInput").value = "";
+  document.getElementById("accountSelect").value = "";
+  userID = null;
+  logged = [];
+  xp = 0;
+}
 
 let userID = null;
 let logged = [];
 let xp = 0;
-async function register(){
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
-
-const cred = await createUserWithEmailAndPassword(auth,email,password);
-
-userID = cred.user.uid;
-
-document.getElementById("loginBox").style.display="none";
-document.getElementById("app").style.display="block";
-
-loadData();
-
+// Populate dropdown with saved accounts
+function loadAccounts() {
+  const accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
+  const select = document.getElementById("accountSelect");
+  select.innerHTML = '<option value="">-- New Account --</option>';
+  accounts.forEach(name => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    select.appendChild(opt);
+  });
 }
 
-async function login(){
+// When user selects an existing account
+function selectAccount() {
+  const selected = document.getElementById("accountSelect").value;
+  document.getElementById("usernameInput").value = selected;
+}
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+// Start / create account
+function startAccount() {
+  const username = document.getElementById("usernameInput").value.trim();
+  if (!username) return alert("Please enter a username!");
 
-const cred = await signInWithEmailAndPassword(auth,email,password);
+  userID = username;
 
-userID = cred.user.uid;
+  // Load existing data
+  const savedData = localStorage.getItem(`wilddex_${userID}`);
+  if (savedData) {
+    const parsed = JSON.parse(savedData);
+    logged = parsed.logged || [];
+    xp = parsed.xp || 0;
+    alert(`Welcome back, ${username}!`);
+  } else {
+    logged = [];
+    xp = 0;
+    alert(`New account created: ${username}`);
 
-document.getElementById("loginBox").style.display="none";
-document.getElementById("app").style.display="block";
+    // Add to accounts list
+    const accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
+    if (!accounts.includes(username)) {
+      accounts.push(username);
+      localStorage.setItem("wilddex_accounts", JSON.stringify(accounts));
+    }
+  }
 
-loadData();
+  // Update the dropdown so the new account appears
+  loadAccounts(); // <-- Add this line here
 
+  // Show main app, hide login
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("app").style.display = "block";
+
+  loadData(); // your existing function for initializing the app
+}
+
+// Save function
+function saveData() {
+  if (!userID) return;
+  const data = { logged, xp };
+  localStorage.setItem(`wilddex_${userID}`, JSON.stringify(data));
+}
+
+// Call this on page load
+window.onload = () => {
+  loadAccounts();
+};
+
+// Example: integrate with your existing logAnimal
+function logAnimal() {
+  const input = document.getElementById("animalInput").value.trim();
+  if (!input) return;
+
+  const animal = animals.find(a => a.name.toLowerCase() === input.toLowerCase());
+  if (!animal) return alert("Animal not found!");
+
+  if (!logged.includes(animal.name)) {
+    logged.push(animal.name);
+    xp += 10; // example XP
+    document.getElementById("logMessage").innerText = `Logged ${animal.name}! +10 XP`;
+    saveData(); // save after each log
+    renderCollection();
+  } else {
+    document.getElementById("logMessage").innerText = `${animal.name} already logged!`;
+  }
+
+  document.getElementById("animalInput").value = "";
 }
 
 const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"🕊️", dark:"🌑", poison:"☣️", bug:"🐛",electric:"⚡"};
