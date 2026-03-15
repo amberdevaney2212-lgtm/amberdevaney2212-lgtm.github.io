@@ -954,6 +954,19 @@ Release
 </div>
 
 <h1>WildDex</h1>
+<div id="profileTab" style="display:none; margin-bottom:15px; text-align:center;">
+  <img id="profilePic" src="default-avatar.png" alt="Profile Picture" style="width:60px; height:60px; border-radius:50%; border:2px solid #34c98c; object-fit:cover;">
+    <!-- Hidden file input -->
+  <input type="file" id="avatarInput" style="display:none;" accept="image/*" onchange="updateAvatar(event)">
+
+  <!-- Button to trigger file input -->
+  <button onclick="document.getElementById('avatarInput').click()" 
+          style="margin-top:5px; padding:6px 10px; border-radius:8px; cursor:pointer;">
+    Change Avatar
+  </button>
+  <p id="profileName" style="margin:5px 0; font-weight:bold;"></p>
+  <p id="profileXP" style="margin:0; font-size:14px; color:#555;"></p>
+</div>
 <button id="switchAccountBtn" onclick="switchAccount()" style="margin-bottom:10px;padding:6px 12px;border-radius:8px;background:#f0ad4e;color:white;border:none;cursor:pointer;">
   Switch Account
 </button>
@@ -1101,39 +1114,55 @@ function startAccount() {
 
   userID = username;
 
+  // ✅ Load saved data for this account, including avatar
   const savedData = localStorage.getItem(`wilddex_${userID}`);
   if (savedData) {
     const parsed = JSON.parse(savedData);
     logged = parsed.logged || [];
     xp = parsed.xp || 0;
+
+    // Load avatar if it exists
+    if (parsed.avatar) {
+      document.getElementById("profilePic").src = parsed.avatar;
+    }
+
     alert(`Welcome back, ${username}!`);
   } else {
     logged = [];
     xp = 0;
     alert(`New account created: ${username}`);
-
-    const accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
-    if (!accounts.includes(username)) {
-      accounts.push(username);
-      localStorage.setItem("wilddex_accounts", JSON.stringify(accounts));
-    }
   }
 
-  // Update dropdown
-  loadAccounts();
+  // Update profile display
+  document.getElementById("profileName").innerText = username;
+  document.getElementById("profileXP").innerText = `XP: ${xp}`;
+  document.getElementById("profileTab").style.display = "block";
 
-  // Show main app
+  loadAccounts();
   document.getElementById("loginBox").style.display = "none";
   document.getElementById("app").style.display = "block";
-
+  renderCollection();
+}
   // Minimal initialization if loadData() is missing:
   document.getElementById("xpDisplay").innerText = `XP: ${xp}`;
   renderCollection();  // if you have this function defined
 }
+
+ function updateAvatar(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    document.getElementById("profilePic").src = reader.result;
+    saveData(); // save new avatar
+  };
+  reader.readAsDataURL(file);
+} 
 // Save function
 function saveData() {
   if (!userID) return;
-  const data = { logged, xp };
+  const avatarSrc = document.getElementById("profilePic").src;
+  const data = { logged, xp, avatar: avatarSrc };
   localStorage.setItem(`wilddex_${userID}`, JSON.stringify(data));
 }
 
