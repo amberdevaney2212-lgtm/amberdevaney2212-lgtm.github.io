@@ -1244,6 +1244,24 @@ const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"�
 const continentIcons={Africa:"🌍", Europe:"🌍", Asia:"🌏", NorthAmerica:"🌎", SouthAmerica:"🌎", Oceania:"🦘", Antarctica:"🐧"};
 
 const animals = [
+{name:"Barbary Macaque",scientific:"Macaca sylvanus",type:"grass",continent:"Africa",rarity:"rare",atk:60,def:55,move:"Mountain Leap",habitat:"forest",region:"Morocco"},
+{name:"Fennec Fox",scientific:"Vulpes zerda",type:"ground",continent:"Africa",rarity:"rare",atk:50,def:40,move:"Desert Dash",habitat:"desert",region:"Morocco"},
+{name:"Dorcas Gazelle",scientific:"Gazella dorcas",type:"grass",continent:"Africa",rarity:"uncommon",atk:45,def:40,move:"Swift Sprint",habitat:"desert",region:"Morocco"},
+{name:"Barbary Ground Squirrel",scientific:"Atlantoxerus getulus",type:"normal",continent:"Africa",rarity:"common",atk:35,def:30,move:"Burrow Dash",habitat:"rocky",region:"Morocco"},
+{name:"Egyptian Vulture",scientific:"Neophron percnopterus",type:"flying",continent:"Africa",rarity:"rare",atk:55,def:40,move:"Sky Dive",habitat:"mountain",region:"Morocco"},
+{name:"North African Hedgehog",scientific:"Atelerix algirus",type:"grass",continent:"Africa",rarity:"uncommon",atk:40,def:45,move:"Spike Roll",habitat:"desert",region:"Morocco"},
+{name:"Sand Cat",scientific:"Felis margarita",type:"dark",continent:"Africa",rarity:"rare",atk:55,def:45,move:"Silent Pounce",habitat:"desert",region:"Morocco"},
+{name:"Barbary Partridge",scientific:"Alectoris barbara",type:"flying",continent:"Africa",rarity:"common",atk:35,def:35,move:"Rapid Peck",habitat:"grassland",region:"Morocco"},
+{name:"Moroccan Fat-Tailed Scorpion",scientific:"Androctonus mauritanicus",type:"poison",continent:"Africa",rarity:"rare",atk:80,def:45,move:"Venom Strike",habitat:"desert",region:"Morocco"},
+{name:"Atlas Yellow Scorpion",scientific:"Buthus atlantis",type:"poison",continent:"Africa",rarity:"uncommon",atk:55,def:35,move:"Sand Ambush",habitat:"desert",region:"Morocco"},
+{name:"Mediterranean Yellow Scorpion",scientific:"Buthus occitanus",type:"poison",continent:"Africa",rarity:"uncommon",atk:60,def:40,move:"Quick Sting",habitat:"rocky",region:"Morocco"},
+{name:"Lienhard's Buthus",scientific:"Buthus lienhardi",type:"poison",continent:"Africa",rarity:"uncommon",atk:55,def:35,move:"Rock Strike",habitat:"rocky",region:"Morocco"},
+{name:"Malhomme's Buthus",scientific:"Buthus malhommei",type:"poison",continent:"Africa",rarity:"uncommon",atk:55,def:35,move:"Desert Jab",habitat:"desert",region:"Morocco"},
+{name:"Paris Buthus",scientific:"Buthus paris",type:"poison",continent:"Africa",rarity:"common",atk:50,def:35,move:"Sand Lunge",habitat:"desert",region:"Morocco"},
+{name:"Moroccan Butheoloides",scientific:"Butheoloides maroccanus",type:"poison",continent:"Africa",rarity:"uncommon",atk:45,def:35,move:"Night Sting",habitat:"rocky",region:"Morocco"},
+{name:"Gentili Scorpion",scientific:"Hottentotta gentili",type:"poison",continent:"Africa",rarity:"rare",atk:65,def:40,move:"Lightning Sting",habitat:"desert",region:"Morocco"},
+{name:"Moroccan Large-Clawed Scorpion",scientific:"Scorpio fuliginosus",type:"ground",continent:"Africa",rarity:"common",atk:40,def:60,move:"Crushing Grip",habitat:"rocky",region:"Morocco"},
+{name:"Mogador Scorpion",scientific:"Scorpio mogadorensis",type:"ground",continent:"Africa",rarity:"uncommon",atk:45,def:65,move:"Pincer Slam",habitat:"rocky",region:"Morocco"},
   {name:"African Lion",scientific:"Panthera leo",type:"fire",continent:"Africa",rarity:"rare",atk:80,def:70,move:"Flame Pounce", habitat:"grassland"},
   {name:"Bald Eagle",scientific:"Haliaeetus leucocephalus",type:"flying",continent:"NorthAmerica",rarity:"uncommon",atk:60,def:50,move:"Sky Dive", habitat:"forest"},
   {name:"Polar Bear",scientific:"Ursus maritimus",type:"ice",continent:"Antarctica",rarity:"rare",atk:75,def:80,move:"Frozen Swipe", habitat:"polar"},
@@ -1601,7 +1619,8 @@ else if (irishSpecies.length >= 1) createBadge("🌱 Novice Explorer", `Logged 1
 if (forestAnimals.length >= 50) createBadge("🌲🌲🌲 Forest Guardian", "Logged 50+ forest animals!", "badge-forest");
 else if (forestAnimals.length >= 10) createBadge("🌳 Forest Sentinel", `Logged 10+ forest animals. ${50 - forestAnimals.length} more to Guardian!`, "badge-forest");
 else if (forestAnimals.length >= 1) createBadge("🍃 Forest Novice", `Logged 1+ forest animals. ${10 - forestAnimals.length} more to Sentinel!`, "badge-forest");
-
+if (moroccanSpecies.length >= 5)
+addBadge("Morocco Explorer 🇲🇦","Log 5 animals from Morocco");
 // Ocean animals
 if (oceanAnimals.length >= 20) createBadge("🌊🐋 Sea Sage", "Logged 20+ ocean animals!", "badge-ocean");
 else if (oceanAnimals.length >= 5) createBadge("🌊🐟 Atlantic Watcher", `Logged 5+ ocean animals. ${20 - oceanAnimals.length} more to Sea Sage!`, "badge-ocean");
