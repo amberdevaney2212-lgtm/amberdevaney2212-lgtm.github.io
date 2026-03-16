@@ -16,11 +16,12 @@ h1 {
   color: #de81b9;                         /* dark green text */
   letter-spacing: 2px;                    /* slightly spaced letters */
 }
-#map{
-  height:400px;
-  width:100%;
-  border-radius:10px;
-}
+ #map { height: 100vh; }
+    .explored-square {
+      fill: rgba(34, 139, 34, 0.5);
+      stroke: #228B22;
+      stroke-width: 1;
+    }
   #profileTab{
   position: absolute;
   top:10px;
@@ -1091,19 +1092,8 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <h2>🌍 WildDex World Map</h2>
 
 <div id="map"></div>
-
-</div>
-<script>
-const map = L.map('map').setView([53.27, -9.05], 13); // Galway area
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution:'© OpenStreetMap'
-}).addTo(map);
-function addSighting(animal, lat, lon){
-  L.marker([lat, lon])
-    .addTo(map)
-    .bindPopup("Spotted: " + animal);
-}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="territory.js"></script>
 
   
 function switchAccount() {
