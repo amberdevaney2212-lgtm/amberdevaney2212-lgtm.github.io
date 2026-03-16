@@ -967,6 +967,7 @@ background-position: 0 0, 10px 10px;
     <p id="modalRegion"></p>
     <p id="modalContinent"></p>
     <p id="modalHabitat"></p>
+    <p id="modalFact"></p>
     <p id="modalDate"></p>
     <button onclick="releaseAnimal()" style="margin-top:10px;padding:8px 14px;border-radius:8px;border:none;background:#ff6b6b;color:white;cursor:pointer;">
 Release
@@ -1270,13 +1271,13 @@ const animals = [
   {name:"Horseshoe Bat",scientific:"Rhinolophus hipposideros",type:"dark",type2:"flying",continent:"Europe",rarity:"rare",atk:50,def:40,move:"Night Dive", habitat:"forest"},
   {name:"Gray Wolf",scientific:"Canis lupus",type:"dark",continent:"NorthAmerica",rarity:"uncommon",atk:65,def:55,move:"Shadow Hunt", habitat:"forest"},
   {name:"Komodo Dragon",scientific:"Varanus komodoensis",type:"fire",type2:"poison",continent:"Asia",rarity:"rare",atk:85,def:70,move:"Venom Bite", habitat:"desert"},
-  {name:"Red Fox",scientific:"Vulpes vulpes",type:"fire",continent:"Europe",rarity:"common",atk:50,def:40,move:"Blaze Dash", habitat:"forest",region: "Ireland" },
+  {name:"Red Fox",scientific:"Vulpes vulpes",type:"fire",continent:"Europe",rarity:"common",atk:50,def:40,move:"Blaze Dash", habitat:"forest",region: "Ireland",fact:"Red foxes can hear a mouse squeak from 30 metres away."},
   {name:"Snowy Owl",scientific:"Bubo scandiacus",type:"ice",type2:"flying",continent:"NorthAmerica",rarity:"uncommon",atk:55,def:45,move:"Frost Glide", habitat:"polar"},
   {name:"Praying Mantis",scientific:"Mantodea",type:"bug",continent:"Asia",rarity:"common",atk:45,def:35,move:"Blade Strike", habitat:"forest"},
   {name:"Jaguar",scientific:"Panthera onca",type:"dark",type2:"fire",continent:"SouthAmerica",rarity:"rare",atk:80,def:65,move:"Night Pounce", habitat:"rainforest"},
   {name:"Emperor Penguin",scientific:"Aptenodytes forsteri",type:"ice",continent:"Antarctica",rarity:"uncommon",atk:40,def:60,move:"Glacier Slide", habitat:"polar"},
   {name:"Honey Bee",scientific:"Apis mellifera",type:"bug",type2:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Sting Swarm", habitat:"grassland"},
-  {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll", habitat:"forest",region:"Ireland"},
+  {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll", habitat:"forest",region:"Ireland",fact:"A hedgehog can have over 5,000 spines on its body. They are also what Mikaela did her thesis on!"},
   {name:"Red Deer",scientific:"Cervus elaphus",type:"grass",continent:"Europe",rarity:"common",atk:60,def:55,move:"Antler Charge", habitat:"forest"},
   {name:"European Badger",scientific:"Meles meles",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Burrow Strike", habitat:"forest",region: "Ireland"},
   {name:"Barn Owl",scientific:"Tyto alba",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Silent Glide", habitat:"grassland"},
