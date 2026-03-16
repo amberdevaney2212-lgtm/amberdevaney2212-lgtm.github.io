@@ -1103,13 +1103,12 @@ function addSighting(animal, lat, lon){
   
 function switchAccount() {
   saveData();
+  localStorage.removeItem("wilddex_currentUser"); // ✅ remove current user
 
   document.getElementById("app").style.display = "none";
   document.getElementById("loginBox").style.display = "block";
-
   document.getElementById("profilePic").src = "default-avatar.png";
 
-  // reset inputs
   document.getElementById("usernameInput").value = "";
   document.getElementById("accountSelect").value = "";
   userID = null;
@@ -1146,37 +1145,28 @@ function startAccount() {
   if (!username) return alert("Please enter a username!");
 
   userID = username;
-document.getElementById("profilePic").src = "default-avatar.png";
-  // ✅ Load saved data for this account, including avatar
+  localStorage.setItem("wilddex_currentUser", userID); // ✅ store current user
+
   const savedData = localStorage.getItem(`wilddex_${userID}`);
   if (savedData) {
     const parsed = JSON.parse(savedData);
     logged = parsed.logged || [];
     xp = parsed.xp || 0;
-
-   // Load avatar if it exists, otherwise use default
-if (parsed.avatar) {
-  document.getElementById("profilePic").src = parsed.avatar;
-} else {
-  document.getElementById("profilePic").src = "default-avatar.png";
-}
-
+    if (parsed.avatar) document.getElementById("profilePic").src = parsed.avatar;
+    else document.getElementById("profilePic").src = "default-avatar.png";
     alert(`Welcome back, ${username}!`);
- } else {
-  logged = [];
-  xp = 0;
-let accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
+  } else {
+    logged = [];
+    xp = 0;
+    let accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
     if (!accounts.includes(username)) {
       accounts.push(username);
       localStorage.setItem("wilddex_accounts", JSON.stringify(accounts));
     }
-  // set default avatar for new account
-  document.getElementById("profilePic").src = "default-avatar.png";
+    document.getElementById("profilePic").src = "default-avatar.png";
+    alert(`New account created: ${username}`);
+  }
 
-  alert(`New account created: ${username}`);
-}
-
-  // Update profile display
   document.getElementById("profileName").innerText = username;
   document.getElementById("profileXP").innerText = `XP: ${xp}`;
   document.getElementById("profileTab").style.display = "block";
@@ -1186,7 +1176,6 @@ let accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
   document.getElementById("app").style.display = "block";
   renderCollection();
 
-  // Minimal initialization if loadData() is missing:
   document.getElementById("xpDisplay").innerText = `XP: ${xp}`;
 }
  function updateAvatar(event) {
@@ -1207,9 +1196,14 @@ function saveData() {
   localStorage.setItem(`wilddex_${userID}`, JSON.stringify(data));
 }
 
-// Call this on page load
 window.onload = () => {
   loadAccounts();
+
+  const lastUser = localStorage.getItem("wilddex_currentUser");
+  if (lastUser) {
+    document.getElementById("usernameInput").value = lastUser;
+    startAccount(); // automatically log in
+  }
 };
 
 // Example: integrate with your existing logAnimal
