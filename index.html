@@ -12,13 +12,13 @@ h1 {
   text-transform: uppercase;              /* classic game style */
   color: #de81b9;                         /* dark green text */
   letter-spacing: 2px;                    /* slightly spaced letters */
-#profileTab{
+}
+  #profileTab{
   position:fixed;
   top:10px;
   right:15px;
   text-align:center;
   z-index:1000;
-
   background:rgba(255,255,255,0.9);
   padding:8px 12px;
   border-radius:12px;
@@ -1081,11 +1081,13 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 </div>
 <script>
 function switchAccount() {
-  saveData(); // save current account
+  saveData();
 
-  // hide main app, show login box
   document.getElementById("app").style.display = "none";
   document.getElementById("loginBox").style.display = "block";
+
+  document.getElementById("profilePic").src = "default-avatar.png";
+}
 
   // reset inputs
   document.getElementById("usernameInput").value = "";
@@ -1143,7 +1145,11 @@ if (parsed.avatar) {
  } else {
   logged = [];
   xp = 0;
-
+let accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
+    if (!accounts.includes(username)) {
+      accounts.push(username);
+      localStorage.setItem("wilddex_accounts", JSON.stringify(accounts));
+    }
   // set default avatar for new account
   document.getElementById("profilePic").src = "default-avatar.png";
 
