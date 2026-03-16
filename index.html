@@ -933,7 +933,7 @@ background-position: 0 0, 10px 10px;
  /* Modal additional info */
 #modalHabitat, #modalDate {
   font-size: 14px;
-  font-style: italic;
+  font-style: ariel;
   color: #555;
   margin-top: 4px;
 } 
@@ -963,6 +963,7 @@ background-position: 0 0, 10px 10px;
     <p id="modalMove"></p>
     <p id="modalStats"></p>
     <p id="modalType"></p>
+    <p id="modalRegion"></p>
     <p id="modalContinent"></p>
     <p id="modalHabitat"></p>
     <p id="modalDate"></p>
@@ -1252,13 +1253,13 @@ const animals = [
   {name:"Jaguar",scientific:"Panthera onca",type:"dark",type2:"fire",continent:"SouthAmerica",rarity:"rare",atk:80,def:65,move:"Night Pounce", habitat:"rainforest"},
   {name:"Emperor Penguin",scientific:"Aptenodytes forsteri",type:"ice",continent:"Antarctica",rarity:"uncommon",atk:40,def:60,move:"Glacier Slide", habitat:"polar"},
   {name:"Honey Bee",scientific:"Apis mellifera",type:"bug",type2:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Sting Swarm", habitat:"grassland"},
-  {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll", habitat:"forest"},
+  {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll", habitat:"forest","Ireland"},
   {name:"Red Deer",scientific:"Cervus elaphus",type:"grass",continent:"Europe",rarity:"common",atk:60,def:55,move:"Antler Charge", habitat:"forest"},
-  {name:"European Badger",scientific:"Meles meles",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Burrow Strike", habitat:"forest"},
+  {name:"European Badger",scientific:"Meles meles",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Burrow Strike", habitat:"forest","Ireland"},
   {name:"Barn Owl",scientific:"Tyto alba",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Silent Glide", habitat:"grassland"},
-  {name:"European Robin",scientific:"Erithacus rubecula",type:"flying",continent:"Europe",rarity:"common",atk:25,def:20,move:"Quick Chirp", habitat:"forest"},
+  {name:"European Robin",scientific:"Erithacus rubecula",type:"flying",continent:"Europe",rarity:"common",atk:25,def:20,move:"Quick Chirp", habitat:"forest","Ireland"},
   {name:"Wild Boar",scientific:"Sus scrofa",type:"dark",continent:"Europe",rarity:"uncommon",atk:70,def:65,move:"Tusk Rush", habitat:"forest"},
-  {name:"European Otter",scientific:"Lutra lutra",type:"water",continent:"Europe",rarity:"uncommon",atk:55,def:50,move:"River Dash", habitat:"freshwater"},
+  {name:"European Otter",scientific:"Lutra lutra",type:"water",continent:"Europe",rarity:"uncommon",atk:55,def:50,move:"River Dash", habitat:"freshwater","Ireland"},
   {name:"Common Frog",scientific:"Rana temporaria",type:"water",continent:"Europe",rarity:"common",atk:30,def:25,move:"Leap Splash", habitat:"wetland"},
   {name:"European Green Lizard",scientific:"Lacerta viridis",type:"grass",continent:"Europe",rarity:"common",atk:40,def:35,move:"Sun Dash", habitat:"grassland"},
   {name:"European Brown Bear",scientific:"Ursus arctos arctos",type:"dark",continent:"Europe",rarity:"rare",atk:85,def:80,move:"Forest Smash", habitat:"forest"},
