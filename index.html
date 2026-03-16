@@ -12,7 +12,18 @@ h1 {
   text-transform: uppercase;              /* classic game style */
   color: #de81b9;                         /* dark green text */
   letter-spacing: 2px;                    /* slightly spaced letters */
+#profileTab{
+  position:fixed;
+  top:10px;
+  right:15px;
+  text-align:center;
+  z-index:1000;
 
+  background:rgba(255,255,255,0.9);
+  padding:8px 12px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
   /* Pixelated blocky outline with multiple shadows */
   text-shadow:
     1px 1px 0 #000,
@@ -954,7 +965,7 @@ Release
 </div>
 
 <h1>WildDex</h1>
-<div id="profileTab" style="display:none; margin-bottom:15px; text-align:center;">
+<div id="profileTab" style="display:none;">
   <img id="profilePic" src="default-avatar.png" alt="Profile Picture" style="width:60px; height:60px; border-radius:50%; border:2px solid #34c98c; object-fit:cover;">
     <!-- Hidden file input -->
   <input type="file" id="avatarInput" style="display:none;" accept="image/*" onchange="updateAvatar(event)">
@@ -1121,17 +1132,23 @@ function startAccount() {
     logged = parsed.logged || [];
     xp = parsed.xp || 0;
 
-    // Load avatar if it exists
-    if (parsed.avatar) {
-      document.getElementById("profilePic").src = parsed.avatar;
-    }
+   // Load avatar if it exists, otherwise use default
+if (parsed.avatar) {
+  document.getElementById("profilePic").src = parsed.avatar;
+} else {
+  document.getElementById("profilePic").src = "default-avatar.png";
+}
 
     alert(`Welcome back, ${username}!`);
-  } else {
-    logged = [];
-    xp = 0;
-    alert(`New account created: ${username}`);
-  }
+ } else {
+  logged = [];
+  xp = 0;
+
+  // set default avatar for new account
+  document.getElementById("profilePic").src = "default-avatar.png";
+
+  alert(`New account created: ${username}`);
+}
 
   // Update profile display
   document.getElementById("profileName").innerText = username;
