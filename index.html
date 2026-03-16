@@ -1621,8 +1621,9 @@ else if (irishSpecies.length >= 1) createBadge("🌱 Novice Explorer", `Logged 1
 if (forestAnimals.length >= 50) createBadge("🌲🌲🌲 Forest Guardian", "Logged 50+ forest animals!", "badge-forest");
 else if (forestAnimals.length >= 10) createBadge("🌳 Forest Sentinel", `Logged 10+ forest animals. ${50 - forestAnimals.length} more to Guardian!`, "badge-forest");
 else if (forestAnimals.length >= 1) createBadge("🍃 Forest Novice", `Logged 1+ forest animals. ${10 - forestAnimals.length} more to Sentinel!`, "badge-forest");
-if (moroccanSpecies.length >= 5)
-addBadge("Morocco Explorer 🇲🇦","Log 5 animals from Morocco");
+
+if (moroccanSpecies.length >= 1) createBadge("🌱 Moroccan Explorer", `Logged 1+ Moroccan species. ${10 - moroccanSpecies.length} more to Moroccan Expert!`, "badge-moroccan");
+
 // Ocean animals
 if (oceanAnimals.length >= 20) createBadge("🌊🐋 Sea Sage", "Logged 20+ ocean animals!", "badge-ocean");
 else if (oceanAnimals.length >= 5) createBadge("🌊🐟 Atlantic Watcher", `Logged 5+ ocean animals. ${20 - oceanAnimals.length} more to Sea Sage!`, "badge-ocean");
