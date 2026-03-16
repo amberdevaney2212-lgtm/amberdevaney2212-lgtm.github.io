@@ -1125,7 +1125,7 @@ function startAccount() {
   if (!username) return alert("Please enter a username!");
 
   userID = username;
-
+document.getElementById("profilePic").src = "default-avatar.png";
   // ✅ Load saved data for this account, including avatar
   const savedData = localStorage.getItem(`wilddex_${userID}`);
   if (savedData) {
