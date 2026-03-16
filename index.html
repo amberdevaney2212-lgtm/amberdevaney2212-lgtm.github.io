@@ -1161,7 +1161,7 @@ function saveData() {
   localStorage.setItem(`wilddex_${userID}`, JSON.stringify(data));
 }
 
-.onload = () => {
+window.onload = () => {
   loadAccounts();
 
   const lastUser = localStorage.getItem("wilddex_currentUser");
@@ -1631,23 +1631,32 @@ function openPage(e, id){
 
 let currentAnimal = null;
 function openAnimal(a,img){
-  currentAnimal=a;
-  document.getElementById("modalName").textContent=a.name;
-  document.getElementById("modalImg").src=img;
-  document.getElementById("modalScientific").textContent="Scientific: "+a.scientific;
-  document.getElementById("modalMove").textContent="Move: "+a.move;
-  document.getElementById("modalStats").textContent=`ATK ${a.atk} | DEF ${a.def} | HP ${a.atk+a.def}`;
-  document.getElementById("modalType").textContent=`Type: ${a.type}${a.type2?" / "+a.type2:""}`;
-  document.getElementById("modalContinent").textContent="Continent: "+a.continent;
-document.getElementById("modalHabitat").textContent =
-    a.habitat ? "Habitat: " + a.habitat : "Habitat: Unknown";
-  document.getElementById("modalFact").textContent =
-  a.fact ? "Fun Fact: " + a.fact : "Fun Fact: Unknown";
-  // ✅ Add this line
-  document.getElementById("modalDate").textContent =
-    a.recordedAt ? "Recorded: " + new Date(a.recordedAt).toLocaleString() : "Recorded: Unknown";
+  currentAnimal = a;
 
-  document.getElementById("animalModal").style.display="flex";
+  document.getElementById("modalName").textContent = a.name;
+  document.getElementById("modalImg").src = img;
+  document.getElementById("modalScientific").textContent = "Scientific: " + a.scientific;
+  document.getElementById("modalMove").textContent = "Move: " + a.move;
+  document.getElementById("modalStats").textContent = "ATK " + a.atk + " | DEF " + a.def;
+  document.getElementById("modalType").textContent =
+    "Type: " + a.type + (a.type2 ? " / " + a.type2 : "");
+
+  document.getElementById("modalRegion").textContent =
+    a.region ? "Region: " + a.region : "";
+
+  document.getElementById("modalContinent").textContent =
+    "Continent: " + a.continent;
+
+  document.getElementById("modalHabitat").textContent =
+    a.habitat ? "Habitat: " + a.habitat : "";
+
+  document.getElementById("modalFact").textContent =
+    a.fact ? "Fact: " + a.fact : "";
+
+  document.getElementById("modalDate").textContent =
+    a.recordedAt ? "Logged: " + new Date(a.recordedAt).toLocaleDateString() : "";
+
+  document.getElementById("animalModal").style.display = "flex";
 }
 
 function closeModal(e){
