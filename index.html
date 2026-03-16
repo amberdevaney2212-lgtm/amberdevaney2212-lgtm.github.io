@@ -1246,7 +1246,7 @@ const continentIcons={Africa:"🌍", Europe:"🌍", Asia:"🌏", NorthAmerica:"�
 
 const animals = [
 {name:"Barbary Macaque",scientific:"Macaca sylvanus",type:"grass",continent:"Africa",rarity:"rare",atk:60,def:55,move:"Mountain Leap",habitat:"forest",region:"Morocco"},
-{name:"Fennec Fox",scientific:"Vulpes zerda",type:"ground",continent:"Africa",rarity:"rare",atk:50,def:40,move:"Desert Dash",habitat:"desert",region:"Morocco"},
+{name:"Fennec Fox",scientific:"Vulpes zerda",type:"dark",continent:"Africa",rarity:"rare",atk:50,def:40,move:"Desert Dash",habitat:"desert",region:"Morocco"},
 {name:"Dorcas Gazelle",scientific:"Gazella dorcas",type:"grass",continent:"Africa",rarity:"uncommon",atk:45,def:40,move:"Swift Sprint",habitat:"desert",region:"Morocco"},
 {name:"Barbary Ground Squirrel",scientific:"Atlantoxerus getulus",type:"normal",continent:"Africa",rarity:"common",atk:35,def:30,move:"Burrow Dash",habitat:"rocky",region:"Morocco"},
 {name:"Egyptian Vulture",scientific:"Neophron percnopterus",type:"flying",continent:"Africa",rarity:"rare",atk:55,def:40,move:"Sky Dive",habitat:"mountain",region:"Morocco"},
@@ -1579,6 +1579,7 @@ function updateBadges() {
   const dualTypes = logged.filter(a => a.type2).length;
   const legendaryCount = logged.filter(a => a.rarity === "legendary").length;
   const irishSpecies = logged.filter(a => a.region === "Ireland");
+  const moroccanSpecies = logged.filter(a => a.region === "Morocoo")
   const forestAnimals = logged.filter(a => a.habitat === "forest");
   const oceanAnimals = logged.filter(a => a.habitat === "ocean");
   const birds = logged.filter(a => a.type === "flying");
