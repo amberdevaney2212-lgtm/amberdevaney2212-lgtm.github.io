@@ -950,7 +950,7 @@ background-position: 0 0, 10px 10px;
   </select><br><br>
 
   <input id="usernameInput" placeholder="Enter username for new account"><br><br>
-  <button onclick="()">Start / Create</button>
+ <button onclick="startAccount()">Start / Create</button>
 </div>
 
 <div id="app" style="display:none;"> 
@@ -1079,6 +1079,8 @@ onkeydown="if(event.key==='Enter') logAnimal()">
   <p id="statRare"></p>
   <p id="statHabitats"></p>
   <p id="statContinents"></p>
+
+</div>
 
 <div id="mapPage" class="page">
 
@@ -1319,8 +1321,8 @@ const animals = [
   {name:"Torpedo Ray",scientific:"Torpedo nobiliana",type:"electric",type2:"water",continent:"Europe",rarity:"rare",atk:80,def:70,move:"Shock Wave", habitat:"ocean"},
 {name:"Killer Whale",scientific:"Orcinus orca",type:"water",type2:"fire", continent:"Europe",rarity:"rare",atk:95,def:80,move:"Tidal Hunt",habitat:"ocean"},
 {name:"Leatherback Sea Turtle",scientific:"Dermochelys coriacea",type:"water",continent:"Europe",rarity:"rare",atk:70,def:90,move:"Deep Current",habitat:"ocean"},
-{name:"Manx Shearwater",scientific:"Puffinus puffinus",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Ocean Glide"},
-{name:"Sand Lizard",scientific:"Lacerta agilis",type:"grass",continent:"Europe",rarity:"rare",atk:45,def:40,move:"Sun Dash"},
+{name:"Manx Shearwater",scientific:"Puffinus puffinus",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Ocean Glide",habitat:"ocean"},
+{name:"Sand Lizard",scientific:"Lacerta agilis",type:"grass",continent:"Europe",rarity:"rare",atk:45,def:40,move:"Sun Dash",habitat:"grassland"},
 {name:"Irish Mountain Goat",scientific:"Capra aegagrus hircus",type:"grass",continent:"Europe",rarity:"uncommon",atk:65,def:60,move:"Cliff Charge",habitat:"mountain"},
 {name:"Seven-Spot Ladybird",scientific:"Coccinella septempunctata",type:"bug",continent:"Europe",rarity:"common",atk:20,def:25,move:"Lucky Glide",habitat:"forest"},
 {name:"Stag Beetle",scientific:"Lucanus cervus",type:"bug",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Mandible Clamp",habitat:"forest"}
@@ -1405,6 +1407,13 @@ function logAnimal(){
   logged.push({
   ...animal,
   recordedAt: new Date().toISOString()
+});
+  navigator.geolocation.getCurrentPosition(pos=>{
+  addSighting(
+    animal.name,
+    pos.coords.latitude,
+    pos.coords.longitude
+  );
 });
 addXP(animal.rarity);
 updateStats();
@@ -1642,6 +1651,7 @@ function releaseAnimal(){
 
     updateXPDisplay();
     saveData();
+  }
   closeModal();
   renderCollection();
   updateBadges();
