@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 <meta charset="UTF-8">
 <title>WildDex</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -12,6 +15,11 @@ h1 {
   text-transform: uppercase;              /* classic game style */
   color: #de81b9;                         /* dark green text */
   letter-spacing: 2px;                    /* slightly spaced letters */
+}
+#map{
+  height:400px;
+  width:100%;
+  border-radius:10px;
 }
   #profileTab{
   position:fixed;
@@ -987,7 +995,7 @@ Release
 <div class="tab" onclick="openPage(event,'catches')">🐾 Catches</div>
 <div class="tab" onclick="openPage(event,'badges')">🏅 Badges</div>
 <div class="tab" onclick="openPage(event,'stats')">📊 Stats</div>
-<div class="tab" onclick="openPage(event,'map')">🗺 Map</div>
+<div class="tab" onclick="openPage(event,'mapPage')">🗺 Map</div>
 </div>
 
 <div id="log" class="page active">
@@ -1072,14 +1080,27 @@ onkeydown="if(event.key==='Enter') logAnimal()">
   <p id="statHabitats"></p>
   <p id="statContinents"></p>
 
+<div id="mapPage" class="page">
 
-
+  
 <h2>🌍 WildDex World Map</h2>
 
-
+<div id="map"></div>
 
 </div>
 <script>
+const map = L.map('map').setView([53.27, -9.05], 13); // Galway area
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution:'© OpenStreetMap'
+}).addTo(map);
+function addSighting(animal, lat, lon){
+  L.marker([lat, lon])
+    .addTo(map)
+    .bindPopup("Spotted: " + animal);
+}
+
+  
 function switchAccount() {
   saveData();
 
@@ -1574,6 +1595,7 @@ function openPage(e, id){
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   if (e && e.currentTarget) {
     e.currentTarget.classList.add("active");
+  setTimeout(()=>map.invalidateSize(),100);
   }
 }
 let currentAnimal=null;
