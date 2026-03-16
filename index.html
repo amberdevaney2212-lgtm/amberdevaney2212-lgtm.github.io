@@ -1174,14 +1174,14 @@ function saveData() {
 // Example: integrate with your existing logAnimal
 
 // Make functions accessible to HTML onclick
-.startAccount = startAccount;
-.switchAccount = switchAccount;
-.selectAccount = selectAccount;
-.logAnimal = logAnimal;
+// Make functions accessible to HTML onclick
+window.startAccount = startAccount;
+window.switchAccount = switchAccount;
+window.selectAccount = selectAccount;
+window.logAnimal = logAnimal;
 window.openPage = openPage;
-window.closeModal = closeModal;  // for closing modals
-window.releaseAnimal = releaseAnimal; // for release button
-// Auto-save on page close or refresh
+window.closeModal = closeModal;
+window.releaseAnimal = releaseAnimal;
 window.addEventListener("beforeunload", () => {
   saveData();
 });
