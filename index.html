@@ -24,6 +24,7 @@ h1 {
   #profileTab{
   top:10px;
   left:15px;
+  right: auto;
   text-align:center;
   z-index:1000;
   background:rgba(255,255,255,0.4);
@@ -1244,10 +1245,8 @@ const animals = [
   {name:"Poison Dart Frog",scientific:"Dendrobatidae",type:"poison",continent:"SouthAmerica",rarity:"uncommon",atk:40,def:30,move:"Toxic Jump", habitat:"rainforest"},
   {name:"Horseshoe Bat",scientific:"Rhinolophus hipposideros",type:"dark",type2:"flying",continent:"Europe",rarity:"rare",atk:50,def:40,move:"Night Dive", habitat:"forest"},
   {name:"Gray Wolf",scientific:"Canis lupus",type:"dark",continent:"NorthAmerica",rarity:"uncommon",atk:65,def:55,move:"Shadow Hunt", habitat:"forest"},
-
   {name:"Komodo Dragon",scientific:"Varanus komodoensis",type:"fire",type2:"poison",continent:"Asia",rarity:"rare",atk:85,def:70,move:"Venom Bite", habitat:"desert"},
-
-  {name:"Red Fox",scientific:"Vulpes vulpes",type:"fire",continent:"Europe",rarity:"common",atk:50,def:40,move:"Blaze Dash", habitat:"forest"},
+  {name:"Red Fox",scientific:"Vulpes vulpes",type:"fire",continent:"Europe",rarity:"common",atk:50,def:40,move:"Blaze Dash", habitat:"forest",region: "Ireland" },
   {name:"Snowy Owl",scientific:"Bubo scandiacus",type:"ice",type2:"flying",continent:"NorthAmerica",rarity:"uncommon",atk:55,def:45,move:"Frost Glide", habitat:"polar"},
   {name:"Praying Mantis",scientific:"Mantodea",type:"bug",continent:"Asia",rarity:"common",atk:45,def:35,move:"Blade Strike", habitat:"forest"},
   {name:"Jaguar",scientific:"Panthera onca",type:"dark",type2:"fire",continent:"SouthAmerica",rarity:"rare",atk:80,def:65,move:"Night Pounce", habitat:"rainforest"},
@@ -1268,8 +1267,8 @@ const animals = [
   {name:"Chamois",scientific:"Rupicapra rupicapra",type:"grass",continent:"Europe",rarity:"common",atk:55,def:50,move:"Mountain Dash", habitat:"mountain"},
   {name:"Roe Deer",scientific:"Capreolus capreolus",type:"grass",continent:"Europe",rarity:"common",atk:50,def:45,move:"Swift Bound", habitat:"forest"},
   {name:"European Hare",scientific:"Lepus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:40,def:30,move:"Rapid Hop", habitat:"grassland"},
-  {name:"Mountain Hare",scientific:"Lepus timidus",type:"ice",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Snow Dash", habitat:"mountain"},
-  {name:"Grey Seal",scientific:"Halichoerus grypus",type:"water",continent:"Europe",rarity:"uncommon",atk:60,def:65,move:"Wave Slam", habitat:"ocean"},
+  {name:"Mountain Hare",scientific:"Lepus timidus",type:"ice",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Snow Dash", habitat:"mountain",region: "Ireland" },
+  {name:"Grey Seal",scientific:"Halichoerus grypus",type:"water",continent:"Europe",rarity:"uncommon",atk:60,def:65,move:"Wave Slam", habitat:"ocean",region: "Ireland" },
   {name:"Harbour Seal",scientific:"Phoca vitulina",type:"water",continent:"Europe",rarity:"common",atk:55,def:55,move:"Tidal Roll", habitat:"ocean"},
   {name:"Atlantic Puffin",scientific:"Fratercula arctica",type:"flying",continent:"Europe",rarity:"uncommon",atk:40,def:35,move:"Dive Peck", habitat:"ocean"},
   {name:"Common Buzzard",scientific:"Buteo buteo",type:"flying",continent:"Europe",rarity:"common",atk:55,def:45,move:"Sky Swoop", habitat:"grassland"},
@@ -1298,14 +1297,14 @@ const animals = [
   {name:"Wood Ant",scientific:"Formica rufa",type:"bug",continent:"Europe",rarity:"common",atk:25,def:30,move:"Colony Rush", habitat:"forest"},
   {name:"Brown Rat",scientific:"Rattus norvegicus",type:"dark",continent:"Europe",rarity:"common",atk:30,def:25,move:"Gnaw Attack", habitat:"urban"},
   {name:"Wood Mouse",scientific:"Apodemus sylvaticus",type:"grass",continent:"Europe",rarity:"common",atk:25,def:20,move:"Forest Scurry", habitat:"forest"},
-  {name:"Mute Swan",scientific:"Cygnus olor",type:"flying",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Wing Bash", habitat:"freshwater"},
+  {name:"Mute Swan",scientific:"Cygnus olor",type:"flying",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Wing Bash", habitat:"freshwater",region: "Ireland" },
   {name:"European Glowworm",scientific:"Lampyris noctiluca",type:"bug",continent:"Europe",rarity:"uncommon",atk:20,def:25,move:"Glow Pulse", habitat:"forest"},
   {name:"Mallard Duck",scientific:"Anas platyrhynchos",type:"water",type2:"flying",continent:"Europe",rarity:"common",atk:35,def:35,move:"Splash Peck", habitat:"freshwater"},
   {name:"Grey Heron",scientific:"Ardea cinerea",type:"water",type2:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Spear Strike", habitat:"freshwater"},
   {name:"Blackbird",scientific:"Turdus merula",type:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Dawn Song", habitat:"forest"},
   {name:"Eurasian Beaver",scientific:"Castor fiber",type:"water",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Dam Slam", habitat:"freshwater"},
-  {name:"Starling",scientific:"Sturnus vulgaris",type:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Flock Burst", habitat:"urban"},
-  {name:"Common Gull",scientific:"Larus canus",type:"flying",continent:"Europe",rarity:"common",atk:35,def:30,move:"Coastal Cry", habitat:"ocean"},
+  {name:"Starling",scientific:"Sturnus vulgaris",type:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Flock Burst", habitat:"urban",region: "Ireland" },
+  {name:"Common Gull",scientific:"Larus canus",type:"flying",continent:"Europe",rarity:"common",atk:35,def:30,move:"Coastal Cry", habitat:"ocean",region: "Ireland" },
   {name:"Razorbill",scientific:"Alca torda",type:"water",type2:"flying",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Cliff Dive", habitat:"ocean"},
   {name:"European Wildcat",scientific:"Felis silvestris",type:"dark",continent:"Europe",rarity:"rare",atk:70,def:55,move:"Forest Slash", habitat:"forest"},
   {name:"European Eel",scientific:"Anguilla anguilla",type:"water",continent:"Europe",rarity:"uncommon",atk:50,def:35,move:"River Coil", habitat:"freshwater"},
@@ -1600,6 +1599,43 @@ function updateBadges() {
   // Dual-Type Explorer
   if (dualTypes >= 3) createBadge("🔗 Dual-Type Explorer", "Caught 3+ dual-type animals!");
 
+if (irishSpecies.length >= 50) createBadge("✨🍀 Master Irish Explorer", "Logged 50+ Irish species!", "badge-irish");
+else if (irishSpecies.length >= 10) createBadge("🍀 Irish Explorer", `Logged 10+ Irish species. ${50 - irishSpecies.length} more to Master!`, "badge-irish");
+else if (irishSpecies.length >= 1) createBadge("🌱 Novice Explorer", `Logged 1+ Irish species. ${10 - irishSpecies.length} more to Irish Explorer!`, "badge-irish");
+// Forest animals
+if (forestAnimals.length >= 50) createBadge("🌲🌲🌲 Forest Guardian", "Logged 50+ forest animals!", "badge-forest");
+else if (forestAnimals.length >= 10) createBadge("🌳 Forest Sentinel", `Logged 10+ forest animals. ${50 - forestAnimals.length} more to Guardian!`, "badge-forest");
+else if (forestAnimals.length >= 1) createBadge("🍃 Forest Novice", `Logged 1+ forest animals. ${10 - forestAnimals.length} more to Sentinel!`, "badge-forest");
+
+// Ocean animals
+if (oceanAnimals.length >= 20) createBadge("🌊🐋 Sea Sage", "Logged 20+ ocean animals!", "badge-ocean");
+else if (oceanAnimals.length >= 5) createBadge("🌊🐟 Atlantic Watcher", `Logged 5+ ocean animals. ${20 - oceanAnimals.length} more to Sea Sage!`, "badge-ocean");
+else if (oceanAnimals.length >= 1) createBadge("🐠🐚 Shore Observer", `Logged 1+ ocean animals. ${5 - oceanAnimals.length} more to Atlantic Watcher!`, "badge-ocean");
+// Forest animals
+// Birds
+if (birds.length >= 20) createBadge("Chorus Connoisseur", "Logged 20+ birds!", "badge-birds");
+else if (birds.length >= 5) createBadge("Song Collector", `Logged 5+ birds. ${20 - birds.length} more to Chorus Connoisseur!`, "badge-birds");
+else if (birds.length >= 1) createBadge("Bird Listener", `Logged 1+ birds. ${5 - birds.length} more to Song Collector!`, "badge-birds");
+
+// Freshwater fish
+if (freshwaterFish.length >= 20) createBadge("Master Angler", "Logged 20+ freshwater fish!", "badge-fish");
+else if (freshwaterFish.length >= 5) createBadge("River Rover", `Logged 5+ freshwater fish. ${20 - freshwaterFish.length} more to Master Angler!`, "badge-fish");
+else if (freshwaterFish.length >= 1) createBadge("Stream Beginner", `Logged 1+ freshwater fish. ${5 - freshwaterFish.length} more to River Rover!`, "badge-fish");
+
+// Wetland birds
+if (wetlandBirds.length >= 20) createBadge("Swamp Keeper", "Logged 20+ wetland birds!", "badge-wetland");
+else if (wetlandBirds.length >= 5) createBadge("Wetland Guardian", `Logged 5+ wetland birds. ${20 - wetlandBirds.length} more to Swamp Keeper!`, "badge-wetland");
+else if (wetlandBirds.length >= 1) createBadge("Marsh Visitor", `Logged 1+ wetland birds. ${5 - wetlandBirds.length} more to Wetland Guardian!`, "badge-wetland");
+
+// Bats
+if (bats.length >= 20) createBadge("Shadow Flyer", "Logged 20+ bats!", "badge-bats");
+else if (bats.length >= 5) createBadge("Nocturnal Observer", `Logged 5+ bats. ${20 - bats.length} more to Shadow Flyer!`, "badge-bats");
+else if (bats.length >= 1) createBadge("Night Watcher", `Logged 1+ bats. ${5 - bats.length} more to Nocturnal Observer!`, "badge-bats");
+
+// Terrestrial mammals
+if (terrestrialMammals.length >= 20) createBadge("Beastmaster", "Logged 20+ terrestrial mammals!", "badge-mammals");
+else if (terrestrialMammals.length >= 5) createBadge("Mammal Tracker", `Logged 5+ terrestrial mammals. ${20 - terrestrialMammals.length} more to Beastmaster!`, "badge-mammals");
+else if (terrestrialMammals.length >= 1) createBadge("Mammal Spotter", `Logged 1+ terrestrial mammals. ${5 - terrestrialMammals.length} more to Mammal Tracker!`, "badge-mammals");
   // Legendary Hunter
   if (legendaryCount >= 1) createBadge("🌟 Legendary Hunter", `Caught ${legendaryCount} legendary animal(s)!`, "badge-legendary");
 }
