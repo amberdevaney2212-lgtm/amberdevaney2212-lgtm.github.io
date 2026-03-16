@@ -1641,23 +1641,24 @@ function closeModal(e){
 function releaseAnimal(){
   if(!currentAnimal) return;
 
- const index = logged.findIndex(a => a === currentModalAnimal);
-  if (index > -1) {
-    logged.splice(index, 1);
+const index = logged.findIndex(a => a.name === currentAnimal.name);
 
-    const xpLoss = getAnimalXP(currentModalAnimal);
+  if(index > -1){
+    logged.splice(index,1);
+
+    const xpLoss = getAnimalXP(currentAnimal.name);
     xp -= xpLoss;
-    if (xp < 0) xp = 0; // prevent negative XP
+    if(xp < 0) xp = 0;
 
     updateXPDisplay();
     saveData();
   }
+
   closeModal();
   renderCollection();
   updateBadges();
-  updateStats(); 
+  updateStats();
 }
-
 /* ADD THIS AT THE END */
 renderCollection();
 updateBadges();
