@@ -1678,6 +1678,8 @@ function openAnimal(a,img){
   document.getElementById("modalContinent").textContent="Continent: "+a.continent;
 document.getElementById("modalHabitat").textContent =
     a.habitat ? "Habitat: " + a.habitat : "Habitat: Unknown";
+  document.getElementById("modalFact").textContent =
+  a.fact ? "Fun Fact: " + a.fact : "Fun Fact: Unknown";
   // ✅ Add this line
   document.getElementById("modalDate").textContent =
     a.recordedAt ? "Recorded: " + new Date(a.recordedAt).toLocaleString() : "Recorded: Unknown";
