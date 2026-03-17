@@ -3,12 +3,10 @@
 <head>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 <meta charset="UTF-8">
 <title>WildDex</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-
 h1 {
   font-family: 'Press Start 2P', cursive; /* retro 8-bit font */
   font-size: 32px;                        /* adjust size as needed */
@@ -314,6 +312,10 @@ font-size:18px;
 .badge-world { background: linear-gradient(45deg, #4e9af1, #1c6ef2); }
 .badge-element { background: linear-gradient(45deg, #f1d94e, #f2b91c); }
 .badge-research { background: linear-gradient(45deg, #4ef182, #1cf25b); }
+.badge-italy {
+  background: linear-gradient(45deg, #009246, #ffffff, #ce2b37); /* Italian flag */
+  color: #222;
+}
 .badge-rare { background: linear-gradient(45deg, #d94ef1, #a21cf2); }
 .badge-legendary { background: linear-gradient(45deg, #ffd700, #ffa500); }
 body{
@@ -1312,7 +1314,7 @@ const animals = [
   {name:"Jaguar",scientific:"Panthera onca",type:"dark",type2:"fire",continent:"SouthAmerica",rarity:"rare",atk:80,def:65,move:"Night Pounce", habitat:"rainforest"},
   {name:"Emperor Penguin",scientific:"Aptenodytes forsteri",type:"ice",continent:"Antarctica",rarity:"uncommon",atk:40,def:60,move:"Glacier Slide", habitat:"polar"},
   {name:"Honey Bee",scientific:"Apis mellifera",type:"bug",type2:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Sting Swarm", habitat:"grassland"},
-  {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll", habitat:"forest",region:"Ireland",fact:"A hedgehog can have over 5,000 spines on its body. They are also what Mikaela did her thesis on!"},
+  {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll", habitat:"forest",region: ["Ireland", "Italy"],fact:"A hedgehog can have over 5,000 spines on its body. They are also what Mikaela did her thesis on!"},
   {name:"Red Deer",scientific:"Cervus elaphus",type:"grass",continent:"Europe",rarity:"common",atk:60,def:55,move:"Antler Charge", habitat:"forest"},
   {name:"European Badger",scientific:"Meles meles",type:"dark",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Burrow Strike", habitat:"forest",region: "Ireland"},
   {name:"Barn Owl",scientific:"Tyto alba",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Silent Glide", habitat:"grassland"},
@@ -1321,10 +1323,23 @@ const animals = [
   {name:"European Otter",scientific:"Lutra lutra",type:"water",continent:"Europe",rarity:"uncommon",atk:55,def:50,move:"River Dash", habitat:"freshwater",region: "Ireland"},
   {name:"Common Frog",scientific:"Rana temporaria",type:"water",continent:"Europe",rarity:"common",atk:30,def:25,move:"Leap Splash", habitat:"wetland"},
   {name:"European Green Lizard",scientific:"Lacerta viridis",type:"grass",continent:"Europe",rarity:"common",atk:40,def:35,move:"Sun Dash", habitat:"grassland"},
-  {name:"European Brown Bear",scientific:"Ursus arctos arctos",type:"dark",continent:"Europe",rarity:"rare",atk:85,def:80,move:"Forest Smash", habitat:"forest"},
-  {name:"Eurasian Lynx",scientific:"Lynx lynx",type:"dark",continent:"Europe",rarity:"rare",atk:75,def:60,move:"Silent Pounce", habitat:"forest"},
-  {name:"Alpine Ibex",scientific:"Capra ibex",type:"grass",continent:"Europe",rarity:"uncommon",atk:65,def:70,move:"Cliff Charge", habitat:"mountain"},
-  {name:"Chamois",scientific:"Rupicapra rupicapra",type:"grass",continent:"Europe",rarity:"common",atk:55,def:50,move:"Mountain Dash", habitat:"mountain"},
+  {name:"Italian Wall Lizard",scientific:"Podarcis siculus",type:"grass",continent:"Europe",rarity:"common",atk:30,def:25,move:"Wall Sprint",habitat:"urban",region:"Italy"},
+  {name:"Common Wall Gecko",scientific:"Tarentola mauritanica",type:"dark",continent:"Europe",rarity:"common",atk:30,def:25,move:"Night Cling",habitat:"urban",region:"Italy"},
+{name:"Yellow-Legged Gull",scientific:"Larus michahellis",type:"flying",continent:"Europe",rarity:"common",atk:35,def:30,move:"Coastal Cry",habitat:"ocean",region:"Italy"}
+{name:"Apennine Wolf",scientific:"Canis lupus italicus",type:"dark",continent:"Europe",rarity:"rare",atk:75,def:60,move:"Pack Hunt",habitat:"mountain",region:"Italy"},
+{name:"Marsican Brown Bear",scientific:"Ursus arctos marsicanus",type:"dark",continent:"Europe",rarity:"legendary",atk:90,def:85,move:"Forest Crush",habitat:"forest",region:"Italy"},
+{name:"Alpine Marmot",scientific:"Marmota marmota",type:"grass",continent:"Europe",rarity:"common",atk:40,def:50,move:"Burrow Hide",habitat:"mountain",region:"Italy"},
+{name:"European Pond Turtle",scientific:"Emys orbicularis",type:"water",continent:"Europe",rarity:"uncommon",atk:35,def:60,move:"Shell Snap",habitat:"freshwater",region:"Italy"},
+{name:"Fire Salamander",scientific:"Salamandra salamandra",type:"poison",type2:"fire",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Toxic Blaze",habitat:"forest",region:"Italy"},
+{name:"Italian Crested Newt",scientific:"Triturus carnifex",type:"water",continent:"Europe",rarity:"uncommon",atk:35,def:40,move:"Swamp Strike",habitat:"wetland",region:"Italy"},
+{name:"Eurasian Hoopoe",scientific:"Upupa epops",type:"flying",continent:"Europe",rarity:"uncommon",atk:45,def:35,move:"Crest Peck",habitat:"grassland",region:"Italy"},
+{name:"European Bee-Eater",scientific:"Merops apiaster",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Aerial Snap",habitat:"grassland",region:"Italy"},
+{name:"Italian Tree Frog",scientific:"Hyla intermedia",type:"water",continent:"Europe",rarity:"common",atk:25,def:20,move:"Leaf Leap",habitat:"wetland",region:"Italy"},
+{name:"Alpine Chough",scientific:"Pyrrhocorax graculus",type:"flying",continent:"Europe",rarity:"common",atk:40,def:35,move:"Cliff Glide",habitat:"mountain",region:"Italy"}
+{name:"European Brown Bear",scientific:"Ursus arctos arctos",type:"dark",continent:"Europe",rarity:"rare",atk:85,def:80,move:"Forest Smash", habitat:"forest"},
+{name:"Eurasian Lynx",scientific:"Lynx lynx",type:"dark",continent:"Europe",rarity:"rare",atk:75,def:60,move:"Silent Pounce", habitat:"forest"},
+{name:"Alpine Ibex",scientific:"Capra ibex",type:"grass",continent:"Europe",rarity:"uncommon",atk:65,def:70,move:"Cliff Charge", habitat:"mountain"},
+{name:"Chamois",scientific:"Rupicapra rupicapra",type:"grass",continent:"Europe",rarity:"common",atk:55,def:50,move:"Mountain Dash", habitat:"mountain"},
   {name:"Roe Deer",scientific:"Capreolus capreolus",type:"grass",continent:"Europe",rarity:"common",atk:50,def:45,move:"Swift Bound", habitat:"forest"},
   {name:"European Hare",scientific:"Lepus europaeus",type:"grass",continent:"Europe",rarity:"common",atk:40,def:30,move:"Rapid Hop", habitat:"grassland"},
   {name:"Mountain Hare",scientific:"Lepus timidus",type:"ice",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Snow Dash", habitat:"mountain",region: "Ireland" },
@@ -1338,7 +1353,6 @@ const animals = [
   {name:"European Mole",scientific:"Talpa europaea",type:"dark",continent:"Europe",rarity:"common",atk:35,def:40,move:"Tunnel Strike", habitat:"forest"},
   {name:"Grass Snake",scientific:"Natrix natrix",type:"poison",continent:"Europe",rarity:"common",atk:45,def:35,move:"Venom Snap", habitat:"wetland"},
   {name:"European Adder",scientific:"Vipera berus",type:"poison",continent:"Europe",rarity:"uncommon",atk:60,def:40,move:"Toxic Bite", habitat:"forest"},
-  {name:"Fire Salamander",scientific:"Salamandra salamandra",type:"poison",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Poison Blaze", habitat:"forest"},
   {name:"European Perch",scientific:"Perca fluviatilis",type:"water",continent:"Europe",rarity:"common",atk:40,def:35,move:"Fin Strike", habitat:"freshwater"},
   {name:"Northern Pike",scientific:"Esox lucius",type:"water",continent:"Europe",rarity:"uncommon",atk:70,def:50,move:"Ambush Bite", habitat:"freshwater"},
   {name:"Irish Hare",scientific:"Lepus timidus hibernicus",type:"grass",continent:"Europe",rarity:"common",atk:45,def:35,move:"Bog Dash", habitat:"grassland"},
@@ -1511,7 +1525,6 @@ function updateStats(){
   if(habitatEl) habitatEl.textContent = "🌿 Habitats Explored: " + habitats.length;
   if(continentEl) continentEl.textContent = "🌍 Continents Explored: " + continents.length;
 
-// ✅ Explorer map update lives here (has access to `continents`)
   document.querySelectorAll(".continent").forEach(el => el.classList.remove("discovered"));
   continents.forEach(c => {
     const id = "cont-" + c.replace(/\s/g,"").toLowerCase();
@@ -1615,6 +1628,7 @@ function updateBadges() {
   const legendaryCount = logged.filter(a => a.rarity === "legendary").length;
   const irishSpecies = logged.filter(a => a.region === "Ireland");
   const moroccanSpecies = logged.filter(a => a.region === "Morocco")
+  const italySpecies = logged.filter(a => a.region === "Italy");
   const forestAnimals = logged.filter(a => a.habitat === "forest");
   const oceanAnimals = logged.filter(a => a.habitat === "ocean");
   const birds = logged.filter(a => a.type === "flying");
@@ -1649,15 +1663,35 @@ function updateBadges() {
   // Dual-Type Explorer
   if (dualTypes >= 3) createBadge("🔗 Dual-Type Explorer", "Caught 3+ dual-type animals!");
 
-if (irishSpecies.length >= 50) createBadge("✨🍀 Master Irish Explorer", "Logged 50+ Irish species!", "badge-irish");
-else if (irishSpecies.length >= 10) createBadge("🍀 Irish Explorer", `Logged 10+ Irish species. ${50 - irishSpecies.length} more to Master!`, "badge-irish");
-else if (irishSpecies.length >= 1) createBadge("🌱 Novice Explorer", `Logged 1+ Irish species. ${10 - irishSpecies.length} more to Irish Explorer!`, "badge-irish");
+if (irishSpecies.length >= 50) createBadge("✨🍀 Druid of Éire", "Logged 50+ Irish species!", "badge-irish");
+else if (irishSpecies.length >= 10) createBadge("🍀 Child of Danu", `Logged 10+ Irish species. ${50 - irishSpecies.length} more to Master!`, "badge-irish");
+else if (irishSpecies.length >= 1) createBadge("🌱 Bog Wanderer", `Logged 1+ Irish species. ${10 - irishSpecies.length} more to Irish Explorer!`, "badge-irish");
 // Forest animals
 if (forestAnimals.length >= 50) createBadge("🌲🌲🌲 Forest Guardian", "Logged 50+ forest animals!", "badge-forest");
-else if (forestAnimals.length >= 10) createBadge("🌳 Forest Sentinel", `Logged 10+ forest animals. ${50 - forestAnimals.length} more to Guardian!`, "badge-forest");
-else if (forestAnimals.length >= 1) createBadge("🍃 Forest Novice", `Logged 1+ forest animals. ${10 - forestAnimals.length} more to Sentinel!`, "badge-forest");
+else if (forestAnimals.length >= 10) createBadge("🌳 Canopy Stalker", `Logged 10+ forest animals. ${50 - forestAnimals.length} more to Guardian!`, "badge-forest");
+else if (forestAnimals.length >= 1) createBadge("🍃 Twig Tracker", `Logged 1+ forest animals. ${10 - forestAnimals.length} more to Sentinel!`, "badge-forest");
 
-if (moroccanSpecies.length >= 1) createBadge("🌱 Moroccan Explorer", `Logged 1+ Moroccan species. ${10 - moroccanSpecies.length} more to Moroccan Expert!`, "badge-moroccan");
+if (moroccanSpecies.length >= 50) createBadge("Master of the Maghreb", "Logged 50+ Irish species!", "badge-irish");
+else if (moroccanSpecies.length >= 10) createBadge("Dune Prowler", `Logged 10+ Irish species. ${50 - irishSpecies.length} more to Master!`, "badge-irish");
+else if (moroccanSpecies.length >= 1) createBadge("Sahara Scout", `Logged 1+ Moroccan species. ${10 - moroccanSpecies.length} more to Moroccan Expert!`, "badge-moroccan");
+
+if (italySpecies.length >= 20) {
+  createBadge("🇮🇹 Il Naturalista", "Logged 20+ Italian species!", "badge-italy");
+} 
+else if (italySpecies.length >= 10) {
+  createBadge(
+    "🇮🇹 Veni, Vidi, Fauna",
+    `Logged 10+ Italian species. ${20 - italySpecies.length} more to Master!`,
+    "badge-italy"
+  );
+} 
+else if (italySpecies.length >= 1) {
+  createBadge(
+    "🇮🇹 Novus Italicus",
+    `Logged 1+ Italian species. ${10 - italySpecies.length} more to Explorer!`,
+    "badge-italy"
+  );
+}
 
 // Ocean animals
 if (oceanAnimals.length >= 20) createBadge("🌊🐋 Sea Sage", "Logged 20+ ocean animals!", "badge-ocean");
