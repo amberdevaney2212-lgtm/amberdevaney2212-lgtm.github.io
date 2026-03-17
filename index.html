@@ -920,7 +920,7 @@ background-position: 0 0, 10px 10px;
   </select><br><br>
 
   <input id="usernameInput" placeholder="Enter username for new account"><br><br>
- <button onclick="startAccount()">Start / Create</button>
+<button onclick="console.log('clicked'); startAccount()">Start / Create</button>
 </div>
 
 <div id="app" style="display:none;"> 
@@ -1709,9 +1709,9 @@ else if (freshwaterFish.length >= 5) createBadge("River Rover", `Logged 5+ fresh
 else if (freshwaterFish.length >= 1) createBadge("Stream Beginner", `Logged 1+ freshwater fish. ${5 - freshwaterFish.length} more to River Rover!`, "badge-fish");
 
 // Wetland birds
-if (wetlandBirds.length >= 20) createBadge("Swamp Keeper", "Logged 20+ wetland birds!", "badge-wetland");
-else if (wetlandBirds.length >= 5) createBadge("Wetland Guardian", `Logged 5+ wetland birds. ${20 - wetlandBirds.length} more to Swamp Keeper!`, "badge-wetland");
-else if (wetlandBirds.length >= 1) createBadge("Marsh Visitor", `Logged 1+ wetland birds. ${5 - wetlandBirds.length} more to Wetland Guardian!`, "badge-wetland");
+if (wetland >= 20) createBadge("Swamp Keeper", "Logged 20+ wetland birds!", "badge-wetland");
+else if (wetland >= 5) createBadge("Wetland Guardian", `Logged 5+ wetland birds. ${20 - wetland} more to Swamp Keeper!`, "badge-wetland");
+else if (wetland >= 1) createBadge("Marsh Visitor", `Logged 1+ wetland birds. ${5 - wetland} more to Wetland Guardian!`, "badge-wetland");
 
 // Bats
 if (bats.length >= 20) createBadge("Shadow Flyer", "Logged 20+ bats!", "badge-bats");
