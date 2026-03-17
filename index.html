@@ -1061,7 +1061,61 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <script src="territory.js"></script>
 
 <script>
-  
+function initMap() {
+  window.map = L.map('map').setView([53.27, -9.05], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  }).addTo(window.map);
+
+  // ✅ ADD THIS
+  window.fogLayer = L.layerGroup().addTo(map);
+
+  map.on("moveend", drawFog);
+  drawFog();
+}
+function drawFog() {
+  fogLayer.clearLayers();
+
+const bounds = window.map.getBounds();
+  const step = 0.05;
+
+  for (let lat = bounds.getSouth(); lat < bounds.getNorth(); lat += step) {
+    for (let lng = bounds.getWest(); lng < bounds.getEast(); lng += step) {
+
+      const explored = exploredAreas.some(a =>
+window.map.distance([lat, lng], [a.lat, a.lng]) < a.radius
+      );
+
+      if (!explored) {
+        L.rectangle([
+          [lat, lng],
+          [lat + step, lng + step]
+        ], {
+          color: "#000",
+          weight: 0,
+          fillOpacity: 0.6
+        }).addTo(fogLayer);
+      }
+    }
+  }
+}
+function addSighting(name, lat, lng){
+  if(!window.map) return;
+
+  // Add marker
+ L.marker([lat, lng]).addTo(window.map)
+    .bindPopup(`🐾 ${name}`)
+    .openPopup();
+
+  // ✅ ADD THIS (save explored area)
+ exploredAreas.push({ lat, lng, radius: 10000 });
+ localStorage.setItem(`exploredAreas_${userID}`, JSON.stringify(exploredAreas));
+
+  // ✅ ADD THIS (update fog)
+  drawFog();
+}
 function switchAccount() {
   saveData();
   localStorage.removeItem("wilddex_currentUser"); // ✅ remove current user
@@ -1080,7 +1134,7 @@ function switchAccount() {
 let userID = null;
 let logged = [];
 let xp = 0;
-
+let exploredAreas = [];
 // Populate dropdown with saved accounts
 function loadAccounts() {
   const accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
@@ -1106,6 +1160,9 @@ function startAccount() {
   if (!username) return alert("Please enter a username!");
 
   userID = username;
+  exploredAreas = JSON.parse(
+  localStorage.getItem(`exploredAreas_${userID}`) || "[]"
+);
   localStorage.setItem("wilddex_currentUser", userID); // ✅ store current user
 
   const savedData = localStorage.getItem(`wilddex_${userID}`);
@@ -1399,9 +1456,6 @@ saveData();
 message.textContent="🐾 Animal Discovered!";
 message.classList.add("foundAnim");
 message.style.color="green";
-if (window.map) {
-  setTimeout(() => map.invalidateSize(), 200);
-}
 
   document.getElementById("animalInput").value="";
   document.getElementById("animalInput").focus();
@@ -1624,10 +1678,18 @@ function openPage(e, id){
     e.currentTarget.classList.add("active");
   }
 
-  if (window.map) {
-    setTimeout(() => map.invalidateSize(), 100);
+if (id === "mapPage") {
+
+  // Create map ONLY once
+  if (!window.map) {
+    initMap();
   }
-}   // ← MISSING BRACE WAS HERE
+
+  // Fix rendering after tab becomes visible
+  setTimeout(() => {
+ window.map.invalidateSize();
+  }, 200);
+}
 
 let currentAnimal = null;
 function openAnimal(a,img){
@@ -1695,7 +1757,6 @@ updateBadges();
 updateStats();
 updateXPDisplay();
 updateWorldMap();
-
 </script>
  </div>
 </body>
