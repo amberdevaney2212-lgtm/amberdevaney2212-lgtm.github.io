@@ -1061,6 +1061,12 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <script src="territory.js"></script>
 
 <script>
+let accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "{}");
+let currentUser = null;
+
+function saveAccounts(){
+  localStorage.setItem("wilddex_accounts", JSON.stringify(accounts));
+}
 function initMap() {
   window.map = L.map('map').setView([53.27, -9.05], 6);
 
@@ -1069,8 +1075,7 @@ function initMap() {
     attribution: '© OpenStreetMap'
   }).addTo(window.map);
 
-  // ✅ ADD THIS
-  window.fogLayer = L.layerGroup().addTo(map);
+ window.fogLayer = L.layerGroup().addTo(window.map);
 
   map.on("moveend", drawFog);
   drawFog();
@@ -1153,52 +1158,69 @@ function selectAccount() {
   const selected = document.getElementById("accountSelect").value;
   document.getElementById("usernameInput").value = selected;
 }
+function startAccount(){
 
-// Start / create account
-function startAccount() {
-  const username = document.getElementById("usernameInput").value.trim();
-  if (!username) return alert("Please enter a username!");
+  // ✅ Get username correctly
+  userID = document.getElementById("usernameInput").value.trim();
 
-  userID = username;
-  exploredAreas = JSON.parse(
-  localStorage.getItem(`exploredAreas_${userID}`) || "[]"
-);
-  localStorage.setItem("wilddex_currentUser", userID); // ✅ store current user
+  if(!userID){
+    alert("Please enter a username");
+    return;
+  }
 
-  const savedData = localStorage.getItem(`wilddex_${userID}`);
-  if (savedData) {
-    const parsed = JSON.parse(savedData);
-    logged = parsed.logged || [];
-    xp = parsed.xp || 0;
-    if (parsed.avatar) document.getElementById("profilePic").src = parsed.avatar;
-    else document.getElementById("profilePic").src = "default-avatar.png";
-    alert(`Welcome back, ${username}!`);
+  // ✅ Ensure accounts object exists
+  if(!accounts){
+    accounts = {};
+  }
+
+  // ✅ Create account if new
+  if(!accounts[userID]){
+    accounts[userID] = true; // simple tracker
+  }
+
+  // ✅ Save account list
+  saveAccounts();
+
+  // ✅ Remember current user
+  localStorage.setItem("wilddex_currentUser", userID);
+
+  // ✅ Load saved user data
+  const saved = JSON.parse(localStorage.getItem(`wilddex_${userID}`));
+
+  if(saved){
+    logged = saved.logged || [];
+    xp = saved.xp || 0;
+
+    // Load avatar
+    if(saved.avatar){
+      document.getElementById("profilePic").src = saved.avatar;
+    }
+
   } else {
     logged = [];
     xp = 0;
-    let accounts = JSON.parse(localStorage.getItem("wilddex_accounts") || "[]");
-    if (!accounts.includes(username)) {
-      accounts.push(username);
-      localStorage.setItem("wilddex_accounts", JSON.stringify(accounts));
-    }
-    document.getElementById("profilePic").src = "default-avatar.png";
-    alert(`New account created: ${username}`);
-    localStorage.setItem("wilddex_currentUser", userID);
   }
 
-  document.getElementById("profileName").innerText = username;
-  document.getElementById("profileXP").innerText = `XP: ${xp}`;
-  document.getElementById("profileTab").style.display = "block";
+  // ✅ Load explored map areas
+  exploredAreas = JSON.parse(
+    localStorage.getItem(`exploredAreas_${userID}`) || "[]"
+  );
 
-  loadAccounts();
+  // ✅ Switch UI screens
   document.getElementById("loginBox").style.display = "none";
   document.getElementById("app").style.display = "block";
+  document.getElementById("profileTab").style.display = "block";
+
+  // ✅ Update profile UI
+  document.getElementById("profileName").textContent = userID;
+
+  // ✅ Refresh everything
   renderCollection();
-updateBadges();
-updateStats();
-updateWorldMap();
-updateXPDisplay();
-  document.getElementById("xpDisplay").innerText = `XP: ${xp}`;
+  updateBadges();
+  updateStats();
+  updateXPDisplay();
+  updateWorldMap();
+  loadAccounts();
 }
  function updateAvatar(event) {
   const file = event.target.files[0];
