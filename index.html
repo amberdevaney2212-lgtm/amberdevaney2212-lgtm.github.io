@@ -1198,7 +1198,23 @@ function loadAccounts() {
     select.appendChild(opt);
   });
 }
+function closeModal() {
+  document.getElementById("animalModal").style.display = "none";
+}
 
+function releaseAnimal() {
+  alert("Release feature not built yet");
+}
+function openAnimal(animal, img) {
+  document.getElementById("animalModal").style.display = "flex";
+  document.getElementById("modalName").textContent = animal.name;
+  document.getElementById("modalImg").src = img;
+  document.getElementById("modalScientific").textContent = animal.scientific;
+  document.getElementById("modalMove").textContent = animal.move;
+  document.getElementById("modalStats").textContent = `ATK ${animal.atk} | DEF ${animal.def}`;
+  document.getElementById("modalType").textContent = animal.type;
+  document.getElementById("modalHabitat").textContent = animal.habitat;
+}
 // When user selects an existing account
 function selectAccount() {
   const selected = document.getElementById("accountSelect").value;
