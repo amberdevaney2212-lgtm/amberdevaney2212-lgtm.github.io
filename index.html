@@ -1656,6 +1656,7 @@ if(filter!="all"){
     if (search && !a.name.toLowerCase().includes(search)) return false;
     if (filter !== "all" && a.type !== filter) return false;
     if (habitat !== "all" && a.habitat !== habitat) return false;
+    if (taxon !== "all" && a.taxon !== taxon) return false;
     return true;
   });
 for (let a of animalsToShow){
