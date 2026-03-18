@@ -1086,7 +1086,20 @@ onkeydown="if(event.key==='Enter') logAnimal()">
 <option value="polar">❄️ Polar</option>
 <option value="rainforest">🌴 Rainforest</option>
 </select>
-
+  
+<select id="filterTaxon" onchange="renderCollection()">
+<option value="all">🐾 All Taxon</option>
+<option value="mammal">🐾 Mammal</option>
+<option value="reptile">🦎 Reptile</option>
+<option value="fish">🐟 Fish</option>
+<option value="bird">🐦 Bird</option>
+<option value="amphibian">🐸 Amphibian</option>
+<option value="insect">🐞 Insect</option>
+<option value="arachnid">🕷️ Arachnid</option>
+<option value="crustacean">🦀 Crustacean</option>
+<option value="mollusc">🐚 Mollusc</option>
+<option value="other">❓ Other</option>
+</select>
 </div>
 
 <div id="collection"></div>
