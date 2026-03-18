@@ -37,7 +37,23 @@ h1 {
   box-shadow:0 4px 10px rgba(0,0,0,0.2);
   animation: flicker 1.5s infinite;
 }
+/* Profile tab buttons */
+.profile-btn {
+  margin-top: 5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #34c98c;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+}
 
+.profile-btn:hover {
+  background-color: #2aa372;
+  transform: scale(1.05);
+}
 /* Flicker keyframes */
 @keyframes flicker {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
@@ -961,7 +977,7 @@ background-position: 0 0, 10px 10px;
   </select><br><br>
 
   <input id="usernameInput" placeholder="Enter username for new account"><br><br>
-<button onclick="console.log('clicked'); startAccount()">Start / Create</button>
+<button onclick="console.log('clicked'); startAccount()">Let's go!</button>
 </div>
 
 <div id="app" style="display:none;"> 
@@ -992,16 +1008,15 @@ Release
   <input type="file" id="avatarInput" style="display:none;" accept="image/*" onchange="updateAvatar(event)">
 
   <!-- Button to trigger file input -->
-  <button onclick="document.getElementById('avatarInput').click()" 
-          style="margin-top:5px; padding:6px 10px; border-radius:8px; cursor:pointer;">
-    Change Avatar
-  </button>
+ <button class="profile-btn" id="changeAvatarBtn" onclick="document.getElementById('avatarInput').click()">
+  🖼️
+</button>
   <p id="profileName" style="margin:5px 0; font-weight:bold;"></p>
   <p id="profileXP" style="margin:0; font-size:14px; color:#555;"></p>
-</div>
-<button id="switchAccountBtn" onclick="switchAccount()" style="margin-bottom:10px;padding:6px 12px;border-radius:8px;background:#f0ad4e;color:white;border:none;cursor:pointer;">
+<button id="switchAccountBtn" onclick="switchAccount()" style="margin-bottom:10px;padding:6px 12px;border-radius:8px;background:#dcfcf4;color:white;border:none;cursor:pointer;">
   Switch Account
 </button>
+</div>
 <div class="tabs">
 
 <div class="tab active" onclick="openPage(event,'log')">📘 Log</div>
@@ -1340,14 +1355,14 @@ const typeIcons={fire:"🔥", water:"💧", grass:"🌿", ice:"🧊", flying:"�
 const continentIcons={Africa:"🌍", Europe:"🌍", Asia:"🌏", NorthAmerica:"🌎", SouthAmerica:"🌎", Oceania:"🦘", Antarctica:"🐧"};
 
 const animals = [
-{name:"Barbary Macaque",scientific:"Macaca sylvanus",type:"grass",continent:"Africa",rarity:"rare",atk:60,def:55,move:"Mountain Leap",habitat:"forest",region:"Morocco"},
+{name:"Barbary Macaque",scientific:"Macaca sylvanus",type:"grass",taxon: "mammal",continent:"Africa",rarity:"rare",atk:60,def:55,move:"Mountain Leap",habitat:"forest",region:"Morocco"},
 {name:"Fennec Fox",scientific:"Vulpes zerda",type:"dark",taxon: "mammal",continent:"Africa",rarity:"rare",atk:50,def:40,move:"Desert Dash",habitat:"desert",region:"Morocco"},
 {name:"Dorcas Gazelle",scientific:"Gazella dorcas",type:"grass",taxon: "mammal",continent:"Africa",rarity:"uncommon",atk:45,def:40,move:"Swift Sprint",habitat:"desert",region:"Morocco"},
 {name:"Barbary Ground Squirrel",scientific:"Atlantoxerus getulus",type:"normal",taxon: "mammal",continent:"Africa",rarity:"common",atk:35,def:30,move:"Burrow Dash",habitat:"rocky",region:"Morocco"},
-{name:"Egyptian Vulture",scientific:"Neophron percnopterus",type:"flying",continent:"Africa",rarity:"rare",atk:55,def:40,move:"Sky Dive",habitat:"mountain",region:"Morocco"},
+{name:"Egyptian Vulture",scientific:"Neophron percnopterus",type:"flying",taxon: "bird",continent:"Africa",rarity:"rare",atk:55,def:40,move:"Sky Dive",habitat:"mountain",region:"Morocco"},
 {name:"North African Hedgehog",scientific:"Atelerix algirus",type:"grass",taxon: "mammal",continent:"Africa",rarity:"uncommon",atk:40,def:45,move:"Spike Roll",habitat:"desert",region:"Morocco"},
 {name:"Sand Cat",scientific:"Felis margarita",type:"dark",taxon: "mammal",continent:"Africa",rarity:"rare",atk:55,def:45,move:"Silent Pounce",habitat:"desert",region:"Morocco"},
-{name:"Barbary Partridge",scientific:"Alectoris barbara",type:"flying",continent:"Africa",rarity:"common",atk:35,def:35,move:"Rapid Peck",habitat:"grassland",region:"Morocco"},
+{name:"Barbary Partridge",scientific:"Alectoris barbara",type:"flying",taxon: "bird",continent:"Africa",rarity:"common",atk:35,def:35,move:"Rapid Peck",habitat:"grassland",region:"Morocco"},
 {name:"Moroccan Fat-Tailed Scorpion",scientific:"Androctonus mauritanicus",type:"poison",continent:"Africa",rarity:"rare",atk:80,def:45,move:"Venom Strike",habitat:"desert",region:"Morocco"},
 {name:"Atlas Yellow Scorpion",scientific:"Buthus atlantis",type:"poison",continent:"Africa",rarity:"uncommon",atk:55,def:35,move:"Sand Ambush",habitat:"desert",region:"Morocco"},
 {name:"Mediterranean Yellow Scorpion",scientific:"Buthus occitanus",type:"poison",continent:"Africa",rarity:"uncommon",atk:60,def:40,move:"Quick Sting",habitat:"rocky",region:"Morocco"},
@@ -1359,7 +1374,7 @@ const animals = [
 {name:"Moroccan Large-Clawed Scorpion",scientific:"Scorpio fuliginosus",type:"ground",continent:"Africa",rarity:"common",atk:40,def:60,move:"Crushing Grip",habitat:"rocky",region:"Morocco"},
 {name:"Mogador Scorpion",scientific:"Scorpio mogadorensis",type:"ground",continent:"Africa",rarity:"uncommon",atk:45,def:65,move:"Pincer Slam",habitat:"rocky",region:"Morocco"},
   {name:"African Lion",scientific:"Panthera leo",type:"fire",taxon: "mammal",continent:"Africa",rarity:"rare",atk:80,def:70,move:"Flame Pounce", habitat:"grassland"},
-  {name:"Bald Eagle",scientific:"Haliaeetus leucocephalus",type:"flying",continent:"NorthAmerica",rarity:"uncommon",atk:60,def:50,move:"Sky Dive", habitat:"forest"},
+  {name:"Bald Eagle",scientific:"Haliaeetus leucocephalus",type:"flying",taxon: "bird",continent:"NorthAmerica",rarity:"uncommon",atk:60,def:50,move:"Sky Dive", habitat:"forest"},
   {name:"Polar Bear",scientific:"Ursus maritimus",type:"ice",taxon: "mammal",continent:"Antarctica",rarity:"rare",atk:75,def:80,move:"Frozen Swipe", habitat:"polar"},
   {name:"Poison Dart Frog",scientific:"Dendrobatidae",type:"poison",continent:"SouthAmerica",rarity:"uncommon",atk:40,def:30,move:"Toxic Jump", habitat:"rainforest"},
   {name:"Horseshoe Bat",scientific:"Rhinolophus hipposideros",type:"dark",type2:"flying",taxon: "mammal",continent:"Europe",rarity:"rare",atk:50,def:40,move:"Night Dive", habitat:"forest"},
@@ -1369,7 +1384,7 @@ const animals = [
   {name:"Snowy Owl",scientific:"Bubo scandiacus",type:"ice",type2:"flying",continent:"NorthAmerica",rarity:"uncommon",atk:55,def:45,move:"Frost Glide", habitat:"polar"},
   {name:"Praying Mantis",scientific:"Mantodea",type:"bug",continent:"Asia",rarity:"common",atk:45,def:35,move:"Blade Strike", habitat:"forest"},
   {name:"Jaguar",scientific:"Panthera onca",type:"dark",type2:"fire",taxon: "mammal",continent:"SouthAmerica",rarity:"rare",atk:80,def:65,move:"Night Pounce", habitat:"rainforest"},
-  {name:"Emperor Penguin",scientific:"Aptenodytes forsteri",type:"ice",continent:"Antarctica",rarity:"uncommon",atk:40,def:60,move:"Glacier Slide", habitat:"polar"},
+  {name:"Emperor Penguin",scientific:"Aptenodytes forsteri",type:"ice",taxon: "bird",continent:"Antarctica",rarity:"uncommon",atk:40,def:60,move:"Glacier Slide", habitat:"polar"},
   {name:"Honey Bee",scientific:"Apis mellifera",type:"bug",type2:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Sting Swarm", habitat:"grassland"},
   {name:"European Hedgehog",scientific:"Erinaceus europaeus",type:"grass",taxon: "mammal",continent:"Europe",rarity:"common",atk:35,def:50,move:"Spike Roll", habitat:"forest",region: ["Ireland", "Italy"],fact:"A hedgehog can have over 5,000 spines on its body. They are also what Mikaela did her thesis on!"},
   {name:"Red Deer",scientific:"Cervus elaphus",type:"grass",taxon: "mammal",continent:"Europe",rarity:"common",atk:60,def:55,move:"Antler Charge", habitat:"forest"},
@@ -1390,23 +1405,23 @@ const animals = [
 {name:"Fire Salamander",scientific:"Salamandra salamandra",type:"poison",type2:"fire",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Toxic Blaze",habitat:"forest",region:"Italy"},
 {name:"Italian Crested Newt",scientific:"Triturus carnifex",type:"water",continent:"Europe",rarity:"uncommon",atk:35,def:40,move:"Swamp Strike",habitat:"wetland",region:"Italy"},
 {name:"Eurasian Hoopoe",scientific:"Upupa epops",type:"flying",continent:"Europe",rarity:"uncommon",atk:45,def:35,move:"Crest Peck",habitat:"grassland",region:"Italy"},
-{name:"European Bee-Eater",scientific:"Merops apiaster",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Aerial Snap",habitat:"grassland",region:"Italy"},
+{name:"European Bee-Eater",scientific:"Merops apiaster",type:"flying",taxon: "bird",continent:"Europe",rarity:"uncommon",atk:50,def:40,move:"Aerial Snap",habitat:"grassland",region:"Italy"},
 {name:"Italian Tree Frog",scientific:"Hyla intermedia",type:"water",continent:"Europe",rarity:"common",atk:25,def:20,move:"Leaf Leap",habitat:"wetland",region:"Italy"},
 {name:"Alpine Chough",scientific:"Pyrrhocorax graculus",type:"flying",continent:"Europe",rarity:"common",atk:40,def:35,move:"Cliff Glide",habitat:"mountain",region:"Italy"},
 {name:"European Brown Bear",scientific:"Ursus arctos arctos",type:"dark",taxon: "mammal",continent:"Europe",rarity:"rare",atk:85,def:80,move:"Forest Smash", habitat:"forest"},
 {name:"Eurasian Lynx",scientific:"Lynx lynx",type:"dark",taxon: "mammal",continent:"Europe",rarity:"rare",atk:75,def:60,move:"Silent Pounce", habitat:"forest"},
 {name:"Alpine Ibex",scientific:"Capra ibex",type:"grass",taxon: "mammal",continent:"Europe",rarity:"uncommon",atk:65,def:70,move:"Cliff Charge", habitat:"mountain"},
 {name:"Chamois",scientific:"Rupicapra rupicapra",type:"grass",continent:"Europe",rarity:"common",atk:55,def:50,move:"Mountain Dash", habitat:"mountain"},
-  {name:"Roe Deer",scientific:"Capreolus capreolus",type:"grass",taxon: "mammal",continent:"Europe",rarity:"common",atk:50,def:45,move:"Swift Bound", habitat:"forest"},
-  {name:"European Hare",scientific:"Lepus europaeus",type:"grass",taxon: "mammal",continent:"Europe",rarity:"common",atk:40,def:30,move:"Rapid Hop", habitat:"grassland"},
+{name:"Roe Deer",scientific:"Capreolus capreolus",type:"grass",taxon: "mammal",continent:"Europe",rarity:"common",atk:50,def:45,move:"Swift Bound", habitat:"forest"},
+{name:"European Hare",scientific:"Lepus europaeus",type:"grass",taxon: "mammal",continent:"Europe",rarity:"common",atk:40,def:30,move:"Rapid Hop", habitat:"grassland"},
   {name:"Mountain Hare",scientific:"Lepus timidus",type:"ice",taxon: "mammal",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Snow Dash", habitat:"mountain",region: "Ireland" },
   {name:"Grey Seal",scientific:"Halichoerus grypus",type:"water",taxon: "mammal",continent:"Europe",rarity:"uncommon",atk:60,def:65,move:"Wave Slam", habitat:"ocean",region:["Ireland", "Atlantic"]},
   {name:"Harbour Seal",scientific:"Phoca vitulina",type:"water",taxon: "mammal",continent:"Europe",rarity:"common",atk:55,def:55,move:"Tidal Roll", habitat:"ocean", region:["Ireland", "Atlantic"]},
   {name:"Atlantic Puffin",scientific:"Fratercula arctica",type:"flying",continent:"Europe",rarity:"uncommon",atk:40,def:35,move:"Dive Peck", habitat:"ocean"},
   {name:"Common Buzzard",scientific:"Buteo buteo",type:"flying",continent:"Europe",rarity:"common",atk:55,def:45,move:"Sky Swoop", habitat:"grassland"},
-  {name:"Golden Eagle",scientific:"Aquila chrysaetos",type:"flying",continent:"Europe",rarity:"rare",atk:80,def:65,move:"Royal Dive", habitat:"mountain"},
-  {name:"European Magpie",scientific:"Pica pica",type:"flying",continent:"Europe",rarity:"common",atk:35,def:30,move:"Flash Peck", habitat:"forest"},
-  {name:"Common Raven",scientific:"Corvus corax",type:"dark",type2:"flying",continent:"Europe",rarity:"uncommon",atk:60,def:50,move:"Shadow Call", habitat:"forest"},
+  {name:"Golden Eagle",scientific:"Aquila chrysaetos",type:"flying",taxon: "bird",continent:"Europe",rarity:"rare",atk:80,def:65,move:"Royal Dive", habitat:"mountain"},
+  {name:"European Magpie",scientific:"Pica pica",type:"flying",taxon: "bird",continent:"Europe",rarity:"common",atk:35,def:30,move:"Flash Peck", habitat:"forest"},
+  {name:"Common Raven",scientific:"Corvus corax",type:"dark",type2:"flying",taxon: "bird",continent:"Europe",rarity:"uncommon",atk:60,def:50,move:"Shadow Call", habitat:"forest"},
   {name:"European Mole",scientific:"Talpa europaea",type:"dark",taxon: "mammal",continent:"Europe",rarity:"common",atk:35,def:40,move:"Tunnel Strike", habitat:"forest"},
   {name:"Grass Snake",scientific:"Natrix natrix",type:"poison",taxon: "reptile",continent:"Europe",rarity:"common",atk:45,def:35,move:"Venom Snap", habitat:"wetland"},
   {name:"European Adder",scientific:"Vipera berus",type:"poison",continent:"Europe",rarity:"uncommon",atk:60,def:40,move:"Toxic Bite", habitat:"forest"},
@@ -1431,11 +1446,11 @@ const animals = [
   {name:"European Glowworm",scientific:"Lampyris noctiluca",type:"bug",continent:"Europe",rarity:"uncommon",atk:20,def:25,move:"Glow Pulse", habitat:"forest"},
   {name:"Mallard Duck",scientific:"Anas platyrhynchos",type:"water",type2:"flying",continent:"Europe",rarity:"common",atk:35,def:35,move:"Splash Peck", habitat:"freshwater"},
   {name:"Grey Heron",scientific:"Ardea cinerea",type:"water",type2:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Spear Strike", habitat:"freshwater"},
-  {name:"Blackbird",scientific:"Turdus merula",type:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Dawn Song", habitat:"forest"},
+  {name:"Blackbird",scientific:"Turdus merula",type:"flying",taxon: "bird",continent:"Europe",rarity:"common",atk:30,def:25,move:"Dawn Song", habitat:"forest"},
   {name:"Eurasian Beaver",scientific:"Castor fiber",type:"water",taxon: "mammal",continent:"Europe",rarity:"uncommon",atk:55,def:60,move:"Dam Slam", habitat:"freshwater"},
-  {name:"Starling",scientific:"Sturnus vulgaris",type:"flying",continent:"Europe",rarity:"common",atk:30,def:25,move:"Flock Burst", habitat:"urban",region: "Ireland" },
-  {name:"Common Gull",scientific:"Larus canus",type:"flying",continent:"Europe",rarity:"common",atk:35,def:30,move:"Coastal Cry", habitat:"ocean",region: "Ireland" },
-  {name:"Razorbill",scientific:"Alca torda",type:"water",type2:"flying",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Cliff Dive", habitat:"ocean"},
+  {name:"Starling",scientific:"Sturnus vulgaris",type:"flying",taxon: "bird",continent:"Europe",rarity:"common",atk:30,def:25,move:"Flock Burst", habitat:"urban",region: "Ireland" },
+  {name:"Common Gull",scientific:"Larus canus",type:"flying",taxon: "bird",continent:"Europe",rarity:"common",atk:35,def:30,move:"Coastal Cry", habitat:"ocean",region: "Ireland" },
+  {name:"Razorbill",scientific:"Alca torda",type:"water",type2:"flying",taxon: "bird",continent:"Europe",rarity:"uncommon",atk:45,def:40,move:"Cliff Dive", habitat:"ocean"},
   {name:"European Wildcat",scientific:"Felis silvestris",type:"dark",taxon: "mammal",continent:"Europe",rarity:"rare",atk:70,def:55,move:"Forest Slash", habitat:"forest"},
   {name:"European Eel",scientific:"Anguilla anguilla",type:"water",continent:"Europe",rarity:"uncommon",atk:50,def:35,move:"River Coil", habitat:"freshwater"},
   {name:"Atlantic Mackerel",scientific:"Scomber scombrus",type:"water",continent:"Europe",rarity:"common",atk:40,def:30,move:"Silver Dash", habitat:"ocean",region:["Ireland", "Atlantic"]},
@@ -1443,13 +1458,13 @@ const animals = [
   {name:"Common Shore Crab",scientific:"Carcinus maenas",type:"water",continent:"Europe",rarity:"common",atk:30,def:35,move:"Claw Snap", habitat:"ocean",region:["Ireland", "Atlantic"]},
   {name:"Red Squirrel",scientific:"Sciurus vulgaris",type:"grass",continent:"Europe",rarity:"rare",atk:45,def:40,move:"Forest Leap", habitat:"forest"},
   {name:"Pine Marten",scientific:"Martes martes",type:"dark",continent:"Europe",rarity:"rare",atk:70,def:55,move:"Tree Ambush", habitat:"forest"},
-  {name:"White-Tailed Eagle",scientific:"Haliaeetus albicilla",type:"flying",continent:"Europe",rarity:"rare",atk:85,def:70,move:"Sky Tyrant", habitat:"forest"},
+  {name:"White-Tailed Eagle",scientific:"Haliaeetus albicilla",type:"flying",taxon: "bird",continent:"Europe",rarity:"rare",atk:85,def:70,move:"Sky Tyrant", habitat:"forest"},
   {name:"Basking Shark",scientific:"Cetorhinus maximus",type:"water",continent:"Europe",rarity:"rare",atk:90,def:85,move:"Ocean Surge", habitat:"ocean"},
   {name:"Electric Eel",scientific:"Electrophorus electricus",type:"electric",type2:"water",continent:"SouthAmerica",rarity:"rare",atk:85,def:60,move:"Volt Shock", habitat:"freshwater"},
   {name:"Torpedo Ray",scientific:"Torpedo nobiliana",type:"electric",type2:"water",continent:"Europe",rarity:"rare",atk:80,def:70,move:"Shock Wave", habitat:"ocean"},
 {name:"Killer Whale",scientific:"Orcinus orca",type:"water",type2:"fire",taxon: "mammal",continent:"Europe",rarity:"rare",atk:95,def:80,move:"Tidal Hunt",habitat:"ocean",region: "Atlantic"},
 {name:"Leatherback Sea Turtle",scientific:"Dermochelys coriacea",type:"water",continent:"Europe",rarity:"rare",atk:70,def:90,move:"Deep Current",habitat:"ocean",region: "Atlantic"},
-{name:"Manx Shearwater",scientific:"Puffinus puffinus",type:"flying",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Ocean Glide",habitat:"ocean"},
+{name:"Manx Shearwater",scientific:"Puffinus puffinus",type:"flying",taxon: "bird",continent:"Europe",rarity:"uncommon",atk:50,def:45,move:"Ocean Glide",habitat:"ocean"},
 {name:"Sand Lizard",scientific:"Lacerta agilis",type:"grass",continent:"Europe",rarity:"rare",atk:45,def:40,move:"Sun Dash",habitat:"grassland"},
 {name:"Irish Mountain Goat",scientific:"Capra aegagrus hircus",type:"grass",taxon: "mammal",continent:"Europe",rarity:"uncommon",atk:65,def:60,move:"Cliff Charge",habitat:"mountain"},
 {name:"Seven-Spot Ladybird",scientific:"Coccinella septempunctata",type:"bug",continent:"Europe",rarity:"common",atk:20,def:25,move:"Lucky Glide",habitat:"forest"},
