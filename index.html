@@ -35,10 +35,6 @@ h1 {
   padding:8px 12px;
   border-radius:12px;
   box-shadow:0 4px 10px rgba(0,0,0,0.2);
-  text-shadow:
-    1px 1px 0 #000,
-    2px 2px 0 #000,
-    3px 3px 0 #000;
   animation: flicker 1.5s infinite;
 }
 
@@ -291,11 +287,14 @@ font-size:18px;
   cursor: default;
   transition: transform 0.3s, box-shadow 0.3s;
   font-size: 14px;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(4px);
+}
 }
 
 .badge:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+ transform: scale(1.12);
+  box-shadow: 0 0 18px rgba(255,255,255,0.6);
 }
 
 @keyframes badgePop {
@@ -341,6 +340,27 @@ font-size:18px;
   background: linear-gradient(135deg, #90A4AE, #607D8B); /* grey-blue rock tones */
   border: 2px solid #37474F;}
   
+.badge-ocean {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  box-shadow: 0 0 10px rgba(0,150,255,0.6);
+}
+.badge-birds {
+  background: linear-gradient(135deg, #60a5fa, #1d4ed8);
+  box-shadow: 0 0 10px rgba(96,165,250,0.6);
+}
+.badge-wetland {
+  background: linear-gradient(135deg, #4ade80, #15803d);
+  box-shadow: 0 0 10px rgba(74,222,128,0.6);
+}
+.badge-mammals {
+  background: linear-gradient(135deg, #a16207, #78350f);
+  box-shadow: 0 0 10px rgba(161,98,7,0.6);
+}
+
+.badge-bats {
+  background: linear-gradient(135deg, #6b7280, #111827);
+  box-shadow: 0 0 12px rgba(0,0,0,0.8);
+}  
 .badge-rare { background: linear-gradient(45deg, #d94ef1, #a21cf2); }
 .badge-legendary { background: linear-gradient(45deg, #ffd700, #ffa500); }
 body{
@@ -1656,6 +1676,7 @@ function updateBadges() {
   const italySpecies = logged.filter(a => a.region === "Italy");
   const forestAnimals = logged.filter(a => a.habitat === "forest");
   const oceanAnimals = logged.filter(a => a.habitat === "ocean");
+ const bugAnimals = logged.filter(a => a.type === "bug");
   const birds = logged.filter(a => a.type === "flying");
   const freshwaterFish = logged.filter(a => a.habitat === "freshwater");
   const wetlandBirds = logged.filter(a => a.habitat === "wetland");
@@ -1719,34 +1740,44 @@ else if (italySpecies.length >= 1) {
 }
 
 // Ocean animals
-if (oceanAnimals.length >= 20) createBadge("🌊🐋 Sea Sage", "Logged 20+ ocean animals!", "badge-ocean");
-else if (oceanAnimals.length >= 5) createBadge("🌊🐟 Atlantic Watcher", `Logged 5+ ocean animals. ${20 - oceanAnimals.length} more to Sea Sage!`, "badge-ocean");
-else if (oceanAnimals.length >= 1) createBadge("🐠🐚 Shore Observer", `Logged 1+ ocean animals. ${5 - oceanAnimals.length} more to Atlantic Watcher!`, "badge-ocean");
-// Forest animals
+if (oceanAnimals.length >= 20) createBadge("🐋 Sea Sage", "Logged 20+ ocean animals!", "badge-ocean");
+else if (oceanAnimals.length >= 5) createBadge("🌊 Tide Tracker", `Logged 5+ ocean animals. ${20 - oceanAnimals.length} more to Sea Sage!`, "badge-ocean");
+else if (oceanAnimals.length >= 1) createBadge("🐚 Beachcomber", `Logged 1+ ocean animals. ${5 - oceanAnimals.length} more to Atlantic Watcher!`, "badge-ocean");
+
 // Birds
 if (birds.length >= 20) createBadge("Chorus Connoisseur", "Logged 20+ birds!", "badge-birds");
 else if (birds.length >= 5) createBadge("Song Collector", `Logged 5+ birds. ${20 - birds.length} more to Chorus Connoisseur!`, "badge-birds");
 else if (birds.length >= 1) createBadge("Bird Listener", `Logged 1+ birds. ${5 - birds.length} more to Song Collector!`, "badge-birds");
 
+// Amphibians / Reptiles
+if (herps.length >= 20) createBadge("🐍 Herpetology Hero", "Logged 20+ amphibians or reptiles!", "badge-herps");
+else if (herps.length >= 5) createBadge("🐢 Shell Seeker", `Logged 5+ amphibians or reptiles. ${20 - herps.length} more to Master Angler!`, "badge-herps");
+else if (herps.length >= 1) createBadge("🐸 Little Lily Leaper", `Logged 1+ amphibians or reptiles. ${5 - herps.length} more to River Rover!`, "badge-herps");
+
+//Bugs
+if (bug.length >= 20) createBadge("🦋 Entomologist", "Logged 20+ birds!", "badge-birds");
+else if (bug.length >= 5) createBadge("🦗 Chirp Collector", `Logged 5+ birds. ${20 - birds.length} more to Chorus Connoisseur!`, "badge-birds");
+else if (bug.length >= 1) createBadge("🐛 Creepy Crawler", `Logged 1+ birds. ${5 - birds.length} more to Song Collector!`, "badge-birds");
+// Amphibians / Reptiles
 // Freshwater fish
 if (freshwaterFish.length >= 20) createBadge("Master Angler", "Logged 20+ freshwater fish!", "badge-fish");
 else if (freshwaterFish.length >= 5) createBadge("River Rover", `Logged 5+ freshwater fish. ${20 - freshwaterFish.length} more to Master Angler!`, "badge-fish");
 else if (freshwaterFish.length >= 1) createBadge("Stream Beginner", `Logged 1+ freshwater fish. ${5 - freshwaterFish.length} more to River Rover!`, "badge-fish");
 
 // Wetland birds
-if (wetland >= 20) createBadge("Swamp Keeper", "Logged 20+ wetland birds!", "badge-wetland");
-else if (wetland >= 5) createBadge("Wetland Guardian", `Logged 5+ wetland birds. ${20 - wetland} more to Swamp Keeper!`, "badge-wetland");
-else if (wetland >= 1) createBadge("Marsh Visitor", `Logged 1+ wetland birds. ${5 - wetland} more to Wetland Guardian!`, "badge-wetland");
+if (wetland >= 20) createBadge("🐸 Swamp King", "Logged 20+ wetland birds!", "badge-wetland");
+else if (wetland >= 5) createBadge("🌫 Mist Walker", `Logged 5+ wetland birds. ${20 - wetland} more to Swamp Keeper!`, "badge-wetland");
+else if (wetland >= 1) createBadge("🦆 Puddle Paddler", `Logged 1+ wetland birds. ${5 - wetland} more to Wetland Guardian!`, "badge-wetland");
 
 // Bats
-if (bats.length >= 20) createBadge("Shadow Flyer", "Logged 20+ bats!", "badge-bats");
-else if (bats.length >= 5) createBadge("Nocturnal Observer", `Logged 5+ bats. ${20 - bats.length} more to Shadow Flyer!`, "badge-bats");
-else if (bats.length >= 1) createBadge("Night Watcher", `Logged 1+ bats. ${5 - bats.length} more to Nocturnal Observer!`, "badge-bats");
+if (bats.length >= 20) createBadge("🦇 Master of Shadows", "Logged 20+ bats!", "badge-bats");
+else if (bats.length >= 5) createBadge("🌑 Echolocation Expert", `Logged 5+ bats. ${20 - bats.length} more to Shadow Flyer!`, "badge-bats");
+else if (bats.length >= 1) createBadge("🌙 Night Watcher", `Logged 1+ bats. ${5 - bats.length} more to Nocturnal Observer!`, "badge-bats");
 
 // Terrestrial mammals
-if (terrestrialMammals.length >= 20) createBadge("Beastmaster", "Logged 20+ terrestrial mammals!", "badge-mammals");
-else if (terrestrialMammals.length >= 5) createBadge("Mammal Tracker", `Logged 5+ terrestrial mammals. ${20 - terrestrialMammals.length} more to Beastmaster!`, "badge-mammals");
-else if (terrestrialMammals.length >= 1) createBadge("Mammal Spotter", `Logged 1+ terrestrial mammals. ${5 - terrestrialMammals.length} more to Mammal Tracker!`, "badge-mammals");
+if (terrestrialMammals.length >= 20) createBadge("🦌 Beastmaster", "Logged 20+ terrestrial mammals!", "badge-mammals");
+else if (terrestrialMammals.length >= 5) createBadge("🐾 Trail Tracker", `Logged 5+ terrestrial mammals. ${20 - terrestrialMammals.length} more to Beastmaster!`, "badge-mammals");
+else if (terrestrialMammals.length >= 1) createBadge("🐭 Critter Chaser", `Logged 1+ terrestrial mammals. ${5 - terrestrialMammals.length} more to Mammal Tracker!`, "badge-mammals");
   // Legendary Hunter
   if (legendaryCount >= 1) createBadge("🌟 Legendary Hunter", `Caught ${legendaryCount} legendary animal(s)!`, "badge-legendary");
 }
