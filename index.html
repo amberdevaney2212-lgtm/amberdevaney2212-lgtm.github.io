@@ -316,14 +316,14 @@ font-size:18px;
   background: linear-gradient(45deg, #009246, #ffffff, #ce2b37); /* Italian flag */
   color: #222;
 }
-.badge-ireland {
+.badge-irish {
   background: linear-gradient(135deg, #169B62, #FFFFFF, #FF883E); /* green, white, orange */
   border: 2px solid #0B6623; /* darker green */
   color: #222;
   font-weight: bold;
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
-.badge-morocco {
+.badge-moroccan {
   background: linear-gradient(135deg, #C1272D, #F9A825); /* red & gold tones */
   border: 2px solid #8B0000; /* deep red accent */
   color: #fff;
@@ -1696,23 +1696,23 @@ if (forestAnimals.length >= 50) createBadge("🌲🌲🌲 Forest Guardian", "Log
 else if (forestAnimals.length >= 10) createBadge("🌳 Canopy Stalker", `Logged 10+ forest animals. ${50 - forestAnimals.length} more to Guardian!`, "badge-forest");
 else if (forestAnimals.length >= 1) createBadge("🍃 Twig Tracker", `Logged 1+ forest animals. ${10 - forestAnimals.length} more to Sentinel!`, "badge-forest");
 
-if (moroccanSpecies.length >= 50) createBadge("Master of the Maghreb", "Logged 50+ Irish species!", "badge-irish");
-else if (moroccanSpecies.length >= 10) createBadge("Dune Prowler", `Logged 10+ Irish species. ${50 - irishSpecies.length} more to Master!`, "badge-irish");
+if (moroccanSpecies.length >= 50) createBadge("Master of the Maghreb", "Logged 50+ Irish species!", "badge-moroccan");
+else if (moroccanSpecies.length >= 10) createBadge("Dune Prowler", `Logged 10+ Irish species. ${50 - irishSpecies.length} more to Master!`, "badge-moroccan");
 else if (moroccanSpecies.length >= 1) createBadge("Sahara Scout", `Logged 1+ Moroccan species. ${10 - moroccanSpecies.length} more to Moroccan Expert!`, "badge-moroccan");
 
 if (italySpecies.length >= 20) {
-  createBadge("🇮🇹 Il Naturalista", "Logged 20+ Italian species!", "badge-italy");
+  createBadge("Il Naturalista", "Logged 20+ Italian species!", "badge-italy");
 } 
 else if (italySpecies.length >= 10) {
   createBadge(
-    "🇮🇹 Veni, Vidi, Fauna",
+    "Veni, Vidi, Fauna",
     `Logged 10+ Italian species. ${20 - italySpecies.length} more to Master!`,
     "badge-italy"
   );
 } 
 else if (italySpecies.length >= 1) {
   createBadge(
-    "🇮🇹 Novus Italicus",
+    "Novus Italicus",
     `Logged 1+ Italian species. ${10 - italySpecies.length} more to Explorer!`,
     "badge-italy"
   );
